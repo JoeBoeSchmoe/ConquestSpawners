@@ -1,0 +1,4 @@
+package org.conquest.conquestSpawners.responseHandler.messageModels;
+
+public class AdminMessageModels {
+}

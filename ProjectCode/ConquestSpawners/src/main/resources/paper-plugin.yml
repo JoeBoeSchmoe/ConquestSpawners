@@ -1,0 +1,6 @@
+name: ConquestSpawners
+version: '1.0'
+main: org.conquest.conquestSpawners.ConquestSpawners
+api-version: '1.21'
+authors: [Conquest Coder]
+description: A plugin for creating a performance friendly but interactive spawner plugin

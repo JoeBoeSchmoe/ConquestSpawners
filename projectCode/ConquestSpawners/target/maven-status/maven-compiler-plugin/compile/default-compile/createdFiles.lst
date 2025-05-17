@@ -1,1 +1,8 @@
+org\conquest\conquestSpawners\configurationHandler\integrationFiles\PlaceHolderAPIManager.class
+org\conquest\conquestSpawners\configurationHandler\ConfigurationManager.class
+org\conquest\conquestSpawners\configurationHandler\configurationFiles\adminMessagesFile.class
+org\conquest\conquestSpawners\configurationHandler\configurationFiles\configFile.class
 org\conquest\conquestSpawners\ConquestSpawners.class
+org\conquest\conquestSpawners\configurationHandler\configurationFiles\userMessagesFile.class
+org\conquest\conquestSpawners\configurationHandler\integrationFiles\VaultManager.class
+org\conquest\conquestSpawners\configurationHandler\IntegrationManager.class

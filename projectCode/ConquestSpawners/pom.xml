@@ -60,7 +60,7 @@
   </dependencies>
 
   <build>
-    <finalName>ConquestSpawners</finalName>
+    <finalName>ConquestSpawners-1.0</finalName>
     <plugins>
       <!-- Java Compiler Plugin -->
       <plugin>

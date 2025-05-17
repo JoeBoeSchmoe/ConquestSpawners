@@ -11,13 +11,13 @@ import java.util.logging.Logger;
  * ⚙️ configFile
  * Loads and manages access to config.yml as a static utility.
  */
-public class configFile {
+public class ConfigFile {
 
     private static final ConquestSpawners plugin = ConquestSpawners.getInstance();
     private static final Logger log = plugin.getLogger();
     private static YamlConfiguration config;
 
-    private configFile() {
+    private ConfigFile() {
         // Utility class — prevent instantiation
     }
 

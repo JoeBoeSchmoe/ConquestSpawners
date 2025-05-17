@@ -1,0 +1,71 @@
+# ===================================================
+# 🧱 ConquestSpawners - Configuration File
+# Controls behavior, formatting, interaction cooldowns, and more.
+# Reloadable at runtime using /cspawners reload.
+# ===================================================
+
+# ===================================================
+# 🎨 MiniMessage Formatting Guide (Used in names/lore)
+# ===================================================
+# ✅ Color Tags: <red>, <green>, <yellow>, <white>, <gray>
+# ✅ Text Styles: <bold>, <italic>, <underlined>, <strikethrough>, <obfuscated>
+# ✅ Gradients: <gradient:#ff0000:#ffff00>text</gradient>
+# ✅ Hex Colors: <#34ebcf>, <#ffaa00>, etc
+# ✅ Events: <hover:show_text:'hello'>hover me</hover>, <click:run_command:'/warp'>
+#
+# Full syntax: https://docs.advntr.dev/minimessage/format.html
+
+# ===================================================
+# 🎨 Global Message Styling
+# Prefix shown before all plugin messages.
+# Supports MiniMessage.
+# ===================================================
+chat-prefix: "<dark_gray>[<green>ConquestSpawners<dark_gray>]<gray> "
+
+# ===================================================
+# 🌍 World Restrictions
+# If enabled, restrict spawner usage and upgrades to specific worlds.
+# ===================================================
+world-restrictions:
+  whitelist-worlds: false # If true, restrict duel commands to specific worlds
+  allowed-worlds:
+    - world                    # Overworld
+    - world_nether             # Nether
+    - world_the_end            # End
+#    - example_world           # Uncomment to add custom worlds
+
+# ===================================================
+# 🧭 Command Aliases
+# Aliases for /conquestspawners
+# These must match plugin.yml.
+# ===================================================
+command-aliases:
+  - conquestspawners
+  - cspawners
+  - spawners
+
+# ===================================================
+# 📘 PlaceholderAPI Integration
+# Set to false to disable placeholder parsing even if PAPI is present.
+# ===================================================
+placeholders:
+  use-placeholderapi: true
+
+# ===================================================
+# ⏱️ Cooldowns (in milliseconds)
+# Prevents spam and regulates plugin actions.
+# ===================================================
+cooldowns:
+  command-delay-ms: 500
+  gui-action-cooldown-ms: 150
+  interaction-cooldown-ms: 3000
+
+# ===================================================
+# 🕒 GUI Timeout
+# Automatically closes GUIs if left open too long (in seconds).
+# Set to 0 to disable.
+# ===================================================
+gui-settings:
+  timeout-seconds: 60     # Auto-close after inactivity (0 = disabled)
+
+# End of config.yml

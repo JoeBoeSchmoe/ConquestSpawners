@@ -31,7 +31,7 @@ commands:
     description: Root command for ConquestSpawners features.
     usage: /<command>
     aliases: [cspawners, spawners]
-    permission: conquestspawners.command.base
+    permission: conquestspawners.admin.basecommand
 
 # ===================================================
 # 🔐 Permissions
@@ -39,19 +39,15 @@ commands:
 # Compatible with LuckPerms, etc.
 # ===================================================
 permissions:
-  conquestspawners.command.base:
+  conquestspawners.admin.basecommand:
     description: Access to /conquestspawners and its subcommands
     default: true
 
-  conquestspawners.command.help:
+  conquestspawners.admin.help:
     description: View spawner plugin help menu
     default: true
 
-  conquestspawners.command.give:
-    description: Give yourself or another player a spawner
-    default: op
-
-  conquestspawners.command.reload:
+  conquestspawners.admin.reload:
     description: Reloads the plugin configuration files
     default: op
 
@@ -59,7 +55,6 @@ permissions:
     description: Grants full access to ConquestSpawners admin commands
     default: op
     children:
-      conquestspawners.command.base: true
-      conquestspawners.command.help: true
-      conquestspawners.command.give: true
-      conquestspawners.command.reload: true
+      conquestspawners.admin.basecommand: true
+      conquestspawners.admin.give: true
+      conquestspawners.admin.reload: true

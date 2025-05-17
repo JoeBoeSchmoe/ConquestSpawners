@@ -1,23 +1,28 @@
 package org.conquest.conquestSpawners.responseHandler.messageModels;
 
 /**
- * 🙋 UserMessageModels
+ * 🎮 UserMessageModels
  * Enum keys for referencing structured userMessages.yml paths.
  */
 public enum UserMessageModels {
 
-    // 🧱 Basic interactions
-    PLACE_SUCCESS("spawner.place-success"),
-    BREAK_SUCCESS("spawner.break-success"),
-    UPGRADE_SUCCESS("spawner.upgrade-success"),
-    UPGRADE_FAIL("spawner.upgrade-fail"),
-    MAX_LEVEL_REACHED("spawner.max-level"),
+    // ❓ Help & Usage
+    HELP_HEADER("help.header"),
+    HELP("help.header"), // ✅ alias if you reference just HELP
+    USAGE_HINT("help.usage-hint"),
+    UNKNOWN_COMMAND("help.unknown-command"),
 
-    // ❌ Deny feedback
-    WORLD_NOT_ALLOWED("denied.world"),
-    NO_PERMISSION("denied.permission"),
-    COOLDOWN_ACTIVE("denied.cooldown"),
-    INVALID_ACTION("denied.invalid-action");
+    // 🔁 Cooldowns
+    COMMAND_ON_COOLDOWN("cooldown.command"),
+
+    // 🎁 Spawner Give
+    SPAWNER_GIVE_SUCCESS("give.success"),
+    SPAWNER_GIVE_FAIL("give.fail"),
+    SPAWNER_GIVEN("give.success"), // ✅ alias for older reference
+
+    // 📄 Info Display
+    INFO_DISPLAY("info.display"),
+    SPAWNER_INFO("info.display"); // ✅ alias for older reference
 
     private final String path;
 

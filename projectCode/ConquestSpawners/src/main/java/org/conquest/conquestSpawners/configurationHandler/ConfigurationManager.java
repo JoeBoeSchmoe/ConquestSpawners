@@ -5,6 +5,8 @@ import org.conquest.conquestSpawners.ConquestSpawners;
 import org.conquest.conquestSpawners.configurationHandler.configurationFiles.AdminMessagesFile;
 import org.conquest.conquestSpawners.configurationHandler.configurationFiles.ConfigFile;
 import org.conquest.conquestSpawners.configurationHandler.configurationFiles.UserMessagesFile;
+import org.conquest.conquestSpawners.configurationHandler.integrationFiles.PlaceHolderAPIManager;
+import org.conquest.conquestSpawners.configurationHandler.integrationFiles.VaultManager;
 
 import java.util.logging.Logger;
 
@@ -50,7 +52,7 @@ public class ConfigurationManager {
      * Validates all required config keys.
      */
     private void checkAll() {
-        log.info("🔍 Validating config.yml structure...");
+        log.info("🔍  Validating config.yml structure...");
         check("chat-prefix");
 
         // World restrictions
@@ -83,8 +85,7 @@ public class ConfigurationManager {
      * Initializes Vault integration if enabled.
      */
     private void setupVault() {
-        boolean enabled = ConfigFile.getBoolean("economy.use-vault", false);
-        // VaultManager.initialize(enabled);
+        VaultManager.initialize(true);
     }
 
     /**
@@ -92,7 +93,7 @@ public class ConfigurationManager {
      */
     private void setupPlaceholderAPI() {
         boolean enabled = ConfigFile.getBoolean("placeholders.use-placeholderapi", true);
-        // PlaceholderAPIManager.initialize(enabled);
+        PlaceHolderAPIManager.initialize(enabled);
     }
 
     public FileConfiguration getConfig() {

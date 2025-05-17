@@ -5,26 +5,25 @@
 # ===================================================
 
 name: ConquestSpawners
-version: '1.0'
+version: 1.0.0
 main: org.conquest.conquestSpawners.ConquestSpawners
-api-version: '1.21'
-authors: [Conquest Coder]
+api-version: 1.21
+author: Conquest Coder
 description: >
-  A plugin for creating a performance friendly but interactive spawner plugin.
-  Includes support for Vault, PlaceholderAPI, and DecentHolograms.
-website: https://www.spigotmc.org/resources/conquestspawners
+  A top-tier dueling plugin with arena management, betting support,
+  player blocking, and full GUI + command access.
 
-# ===================================================
-# 🔗 Dependencies
-# Vault is a hard dependency; PlaceholderAPI is optional.
-# ===================================================
-depend: [Vault]
-softdepend: [PlaceholderAPI]
+# Hard Dependencies
+depend:
+  - Vault
+# Optional Dependencies
+softdepend:
+  - PlaceholderAPI
 
 # ===================================================
 # 🧭 Commands
 # Commands registered in CommandManager.java
-# Aliases are configurable and exposed via plugin.yml.
+# Aliases are handled dynamically via config.yml too.
 # ===================================================
 commands:
   conquestspawners:

@@ -25,14 +25,14 @@ public class AdminMessagesFile {
 
     public static void load() {
         try {
-            File messagesFolder = new File(plugin.getDataFolder(), "MessagesConfiguration");
+            File messagesFolder = new File(plugin.getDataFolder(), "messagesConfiguration");
             if (!messagesFolder.exists() && !messagesFolder.mkdirs()) {
-                log.warning("⚠️  Failed to create MessagesConfiguration folder");
+                log.warning("⚠️  Failed to create messagesConfiguration folder");
             }
 
             File file = new File(messagesFolder, "adminMessages.yml");
             if (!file.exists()) {
-                try (InputStream in = plugin.getResource("MessagesConfiguration/adminMessages.yml")) {
+                try (InputStream in = plugin.getResource("messagesConfiguration/adminMessages.yml")) {
                     if (in != null) {
                         Files.copy(in, file.toPath());
                         log.info("📄  Created default adminMessages.yml");

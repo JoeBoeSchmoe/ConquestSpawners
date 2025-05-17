@@ -45,10 +45,10 @@ public class ConfigFile {
             }
 
             config = YamlConfiguration.loadConfiguration(configFile);
-            log.info("✅ Loaded config.yml successfully.");
+            log.info("✅  Loaded config.yml successfully.");
 
         } catch (Exception e) {
-            log.severe("❌ Failed to load config.yml: " + e.getMessage());
+            log.severe("❌  Failed to load config.yml: " + e.getMessage());
         }
     }
 

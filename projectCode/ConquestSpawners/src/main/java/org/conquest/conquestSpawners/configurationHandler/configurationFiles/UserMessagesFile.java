@@ -10,8 +10,8 @@ import java.nio.file.Files;
 import java.util.logging.Logger;
 
 /**
- * 👥 userMessagesFile
- * Loads and manages userMessages.yml in the MessagesConfiguration folder.
+ * 📩 UserMessagesFile
+ * Manages the loading and access to messagesConfiguration/userMessages.yml
  */
 public class UserMessagesFile {
 
@@ -23,27 +23,37 @@ public class UserMessagesFile {
         // Utility class
     }
 
+    /**
+     * Loads or creates the userMessages.yml file.
+     */
     public static void load() {
         try {
-            File messagesFolder = new File(plugin.getDataFolder(), "messagesConfiguration");
-            if (!messagesFolder.exists() && !messagesFolder.mkdirs()) {
-                log.warning("⚠️  Failed to create messagesConfiguration folder");
+            File folder = plugin.getDataFolder();
+            if (!folder.exists() && !folder.mkdirs()) {
+                log.warning("⚠️  Failed to create plugin data folder: " + folder.getAbsolutePath());
             }
 
-            File file = new File(messagesFolder, "userMessages.yml");
+            File messagesDir = new File(folder, "messagesConfiguration");
+            if (!messagesDir.exists() && !messagesDir.mkdirs()) {
+                log.warning("⚠️  Failed to create messagesConfiguration directory: " + messagesDir.getAbsolutePath());
+            }
+
+            File file = new File(messagesDir, "userMessages.yml");
+
             if (!file.exists()) {
                 try (InputStream in = plugin.getResource("messagesConfiguration/userMessages.yml")) {
                     if (in != null) {
                         Files.copy(in, file.toPath());
                         log.info("📄  Created default userMessages.yml");
                     } else {
-                        log.warning("⚠️  Missing embedded userMessages.yml resource!");
+                        log.warning("⚠️  Missing embedded userMessages.yml resource.");
                     }
                 }
             }
 
             config = YamlConfiguration.loadConfiguration(file);
             log.info("✅  Loaded userMessages.yml successfully.");
+
         } catch (Exception e) {
             log.severe("❌  Failed to load userMessages.yml: " + e.getMessage());
         }
@@ -59,9 +69,5 @@ public class UserMessagesFile {
 
     public static boolean contains(String path) {
         return config != null && config.contains("messages." + path);
-    }
-
-    public static String get(String path) {
-        return config != null ? config.getString("messages." + path) : null;
     }
 }

@@ -10,8 +10,8 @@ import java.nio.file.Files;
 import java.util.logging.Logger;
 
 /**
- * 🛡️ adminMessagesFile
- * Loads and manages adminMessages.yml in the MessagesConfiguration folder.
+ * 🛠️ AdminMessagesFile
+ * Manages the loading and access to messagesConfiguration/adminMessages.yml
  */
 public class AdminMessagesFile {
 
@@ -23,27 +23,37 @@ public class AdminMessagesFile {
         // Utility class
     }
 
+    /**
+     * Loads or creates the adminMessages.yml file.
+     */
     public static void load() {
         try {
-            File messagesFolder = new File(plugin.getDataFolder(), "messagesConfiguration");
-            if (!messagesFolder.exists() && !messagesFolder.mkdirs()) {
-                log.warning("⚠️  Failed to create messagesConfiguration folder");
+            File folder = plugin.getDataFolder();
+            if (!folder.exists() && !folder.mkdirs()) {
+                log.warning("⚠️  Failed to create plugin data folder: " + folder.getAbsolutePath());
             }
 
-            File file = new File(messagesFolder, "adminMessages.yml");
+            File messagesDir = new File(folder, "messagesConfiguration");
+            if (!messagesDir.exists() && !messagesDir.mkdirs()) {
+                log.warning("⚠️  Failed to create messagesConfiguration directory: " + messagesDir.getAbsolutePath());
+            }
+
+            File file = new File(messagesDir, "adminMessages.yml");
+
             if (!file.exists()) {
                 try (InputStream in = plugin.getResource("messagesConfiguration/adminMessages.yml")) {
                     if (in != null) {
                         Files.copy(in, file.toPath());
                         log.info("📄  Created default adminMessages.yml");
                     } else {
-                        log.warning("⚠️  Missing embedded adminMessages.yml resource!");
+                        log.warning("⚠️  Missing embedded adminMessages.yml resource.");
                     }
                 }
             }
 
             config = YamlConfiguration.loadConfiguration(file);
             log.info("✅  Loaded adminMessages.yml successfully.");
+
         } catch (Exception e) {
             log.severe("❌  Failed to load adminMessages.yml: " + e.getMessage());
         }
@@ -59,9 +69,5 @@ public class AdminMessagesFile {
 
     public static boolean contains(String path) {
         return config != null && config.contains("messages." + path);
-    }
-
-    public static String get(String path) {
-        return config != null ? config.getString("messages." + path) : null;
     }
 }

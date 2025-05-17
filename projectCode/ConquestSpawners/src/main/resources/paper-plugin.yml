@@ -1,0 +1,65 @@
+# ===================================================
+# 🏰 ConquestSpawners - plugin.yml
+# Metadata, command routing, and permission control.
+# Required by Paper/Bukkit for loading the plugin.
+# ===================================================
+
+name: ConquestSpawners
+version: '1.0'
+main: org.conquest.conquestSpawners.ConquestSpawners
+api-version: '1.21'
+authors: [Conquest Coder]
+description: >
+  A plugin for creating a performance friendly but interactive spawner plugin.
+  Includes support for Vault, PlaceholderAPI, and DecentHolograms.
+website: https://www.spigotmc.org/resources/conquestspawners
+
+# ===================================================
+# 🔗 Dependencies
+# Vault is a hard dependency; PlaceholderAPI is optional.
+# ===================================================
+depend: [Vault]
+softdepend: [PlaceholderAPI]
+
+# ===================================================
+# 🧭 Commands
+# Commands registered in CommandManager.java
+# Aliases are configurable and exposed via plugin.yml.
+# ===================================================
+commands:
+  conquestspawners:
+    description: Root command for ConquestSpawners features.
+    usage: /<command>
+    aliases: [cspawners, spawners]
+    permission: conquestspawners.command.base
+
+# ===================================================
+# 🔐 Permissions
+# Grouped for clean control and future modular expansions.
+# Compatible with LuckPerms, etc.
+# ===================================================
+permissions:
+  conquestspawners.command.base:
+    description: Access to /conquestspawners and its subcommands
+    default: true
+
+  conquestspawners.command.help:
+    description: View spawner plugin help menu
+    default: true
+
+  conquestspawners.command.give:
+    description: Give yourself or another player a spawner
+    default: op
+
+  conquestspawners.command.reload:
+    description: Reloads the plugin configuration files
+    default: op
+
+  conquestspawners.admin.*:
+    description: Grants full access to ConquestSpawners admin commands
+    default: op
+    children:
+      conquestspawners.command.base: true
+      conquestspawners.command.help: true
+      conquestspawners.command.give: true
+      conquestspawners.command.reload: true

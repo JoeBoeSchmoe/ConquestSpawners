@@ -4,3 +4,16 @@ main: org.conquest.conquestSpawners.ConquestSpawners
 api-version: '1.21'
 authors: [ Conquest Coder ]
 description: A plugin for creating a performance friendly but interactive spawner plugin
+
+softdepend:
+  - Vault
+  - PlaceholderAPI
+
+commands:
+  spawners:
+    description: Base command for ConquestSpawners
+    usage: /<command>
+    aliases:
+      - spawner
+      - cspawner
+      - conquestspawners

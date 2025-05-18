@@ -1,13 +1,14 @@
 package org.conquest.conquestSpawners.commandHandler;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 import org.conquest.conquestSpawners.commandHandler.subcommandHandler.AdminCommands;
 import org.conquest.conquestSpawners.commandHandler.subcommandHandler.UserCommands;
 import org.conquest.conquestSpawners.cooldownHandler.CommandCooldownManager;
 import org.conquest.conquestSpawners.responseHandler.MessageResponseManager;
-import org.conquest.conquestSpawners.responseHandler.messageModels.UserMessageModels;
 import org.conquest.conquestSpawners.responseHandler.messageModels.AdminMessageModels;
+import org.conquest.conquestSpawners.responseHandler.messageModels.UserMessageModels;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -15,7 +16,8 @@ import java.util.*;
 
 /**
  * 🧭 CommandManager
- * Central executor and tab completer for /spawner and subcommands.
+ * Central executor and tab completer for /conquestspawners and its aliases.
+ * Routes subcommands to AdminCommands and UserCommands based on alias map and permission level.
  */
 public class CommandManager implements CommandExecutor, TabCompleter {
 
@@ -26,6 +28,7 @@ public class CommandManager implements CommandExecutor, TabCompleter {
     }
 
     private static void registerAliases() {
+        // Core commands
         ALIAS_MAP.put("help", "help");
         ALIAS_MAP.put("h", "help");
 
@@ -35,7 +38,12 @@ public class CommandManager implements CommandExecutor, TabCompleter {
         ALIAS_MAP.put("info", "info");
         ALIAS_MAP.put("i", "info");
 
+        // Admin group
         ALIAS_MAP.put("admin", "admin");
+
+        // Utility
+        ALIAS_MAP.put("reload", "reload");
+        ALIAS_MAP.put("r", "reload");
     }
 
     @Override
@@ -48,6 +56,7 @@ public class CommandManager implements CommandExecutor, TabCompleter {
             MessageResponseManager.send(player, UserMessageModels.COMMAND_ON_COOLDOWN);
             return true;
         }
+
         CommandCooldownManager.mark(player.getUniqueId());
 
         if (args.length == 0) {
@@ -58,7 +67,7 @@ public class CommandManager implements CommandExecutor, TabCompleter {
         String subcommand = ALIAS_MAP.getOrDefault(input, null);
 
         if (subcommand == null) {
-            MessageResponseManager.send(player, UserMessageModels.UNKNOWN_COMMAND);
+            MessageResponseManager.send(player, AdminMessageModels.ADMIN_USAGE_HINT);
             return true;
         }
 

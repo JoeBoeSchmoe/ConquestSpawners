@@ -1,55 +1,44 @@
 package org.conquest.conquestSpawners.commandHandler.subcommandHandler;
 
-import org.bukkit.entity.Player;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import org.conquest.conquestSpawners.commandHandler.permissionHandler.PermissionManager;
+import org.conquest.conquestSpawners.commandHandler.permissionHandler.PermissionModels;
 import org.conquest.conquestSpawners.responseHandler.MessageResponseManager;
+import org.conquest.conquestSpawners.responseHandler.messageModels.AdminMessageModels;
 import org.conquest.conquestSpawners.responseHandler.messageModels.UserMessageModels;
 
 /**
  * 🎮 UserCommands
- * Handles all non-admin /spawner subcommands.
+ * Handles all non-admin /spawners subcommands.
+ * Currently redirects to admin usage hints only — non-admin commands not available yet.
  */
 public class UserCommands {
 
     public static boolean handle(Player player, String subcommand, String[] args) {
-        switch (subcommand) {
-            case "help" -> {
-                // You can expand with usage details
-                MessageResponseManager.send(player, UserMessageModels.HELP);
-                return true;
-            }
-            case "give" -> {
-                return handleGive(player, args);
-            }
-            case "info" -> {
-                return handleInfo(player, args);
-            }
-            default -> {
-                MessageResponseManager.send(player, UserMessageModels.UNKNOWN_COMMAND);
-                return true;
-            }
-        }
-    }
-
-    private static boolean handleGive(Player player, String[] args) {
-        // Your give logic here
-        MessageResponseManager.send(player, UserMessageModels.SPAWNER_GIVEN);
+        // Non-admin access is not supported yet
+        MessageResponseManager.send(player, AdminMessageModels.ADMIN_USAGE_HINT);
         return true;
     }
 
-    private static boolean handleInfo(Player player, String[] args) {
-        // Your info logic here
-        MessageResponseManager.send(player, UserMessageModels.SPAWNER_INFO);
-        return true;
-    }
-
+    /**
+     * Sends a message to console or command blocks that this command is player-only.
+     */
     public static boolean sendNotPlayer(CommandSender sender) {
-        sender.sendMessage("§cOnly players can use this command.");
+        MessageResponseManager.send((Player) sender, UserMessageModels.NOT_PLAYER);
         return true;
     }
 
+    /**
+     * Sends the general usage hint (admin help) to players without arguments.
+     */
     public static boolean sendUsageHint(Player player) {
-        MessageResponseManager.send(player, UserMessageModels.USAGE_HINT);
+        if (!PermissionManager.has(player, PermissionModels.ADMIN_BASE)) {
+            MessageResponseManager.send(player, AdminMessageModels.NO_PERMISSION);
+            return true;
+        }
+
+        MessageResponseManager.send(player, AdminMessageModels.ADMIN_USAGE_HINT);
         return true;
     }
 }

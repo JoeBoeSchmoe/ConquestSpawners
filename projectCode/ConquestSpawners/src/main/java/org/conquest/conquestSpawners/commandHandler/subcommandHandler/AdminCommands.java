@@ -1,6 +1,7 @@
 package org.conquest.conquestSpawners.commandHandler.subcommandHandler;
 
 import org.bukkit.entity.Player;
+import org.conquest.conquestSpawners.ConquestSpawners;
 import org.conquest.conquestSpawners.commandHandler.permissionHandler.PermissionManager;
 import org.conquest.conquestSpawners.commandHandler.permissionHandler.PermissionModels;
 import org.conquest.conquestSpawners.responseHandler.MessageResponseManager;
@@ -8,18 +9,20 @@ import org.conquest.conquestSpawners.responseHandler.messageModels.AdminMessageM
 
 /**
  * 🛠 AdminCommands
- * Handles all /spawner admin subcommands.
+ * Handles all /spawners admin subcommands.
  */
 public class AdminCommands {
 
+    /**
+     * Routes /spawners admin <sub> commands
+     */
     public static boolean handle(Player player, String[] args) {
         String sub = args[1].toLowerCase();
 
         return switch (sub) {
             case "reload" -> handleReload(player);
-            case "give" -> handleAdminGive(player, args);
             case "help" -> {
-                MessageResponseManager.send(player, AdminMessageModels.ADMIN_HELP);
+                MessageResponseManager.sendHelpPage(player, "admin-help", 1);
                 yield true;
             }
             default -> {
@@ -35,19 +38,8 @@ public class AdminCommands {
             return true;
         }
 
-        // Perform config reload here
-        MessageResponseManager.send(player, AdminMessageModels.RELOADED);
-        return true;
-    }
-
-    private static boolean handleAdminGive(Player player, String[] args) {
-        if (!PermissionManager.has(player, PermissionModels.ADMIN_GIVE)) {
-            MessageResponseManager.send(player, AdminMessageModels.NO_PERMISSION);
-            return true;
-        }
-
-        // Admin-level spawner giving logic here
-        MessageResponseManager.send(player, AdminMessageModels.SPAWNER_GIVEN_ADMIN);
+        ConquestSpawners.getInstance().reload();
+        MessageResponseManager.send(player, AdminMessageModels.CONFIG_RELOADED);
         return true;
     }
 }

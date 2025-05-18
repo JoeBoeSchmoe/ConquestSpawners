@@ -1,8 +1,12 @@
 package org.conquest.conquestSpawners;
 
+import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.conquest.conquestSpawners.commandHandler.CommandManager;
 import org.conquest.conquestSpawners.configurationHandler.ConfigurationManager;
-import org.bukkit.Bukkit;
+
+import java.util.List;
+import java.util.Objects;
 
 /**
  * 🧱 ConquestSpawners
@@ -22,6 +26,9 @@ public final class ConquestSpawners extends JavaPlugin {
         configurationManager = new ConfigurationManager();
         configurationManager.initialize();
 
+        // 📜 Register commands
+        setupCommands();
+
         // 🎧 Register events
         registerListeners();
 
@@ -39,15 +46,37 @@ public final class ConquestSpawners extends JavaPlugin {
     public void reload() {
         getLogger().info("🔄  Reloading ConquestSpawners...");
         configurationManager.initialize();
-        // Optional: re-register tasks, clear caches, etc.
         getLogger().info("✅  Reload complete.");
+    }
+
+    /**
+     * Registers main command and aliases as defined in plugin.yml and config.yml
+     */
+    private void setupCommands() {
+        CommandManager commandManager = new CommandManager();
+
+        // Main command must match plugin.yml
+        PluginCommand baseCommand = getCommand("conquestspawners");
+        if (baseCommand == null) {
+            getLogger().severe("❌  Command 'conquestspawners' not registered in plugin.yml.");
+            return;
+        }
+
+        baseCommand.setExecutor(commandManager);
+        baseCommand.setTabCompleter(commandManager);
+
+        // Log aliases defined in config (not dynamically registered but good for debugging)
+        List<String> aliases = getConfig().getStringList("command-aliases");
+        if (!aliases.isEmpty()) {
+            getLogger().info("🔗  Registered aliases from config: " + String.join(", ", aliases));
+        }
     }
 
     /**
      * Registers all Bukkit event listeners.
      */
     private void registerListeners() {
-        // Example: Bukkit.getPluginManager().registerEvents(new SpawnerInteractListener(), this);
+        // Bukkit.getPluginManager().registerEvents(new ExampleListener(), this);
     }
 
     public static ConquestSpawners getInstance() {

@@ -45,7 +45,7 @@ SpawnerRequirements:
 
   Fluid: false
 
-  InBiome: true
+  InBiome: false
   # Natural Ghast zones
   AllowedBiomes:
     - soul_sand_valley

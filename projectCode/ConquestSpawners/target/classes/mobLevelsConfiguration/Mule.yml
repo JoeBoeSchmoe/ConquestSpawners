@@ -37,7 +37,7 @@ DisplayLore:
 
 SpawnerRequirements:
   Air: true
-  Above-Sea-Level: true
+  Above-Sea-Level: false
   Below-Sea-Level: false
   Above-Y-Axis: false
   Below-Y-Axis: false
@@ -48,7 +48,7 @@ SpawnerRequirements:
 
   Fluid: false
 
-  InBiome: true
+  InBiome: false
   # Cross-biome caravan areas
   AllowedBiomes:
     - plains

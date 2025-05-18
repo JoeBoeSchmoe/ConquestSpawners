@@ -48,7 +48,7 @@ SpawnerRequirements:
 
   Fluid: false                  # Will not spawn in water or lava
 
-  InBiome: true
+  InBiome: false
   # End and overworld biomes
   AllowedBiomes:
     - end_highlands

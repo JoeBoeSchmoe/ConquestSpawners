@@ -34,7 +34,7 @@ DisplayLore:
 
 SpawnerRequirements:
   Air: true
-  Above-Sea-Level: true
+  Above-Sea-Level: false
   Below-Sea-Level: false
   Above-Y-Axis: false
   Below-Y-Axis: false
@@ -47,7 +47,7 @@ SpawnerRequirements:
   AllowedFluids:
     - LAVA
 
-  InBiome: true
+  InBiome: false
   # Typical magma cube biomes
   AllowedBiomes:
     - basalt_deltas

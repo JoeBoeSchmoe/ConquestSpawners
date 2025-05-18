@@ -50,7 +50,7 @@ SpawnerRequirements:
   AllowedFluids:
     - WATER
 
-  InBiome: true
+  InBiome: false
   # Amphibian habitats
   AllowedBiomes:
     - swamp

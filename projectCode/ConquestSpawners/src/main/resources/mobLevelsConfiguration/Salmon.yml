@@ -50,7 +50,7 @@ SpawnerRequirements:
   AllowedFluids:
     - WATER
 
-  InBiome: true
+  InBiome: false
   # Salmon spawn in rivers and cold/lukewarm ocean regions
   AllowedBiomes:
     - river

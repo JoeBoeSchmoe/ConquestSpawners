@@ -1,4 +1,4 @@
-package org.conquest.conquestSpawners.mobSpawningHandler;
+package org.conquest.conquestSpawners.mobSpawningHandler.spawnerSetup;
 
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;

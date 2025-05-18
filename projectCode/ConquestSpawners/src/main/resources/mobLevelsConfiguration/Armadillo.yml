@@ -50,7 +50,7 @@ SpawnerRequirements:
   Fluid: false
 
   # Biome restriction: requires the spawner to be in a specific biome
-  InBiome: true
+  InBiome: false
   # Full biome list: https://minecraft.fandom.com/wiki/Biome#List_of_biomes
   AllowedBiomes:
     - savanna

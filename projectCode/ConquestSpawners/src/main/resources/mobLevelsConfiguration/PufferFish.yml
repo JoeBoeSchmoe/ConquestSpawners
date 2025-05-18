@@ -50,7 +50,7 @@ SpawnerRequirements:
   AllowedFluids:
     - WATER
 
-  InBiome: true
+  InBiome: false
   # Ocean biomes where pufferfish spawn
   AllowedBiomes:
     - warm_ocean

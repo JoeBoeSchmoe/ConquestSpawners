@@ -37,7 +37,7 @@ DisplayLore:
 
 SpawnerRequirements:
   Air: true                     # Requires air blocks above spawn position
-  Above-Sea-Level: true         # Must be above Y=63
+  Above-Sea-Level: false         # Must be above Y=63
   Below-Sea-Level: false        # Must be below Y=63
   Above-Y-Axis: false           # Requires being above a specific Y value
   Below-Y-Axis: false           # Requires being below a specific Y value

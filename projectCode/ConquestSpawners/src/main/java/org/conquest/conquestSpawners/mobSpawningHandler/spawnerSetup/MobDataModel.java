@@ -1,4 +1,4 @@
-package org.conquest.conquestSpawners.mobSpawningHandler;
+package org.conquest.conquestSpawners.mobSpawningHandler.spawnerSetup;
 
 import java.util.List;
 import java.util.Map;
@@ -64,4 +64,5 @@ public class MobDataModel {
     public List<String> getDisplayLore() { return displayLore; }
     public SpawnerRequirementsModel getRequirements() { return requirements; }
     public Map<Integer, SpawnerLevelModel> getLevels() { return levels; }
+
 }

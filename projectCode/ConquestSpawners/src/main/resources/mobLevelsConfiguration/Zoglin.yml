@@ -46,7 +46,7 @@ SpawnerRequirements:
 
   Fluid: false
 
-  InBiome: true
+  InBiome: false
   # Nether corruption zones
   AllowedBiomes:
     - crimson_forest

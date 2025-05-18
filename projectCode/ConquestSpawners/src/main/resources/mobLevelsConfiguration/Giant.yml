@@ -37,7 +37,7 @@ DisplayLore:
 
 SpawnerRequirements:
   Air: true                     # Needs very tall air space
-  Above-Sea-Level: true
+  Above-Sea-Level: false
   Below-Sea-Level: false
   Above-Y-Axis: false
   Below-Y-Axis: false

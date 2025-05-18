@@ -47,7 +47,7 @@ SpawnerRequirements:
   AllowedFluids:
     - LAVA
 
-  InBiome: true
+  InBiome: false
   # Strider-compatible Nether biomes
   AllowedBiomes:
     - nether_wastes

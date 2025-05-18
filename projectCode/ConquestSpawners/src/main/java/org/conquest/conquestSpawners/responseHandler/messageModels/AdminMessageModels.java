@@ -18,7 +18,13 @@ public enum AdminMessageModels {
     ADMIN_HELP("admin-help"),
 
     // ❌ Permissions
-    NO_PERMISSION("no-permission");
+    NO_PERMISSION("no-permission"),
+    CONSOLE_BLOCKED("console-blocked"),
+
+    // 🎁 Spawner Give Command
+    SPAWNER_GIVE_SUCCESS("spawner-give-success"),
+    SPAWNER_GIVE_FAILED("spawner-give-failed"),
+    SPAWNER_GIVE_USAGE("spawner-give-usage");
 
     private final String path;
 

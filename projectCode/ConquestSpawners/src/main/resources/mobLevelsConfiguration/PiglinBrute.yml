@@ -20,13 +20,13 @@ DisplayLore:
 
 SpawnerRequirements:
   Air: true
-  Above-Sea-Level: true
+  Above-Sea-Level: false
   Light: false
   Total-Darkness: false
   Darkness: false
   Fluid: false
   Max-Entities-Nearby: false
-  InBiome: true
+  InBiome: false
   AllowedBiomes:
     - bastion_remnant
   On-Ground: true

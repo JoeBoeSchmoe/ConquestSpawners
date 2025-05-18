@@ -8,7 +8,7 @@ import org.conquest.conquestSpawners.configurationHandler.configurationFiles.Use
 import org.conquest.conquestSpawners.configurationHandler.integrationFiles.DecentHologramsManager;
 import org.conquest.conquestSpawners.configurationHandler.integrationFiles.PlaceHolderAPIManager;
 import org.conquest.conquestSpawners.configurationHandler.integrationFiles.VaultManager;
-import org.conquest.conquestSpawners.mobSpawningHandler.MobManager;
+import org.conquest.conquestSpawners.mobSpawningHandler.spawnerSetup.MobManager;
 
 import java.util.logging.Logger;
 
@@ -24,8 +24,11 @@ public class ConfigurationManager {
     private final Logger log = plugin.getLogger();
     private FileConfiguration config;
 
-    private MobManager mobManager;
+    private final MobManager mobManager;
 
+    public ConfigurationManager() {
+        this.mobManager = new MobManager(plugin); // ✅ Instantiate ONCE here
+    }
     public void initialize() {
         try {
             log.info("📦  Loading configuration...");
@@ -37,21 +40,18 @@ public class ConfigurationManager {
 
             this.config = ConfigFile.getConfig();
 
-            // ✅ Validate structure
             checkAll();
 
-            // 🔌 Third-party integrations
+            // 🔌 Integrations
             setupVault();
             setupPlaceholderAPI();
             setupDecentHolograms();
 
-            // 🧟 Mob Configurations
-            this.mobManager = new MobManager(plugin);
-            mobManager.loadAllMobs();
+            // ✅ Now we can safely reload the mobs
+            mobManager.reload();
 
             log.info("✅  Configuration loading complete.");
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             log.severe("❌  Failed to load configuration: " + e.getMessage());
         }
     }

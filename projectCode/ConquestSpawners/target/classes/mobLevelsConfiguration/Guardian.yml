@@ -50,7 +50,7 @@ SpawnerRequirements:
   AllowedFluids:
     - WATER
 
-  InBiome: true
+  InBiome: false
   # Ocean monument and coastal biomes
   AllowedBiomes:
     - ocean

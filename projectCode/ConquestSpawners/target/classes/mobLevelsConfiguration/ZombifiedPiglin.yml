@@ -45,7 +45,7 @@ SpawnerRequirements:
 
   Fluid: false
 
-  InBiome: true
+  InBiome: false
   # Nether-native undead biomes
   AllowedBiomes:
     - nether_wastes

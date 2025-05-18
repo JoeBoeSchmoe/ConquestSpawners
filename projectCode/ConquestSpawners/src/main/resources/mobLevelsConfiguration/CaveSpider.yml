@@ -48,7 +48,7 @@ SpawnerRequirements:
 
   Fluid: false
 
-  InBiome: true
+  InBiome: false
   # Cave spider-friendly environments
   AllowedBiomes:
     - lush_caves

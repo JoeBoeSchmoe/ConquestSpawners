@@ -50,7 +50,7 @@ SpawnerRequirements:
   AllowedFluids:
     - WATER
 
-  InBiome: true
+  InBiome: false
   # Swamp and ocean biomes are their home
   AllowedBiomes:
     - river

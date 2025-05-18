@@ -21,12 +21,12 @@ DisplayLore:
 
 SpawnerRequirements:
   Air: true
-  Above-Sea-Level: true
+  Above-Sea-Level: false
   Light: true
   Darkness: false
   Fluid: false
   Max-Entities-Nearby: false
-  InBiome: true
+  InBiome: false
   AllowedBiomes:
     - plains
     - savanna

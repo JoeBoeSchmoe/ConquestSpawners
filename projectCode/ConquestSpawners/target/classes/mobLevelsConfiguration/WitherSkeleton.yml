@@ -45,7 +45,7 @@ SpawnerRequirements:
 
   Fluid: false
 
-  InBiome: true
+  InBiome: false
   # Fortress and nether zones
   AllowedBiomes:
     - soul_sand_valley

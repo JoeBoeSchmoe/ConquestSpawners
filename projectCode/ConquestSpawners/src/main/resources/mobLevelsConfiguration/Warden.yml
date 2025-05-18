@@ -47,7 +47,7 @@ SpawnerRequirements:
 
   Fluid: false
 
-  InBiome: true
+  InBiome: false
   # Deep dark only!
   AllowedBiomes:
     - deep_dark

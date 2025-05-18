@@ -48,7 +48,7 @@ SpawnerRequirements:
 
   Fluid: false
 
-  InBiome: true
+  InBiome: false
   # Classic overworld biomes
   AllowedBiomes:
     - plains

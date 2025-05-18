@@ -110,8 +110,8 @@ default-values:
   # Used if a specific mob config does not override it.
   # ===================================================
   default-display:
-    display-name: "&f&l[&b{Spawner} Spawner&f&l] &7Level &8{level}"
+    display-name: "<white><bold>[<aqua>{Spawner} Spawner</aqua><white>]</bold> <gray><bold>Level</bold> <white><bold>{level}</white>"
     display-lore:
-      - "&7Collect me with Silk Touch!"
+      - "<gray>Collect me with Silk Touch!"
 
 # End of config.yml

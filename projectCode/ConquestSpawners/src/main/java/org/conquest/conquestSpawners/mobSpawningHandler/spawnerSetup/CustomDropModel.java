@@ -1,4 +1,4 @@
-package org.conquest.conquestSpawners.mobSpawningHandler;
+package org.conquest.conquestSpawners.mobSpawningHandler.spawnerSetup;
 
 import java.util.Map;
 

@@ -48,7 +48,7 @@ SpawnerRequirements:
 
   Fluid: false
 
-  InBiome: true
+  InBiome: false
   # Swamp and cave-compatible
   AllowedBiomes:
     - swamp

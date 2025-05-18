@@ -50,7 +50,7 @@ SpawnerRequirements:
   AllowedFluids:
     - WATER
 
-  InBiome: true
+  InBiome: false
   # Underground aquatic biomes
   AllowedBiomes:
     - lush_caves

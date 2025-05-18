@@ -48,7 +48,7 @@ SpawnerRequirements:
 
   Fluid: false
 
-  InBiome: true
+  InBiome: false
   # Often found near Strongholds or stone regions
   AllowedBiomes:
     - deep_dark

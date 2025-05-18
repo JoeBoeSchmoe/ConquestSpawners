@@ -4,9 +4,10 @@ import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.conquest.conquestSpawners.commandHandler.CommandManager;
 import org.conquest.conquestSpawners.configurationHandler.ConfigurationManager;
+import org.conquest.conquestSpawners.mobSpawningHandler.SpawnerListener;
+import org.conquest.conquestSpawners.mobSpawningHandler.SpawnerPlaceListener;
 
 import java.util.List;
-import java.util.Objects;
 
 /**
  * 🧱 ConquestSpawners
@@ -76,8 +77,15 @@ public final class ConquestSpawners extends JavaPlugin {
      * Registers all Bukkit event listeners.
      */
     private void registerListeners() {
-        // Bukkit.getPluginManager().registerEvents(new ExampleListener(), this);
+        // 📦 Handles placement restrictions (biome, y-axis, etc.)
+        new SpawnerPlaceListener(configurationManager.getMobManager());
+
+        // ⚙️ Handles spawning logic and runtime checks (air, light, etc.)
+        new SpawnerListener(configurationManager.getMobManager());
+
+        getLogger().info("🎧  Event listeners registered.");
     }
+
 
     public static ConquestSpawners getInstance() {
         return instance;

@@ -41,6 +41,21 @@ messages:
       subtitle: "<gray>You don’t have access to this command."
       timings: { fadeIn: 10, stay: 40, fadeOut: 20 }
 
+  # 🧱 CONSOLE-BLOCKED MESSAGE
+  console-blocked:
+    text: [ "<red>This command is only available to players." ]
+    hover: "<gray>You must run this in-game."
+    click: ""
+    clickType: "NONE"
+    prefix: true
+    sound: { type: BLOCK_NOTE_BLOCK_BASS, volume: 1.0, pitch: 0.9 }
+    particles: [ { type: CLOUD, count: 5, offset: [0.2, 0.3, 0.2], speed: 0.01 } ]
+    actionbar: { text: "<gray>This is a player-only command.", duration: 60 }
+    title:
+      text: "<red><bold>Console Blocked</bold></red>"
+      subtitle: "<gray>This must be run by a player."
+      timings: { fadeIn: 10, stay: 40, fadeOut: 20 }
+
   # ❓ UNKNOWN ADMIN SUBCOMMAND
   unknown-admin-command:
     text: [ "<red>Unknown admin command. Try <yellow>/spawners admin help</yellow>." ]
@@ -98,8 +113,8 @@ messages:
         clickType: "SUGGEST_COMMAND"
         permission: "conquestspawners.admin.reload"
 
-      - text: " <white>/spawners admin give <player> <type> <gray>- Give a spawner"
-        hover: "<gray>Grant a player a specific spawner</gray>"
+      - text: " <white>/spawners admin give <player> <mob> <level> <quantity> <gray>- Give a spawner"
+        hover: "<gray>Grant a player a specific mob spawner</gray>"
         click: "/spawners admin give "
         clickType: "SUGGEST_COMMAND"
         permission: "conquestspawners.admin.give"
@@ -136,6 +151,49 @@ messages:
       subtitle: "<gray>Use /spawners admin help to get started."
       timings: { fadeIn: 10, stay: 40, fadeOut: 20 }
 
-# End Of Config :D
+  # 🎁 GIVE SPAWNER SUCCESS
+  spawner-give-success:
+    text: [ "<green>Gave <gray>{quantity}x {mob} Spawner(s) <gray>(Level {level})</gray> to <white>{player}" ]
+    hover: "<gray>The player now has those spawner items in their inventory."
+    click: ""
+    clickType: "NONE"
+    prefix: true
+    sound: { type: ENTITY_ITEM_PICKUP, volume: 1.0, pitch: 1.2 }
+    particles: [ { type: VILLAGER_HAPPY, count: 6, offset: [0.2, 0.3, 0.2], speed: 0.02 } ]
+    actionbar: { text: "<green>Spawner given to {player}.", duration: 60 }
+    title:
+      text: "<green><bold>Spawner Given</bold></green>"
+      subtitle: "<gray>{quantity}x {mob} (Level {level})"
+      timings: { fadeIn: 10, stay: 40, fadeOut: 20 }
 
-# End Of Config :D
+  # ❌ GIVE SPAWNER FAILED
+  spawner-give-failed:
+    text: [ "<red>Failed to give spawner: <gray>{reason}" ]
+    hover: "<gray>Check if the player exists, mob is valid, and level is defined."
+    click: ""
+    clickType: "NONE"
+    prefix: true
+    sound: { type: BLOCK_ANVIL_LAND, volume: 1.0, pitch: 0.8 }
+    particles: [ { type: SMOKE_NORMAL, count: 5, offset: [0.2, 0.4, 0.2], speed: 0.01 } ]
+    actionbar: { text: "<red>Failed to give spawner.", duration: 60 }
+    title:
+      text: "<red><bold>Give Failed</bold></red>"
+      subtitle: "<gray>{reason}"
+      timings: { fadeIn: 10, stay: 40, fadeOut: 20 }
+
+  # 🧾 GIVE SPAWNER USAGE
+  spawner-give-usage:
+    text: [ "<gray>Usage: <yellow>/spawners admin give <player> <mob> <level> <quantity>" ]
+    hover: "<gray>Give a player a configured mob spawner at a specific level."
+    click: "/spawners admin give "
+    clickType: "SUGGEST_COMMAND"
+    prefix: true
+    sound: { type: UI_BUTTON_CLICK, volume: 1.0, pitch: 1.0 }
+    particles: [ { type: NOTE, count: 3, offset: [0.2, 0.4, 0.2], speed: 0.01 } ]
+    actionbar: { text: "<gray>Specify all 4 arguments to use this command.", duration: 60 }
+    title:
+      text: "<gold><bold>Spawner Give</bold></gold>"
+      subtitle: "<gray>Provide target, mob, level, and quantity"
+      timings: { fadeIn: 10, stay: 40, fadeOut: 20 }
+
+# End of Config 🎉

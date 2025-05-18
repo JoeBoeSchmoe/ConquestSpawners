@@ -1,0 +1,124 @@
+#########################################
+# 🐑 Sheep Spawner Configuration
+# Overrides and custom values for Sheep-type spawners
+#########################################
+
+# If false, Sheep spawners won't work or be placeable
+Spawner-Enabled: true
+
+# If false, uses global whitelist from config.yml
+Custom-Whitelisted-Worlds: false
+Worlds:
+  - world
+  - world_nether
+  - world_the_end
+  - OtherWorld
+
+# Distance from player required to keep spawner active
+Player-Activation-Range: default
+
+# If true, disables AI on spawned mobs (optional for wool farms)
+Disable-Mob-AI: default
+
+# Maximum number of this mob’s spawners allowed per chunk
+Allowed-Spawners-Per-Chunk: default
+
+# Override name/lore display in GUI (optional)
+OverrideDefaultDisplay: false
+DisplayName: "&f&l[&fSheep Spawner&f&l] &7Level &8{level}"
+DisplayLore:
+  - "&7Collect me with Silk Touch!"
+  - "&7Wooly friend for farms and fashion."
+
+#########################################
+# 📏 Spawner Requirements
+# Conditions that must be met for the spawner to function
+#########################################
+
+SpawnerRequirements:
+  Air: true
+  Above-Sea-Level: true
+  Below-Sea-Level: false
+  Above-Y-Axis: false
+  Below-Y-Axis: false
+  Darkness: false
+  Total-Darkness: false
+  Light: true
+  Max-Entities-Nearby: false
+
+  Fluid: false
+
+  InBiome: true
+  # Common grazing biomes for sheep
+  AllowedBiomes:
+    - plains
+    - sunflower_plains
+    - forest
+    - birch_forest
+
+  On-Ground: true
+
+  On-Block: true
+  AllowedBlocks:
+    - GRASS_BLOCK
+    - DIRT
+    - HAY_BLOCK
+    - PODZOL
+
+#########################################
+# 🧱 Spawner Levels & Upgrade Paths
+# Define behavior and drops for each upgrade tier
+#########################################
+
+Spawner-Levels:
+  '1':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
+    CustomDrops:
+      '1':
+        Material: WHITE_WOOL
+        Amount: 1
+        Drop-Percent: 35.0
+        Custom-Data: {}
+
+  '2':
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: MUTTON
+        Amount: 1
+        Drop-Percent: 50.0
+        Custom-Data: {}
+
+  '3':
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: WHITE_WOOL
+        Amount: 2
+        Drop-Percent: 70.0
+        Custom-Data: {}
+
+  '4':
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: COOKED_MUTTON
+        Amount: 2
+        Drop-Percent: 85.0
+        Custom-Data: {}
+
+  '5':
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: WHITE_BED
+        Amount: 1
+        Drop-Percent: 100.0
+        Custom-Data: {}
+
+#########################################
+# ✅ End of Sheep.yml Configuration
+#########################################

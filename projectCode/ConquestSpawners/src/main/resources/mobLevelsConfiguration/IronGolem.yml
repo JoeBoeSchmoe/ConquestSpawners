@@ -1,0 +1,141 @@
+#########################################
+# 🛡️ Iron Golem Spawner Configuration
+# Overrides and custom values for Iron Golem-type spawners
+#########################################
+
+# If false, Iron Golem spawners won't work or be placeable
+Spawner-Enabled: true
+
+# If false, uses global whitelist from config.yml
+Custom-Whitelisted-Worlds: false
+Worlds:
+  - world
+  - world_the_end
+  - world_nether
+  - OtherWorld
+
+# Distance from player required to keep spawner active
+Player-Activation-Range: 48     # Keeps it active at guard post range
+
+# If true, disables AI on spawned mobs (not recommended for utility mobs)
+Disable-Mob-AI: false
+
+# Maximum number of this mob’s spawners allowed per chunk
+Allowed-Spawners-Per-Chunk: 2
+
+# Override name/lore display in GUI (optional)
+OverrideDefaultDisplay: false
+DisplayName: "&f&l[&7Iron Golem Spawner&f&l] &7Level &8{level}"
+DisplayLore:
+  - "&7Collect me with Silk Touch!"
+  - "&7The village’s ancient defender..."
+
+#########################################
+# 📏 Spawner Requirements
+# Conditions that must be met for the spawner to function
+#########################################
+
+SpawnerRequirements:
+  Air: true
+  Above-Sea-Level: true
+  Below-Sea-Level: false
+  Above-Y-Axis: false
+  Below-Y-Axis: false
+  Darkness: false
+  Total-Darkness: false
+  Light: true                   # Iron Golems spawn in any light, but favor open areas
+  Max-Entities-Nearby: true     # Avoid spamming golems
+
+  Fluid: false
+
+  InBiome: false                # They can exist anywhere if built
+  AllowedBiomes:
+    - plains
+    - savanna
+    - desert
+    - taiga
+    - snowy_plains
+
+  On-Ground: true
+
+  On-Block: true
+  AllowedBlocks:
+    - GRASS_BLOCK
+    - STONE
+    - IRON_BLOCK
+    - SNOW_BLOCK
+    - BRICKS
+
+#########################################
+# 🧱 Spawner Levels & Upgrade Paths
+# Define behavior and drops for each upgrade tier
+#########################################
+
+Spawner-Levels:
+  '1':
+    SpawnerDelay: 800
+    MobCount: 1
+    XPDrop: 150
+    VanillaDrops: false
+    CustomDrops:
+      '1':
+        Material: IRON_INGOT
+        Amount: 2
+        Drop-Percent: 50.0
+        Custom-Data: {}
+
+  '2':
+    SpawnerDelay: 700
+    MobCount: 1
+    XPDrop: 200
+    VanillaDrops: false
+    CostToUpgrade: 2000
+    CustomDrops:
+      '1':
+        Material: IRON_INGOT
+        Amount: 3
+        Drop-Percent: 65.0
+        Custom-Data: {}
+
+  '3':
+    SpawnerDelay: 600
+    MobCount: 1
+    XPDrop: 250
+    VanillaDrops: false
+    CostToUpgrade: 3000
+    CustomDrops:
+      '1':
+        Material: POPPY
+        Amount: 2
+        Drop-Percent: 80.0
+        Custom-Data: {}
+
+  '4':
+    SpawnerDelay: 500
+    MobCount: 1
+    XPDrop: 300
+    VanillaDrops: false
+    CostToUpgrade: 4500
+    CustomDrops:
+      '1':
+        Material: IRON_BLOCK
+        Amount: 1
+        Drop-Percent: 90.0
+        Custom-Data: {}
+
+  '5':
+    SpawnerDelay: 400
+    MobCount: 1
+    XPDrop: 400
+    VanillaDrops: false
+    CostToUpgrade: 6000
+    CustomDrops:
+      '1':
+        Material: NETHERITE_INGOT
+        Amount: 1
+        Drop-Percent: 100.0
+        Custom-Data: {}
+
+#########################################
+# ✅ End of IronGolem.yml Configuration
+#########################################

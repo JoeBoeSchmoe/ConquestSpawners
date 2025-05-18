@@ -36,29 +36,32 @@ DisplayLore:
 #########################################
 
 SpawnerRequirements:
-  Air: true                    # Bees need open space
-  Above-Sea-Level: true
-  Below-Sea-Level: false
-  Above-Y-Axis: false
-  Below-Y-Axis: false
-  Darkness: false
-  Total-Darkness: false
-  Light: true                  # Bees spawn during daylight
-  Max-Entities-Nearby: false
+  Air: true                     # Requires air blocks above spawn position
+  Above-Sea-Level: true         # Must be above Y=63
+  Below-Sea-Level: false        # Must be below Y=63
+  Above-Y-Axis: false           # Requires being above a specific Y value
+  Below-Y-Axis: false           # Requires being below a specific Y value
+  Darkness: false               # Requires light level < 8
+  Total-Darkness: false         # Requires light level = 0
+  Light: true                   # Requires light level > 8 (daylight)
+  Max-Entities-Nearby: false    # Restricts spawning if nearby entity count exceeds threshold
 
+  # Fluid check: if true, must be within one of the following fluids
   Fluid: false
 
+  # Biome restriction: requires the spawner to be in a specific biome
   InBiome: true
-  # Bee-friendly biomes
+  # Full biome list: https://minecraft.fandom.com/wiki/Biome#List_of_biomes
   AllowedBiomes:
     - flower_forest
     - plains
     - sunflower_plains
 
-  On-Ground: false
+  On-Ground: false              # Requires solid block below spawn location
 
+  # Specific block check: requires the spawner to be placed on a block in this list
   On-Block: true
-  # Must spawn on or near flowers
+  # Full block list: https://minecraft.fandom.com/wiki/Category:Blocks
   AllowedBlocks:
     - DANDELION
     - POPPY

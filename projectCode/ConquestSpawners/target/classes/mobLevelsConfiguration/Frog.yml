@@ -1,0 +1,141 @@
+#########################################
+# 🐸 Frog Spawner Configuration
+# Overrides and custom values for Frog-type spawners
+#########################################
+
+# If false, Frog spawners won't work or be placeable
+Spawner-Enabled: true
+
+# If false, uses global whitelist from config.yml
+Custom-Whitelisted-Worlds: false
+Worlds:
+  - world
+  - world_nether
+  - world_the_end
+  - OtherWorld
+
+# Distance from player required to keep spawner active
+Player-Activation-Range: default
+
+# If true, disables AI on spawned mobs (generally not recommended for frogs)
+Disable-Mob-AI: default
+
+# Maximum number of this mob’s spawners allowed per chunk
+Allowed-Spawners-Per-Chunk: default
+
+# Override name/lore display in GUI (optional)
+OverrideDefaultDisplay: false
+DisplayName: "&f&l[&aFrog Spawner&f&l] &7Level &8{level}"
+DisplayLore:
+  - "&7Collect me with Silk Touch!"
+  - "&7Bounce between biomes and bugs."
+
+#########################################
+# 📏 Spawner Requirements
+# Conditions that must be met for the spawner to function
+#########################################
+
+SpawnerRequirements:
+  Air: true                     # Requires headspace
+  Above-Sea-Level: true
+  Below-Sea-Level: false
+  Above-Y-Axis: false
+  Below-Y-Axis: false
+  Darkness: false
+  Total-Darkness: false
+  Light: true                   # Spawns in light during the day
+  Max-Entities-Nearby: false
+
+  Fluid: true                   # Spawns around water
+  AllowedFluids:
+    - WATER
+
+  InBiome: true
+  # Natural frog biomes
+  AllowedBiomes:
+    - swamp
+    - mangrove_swamp
+
+  On-Ground: true
+
+  On-Block: true
+  AllowedBlocks:
+    - MUD
+    - GRASS_BLOCK
+    - ROOTED_DIRT
+    - MANGROVE_ROOTS
+    - LILY_PAD
+
+#########################################
+# 🧱 Spawner Levels & Upgrade Paths
+# Define behavior and drops for each upgrade tier
+#########################################
+
+Spawner-Levels:
+  '1':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
+    CustomDrops:
+      '1':
+        Material: SLIME_BALL
+        Amount: 1
+        Drop-Percent: 30.0
+        Custom-Data: {}
+
+  '2':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: SLIME_BALL
+        Amount: 2
+        Drop-Percent: 45.0
+        Custom-Data: {}
+
+  '3':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: MUD
+        Amount: 2
+        Drop-Percent: 60.0
+        Custom-Data: {}
+
+  '4':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: SLIME_BALL
+        Amount: 3
+        Drop-Percent: 80.0
+        Custom-Data: {}
+
+  '5':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: FROGSPAWN
+        Amount: 1
+        Drop-Percent: 100.0
+        Custom-Data: {}
+
+#########################################
+# ✅ End of Frog.yml Configuration
+#########################################

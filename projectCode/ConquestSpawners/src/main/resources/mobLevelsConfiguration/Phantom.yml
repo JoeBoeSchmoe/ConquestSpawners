@@ -1,0 +1,140 @@
+#########################################
+# 👻 Phantom Spawner Configuration
+# Overrides and custom values for Phantom-type spawners
+#########################################
+
+# If false, Phantom spawners won't work or be placeable
+Spawner-Enabled: true
+
+# If false, uses global whitelist from config.yml
+Custom-Whitelisted-Worlds: false
+Worlds:
+  - world
+  - world_the_end
+  - world_nether
+  - OtherWorld
+
+# Distance from player required to keep spawner active
+Player-Activation-Range: 48     # Larger range for airborne mobs
+
+# If true, disables AI on spawned mobs (not recommended for phantoms)
+Disable-Mob-AI: false
+
+# Maximum number of this mob’s spawners allowed per chunk
+Allowed-Spawners-Per-Chunk: 2
+
+# Override name/lore display in GUI (optional)
+OverrideDefaultDisplay: false
+DisplayName: "&f&l[&5Phantom Spawner&f&l] &7Level &8{level}"
+DisplayLore:
+  - "&7Collect me with Silk Touch!"
+  - "&7Haunts the skies above sleepless players."
+
+#########################################
+# 📏 Spawner Requirements
+# Conditions that must be met for the spawner to function
+#########################################
+
+SpawnerRequirements:
+  Air: true                    # Must spawn in open sky
+  Above-Sea-Level: true
+  Below-Sea-Level: false
+  Above-Y-Axis: false
+  Below-Y-Axis: false
+  Darkness: false
+  Total-Darkness: true         # Night sky only
+  Light: false
+  Max-Entities-Nearby: false
+
+  Fluid: false
+
+  InBiome: false               # Not biome-locked by default
+  AllowedBiomes:
+    - plains
+    - dark_forest
+    - end_highlands
+
+  On-Ground: false             # Floating mob
+
+  On-Block: false
+  AllowedBlocks:
+    - AIR                      # Placeholder for logic compliance
+
+#########################################
+# 🧱 Spawner Levels & Upgrade Paths
+# Define behavior and drops for each upgrade tier
+#########################################
+
+Spawner-Levels:
+  '1':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
+    CustomDrops:
+      '1':
+        Material: PHANTOM_MEMBRANE
+        Amount: 1
+        Drop-Percent: 35.0
+        Custom-Data: {}
+
+  '2':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: PHANTOM_MEMBRANE
+        Amount: 2
+        Drop-Percent: 50.0
+        Custom-Data: {}
+
+  '3':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: ELYTRA
+        Amount: 1
+        Drop-Percent: 5.0
+        Custom-Data:
+          CustomName: "{\"text\":\"Wings of the Night\",\"italic\":false,\"color\":\"dark_purple\"}"
+
+  '4':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: POTION
+        Amount: 1
+        Drop-Percent: 65.0
+        Custom-Data:
+          Potion: slow_falling
+
+  '5':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: ENCHANTED_BOOK
+        Amount: 1
+        Drop-Percent: 100.0
+        Custom-Data:
+          StoredEnchantments:
+            - id: unbreaking
+              lvl: 3
+
+#########################################
+# ✅ End of Phantom.yml Configuration
+#########################################

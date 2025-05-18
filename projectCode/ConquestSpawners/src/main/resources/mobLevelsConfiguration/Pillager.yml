@@ -1,0 +1,89 @@
+#########################################
+# 🏹 Pillager Spawner Configuration
+# Overrides and custom values for Pillager-type spawners
+#########################################
+
+Spawner-Enabled: true
+Custom-Whitelisted-Worlds: false
+Worlds:
+  - world
+  - OtherWorld
+
+Player-Activation-Range: default
+Disable-Mob-AI: false
+Allowed-Spawners-Per-Chunk: 2
+
+OverrideDefaultDisplay: false
+DisplayName: "&f&l[&7Pillager Spawner&f&l] &7Level &8{level}"
+DisplayLore:
+  - "&7Collect me with Silk Touch!"
+  - "&7Part of every good raid party."
+
+SpawnerRequirements:
+  Air: true
+  Above-Sea-Level: true
+  Light: true
+  Darkness: false
+  Fluid: false
+  Max-Entities-Nearby: false
+  InBiome: true
+  AllowedBiomes:
+    - plains
+    - savanna
+    - snowy_plains
+    - taiga
+  On-Ground: true
+  On-Block: true
+  AllowedBlocks:
+    - GRASS_BLOCK
+    - STONE
+    - DIRT_PATH
+
+Spawner-Levels:
+  '1':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: true
+    CustomDrops:
+      '1':
+        Material: CROSSBOW
+        Amount: 1
+        Drop-Percent: 35.0
+        Custom-Data: {}
+  '2':
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: ARROW
+        Amount: 16
+        Drop-Percent: 55.0
+        Custom-Data: {}
+  '3':
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: EMERALD
+        Amount: 2
+        Drop-Percent: 65.0
+        Custom-Data: {}
+  '4':
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: EMERALD
+        Amount: 2
+        Drop-Percent: 85.0
+        Custom-Data: {}
+  '5':
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: EMERALD
+        Amount: 3
+        Drop-Percent: 100.0
+        Custom-Data: {}
+
+#########################################
+# ✅ End of Pillager.yml Configuration
+#########################################

@@ -1,0 +1,90 @@
+#########################################
+# 🐗 Piglin Spawner Configuration
+# Overrides and custom values for Piglin-type spawners
+#########################################
+
+Spawner-Enabled: true
+Custom-Whitelisted-Worlds: true
+Worlds:
+  - world_nether
+
+Player-Activation-Range: default
+Disable-Mob-AI: false
+Allowed-Spawners-Per-Chunk: default
+
+OverrideDefaultDisplay: false
+DisplayName: "&f&l[&6Piglin Spawner&f&l] &7Level &8{level}"
+DisplayLore:
+  - "&7Collect me with Silk Touch!"
+  - "&7Gold-hungry hunters of the Nether."
+
+SpawnerRequirements:
+  Air: true
+  Above-Sea-Level: true
+  Light: false
+  Total-Darkness: false
+  Darkness: false
+  Fluid: false
+  Max-Entities-Nearby: false
+  InBiome: true
+  AllowedBiomes:
+    - nether_wastes
+    - crimson_forest
+  On-Ground: true
+  On-Block: true
+  AllowedBlocks:
+    - NETHERRACK
+    - GOLD_BLOCK
+    - BLACKSTONE
+
+Spawner-Levels:
+  '1':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: true
+    CustomDrops:
+      '1':
+        Material: GOLD_NUGGET
+        Amount: 2
+        Drop-Percent: 40.0
+        Custom-Data: {}
+  '2':
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: GOLD_INGOT
+        Amount: 1
+        Drop-Percent: 55.0
+        Custom-Data: {}
+  '3':
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: ENCHANTED_BOOK
+        Amount: 1
+        Drop-Percent: 70.0
+        Custom-Data:
+          StoredEnchantments:
+            - id: looting
+              lvl: 2
+  '4':
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: GILDED_BLACKSTONE
+        Amount: 2
+        Drop-Percent: 85.0
+        Custom-Data: {}
+  '5':
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: GOLDEN_SWORD
+        Amount: 1
+        Drop-Percent: 100.0
+        Custom-Data: {}
+
+#########################################
+# ✅ End of Piglin.yml Configuration
+#########################################

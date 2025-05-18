@@ -1,0 +1,139 @@
+#########################################
+# 🏜️ Husk Spawner Configuration
+# Overrides and custom values for Husk-type spawners
+#########################################
+
+# If false, Husk spawners won't work or be placeable
+Spawner-Enabled: true
+
+# If false, uses global whitelist from config.yml
+Custom-Whitelisted-Worlds: false
+Worlds:
+  - world
+  - world_the_end
+  - world_nether
+  - OtherWorld
+
+# Distance from player required to keep spawner active
+Player-Activation-Range: default
+
+# If true, disables AI on spawned mobs (not recommended for undead mobs)
+Disable-Mob-AI: default
+
+# Maximum number of this mob’s spawners allowed per chunk
+Allowed-Spawners-Per-Chunk: default
+
+# Override name/lore display in GUI (optional)
+OverrideDefaultDisplay: false
+DisplayName: "&f&l[&6Husk Spawner&f&l] &7Level &8{level}"
+DisplayLore:
+  - "&7Collect me with Silk Touch!"
+  - "&7Sun-baked zombies from the sands..."
+
+#########################################
+# 📏 Spawner Requirements
+# Conditions that must be met for the spawner to function
+#########################################
+
+SpawnerRequirements:
+  Air: true
+  Above-Sea-Level: true
+  Below-Sea-Level: false
+  Above-Y-Axis: false
+  Below-Y-Axis: false
+  Darkness: false
+  Total-Darkness: false
+  Light: true                   # Husk can spawn in light
+  Max-Entities-Nearby: false
+
+  Fluid: false
+
+  InBiome: true
+  # Natural Husk spawning biomes
+  AllowedBiomes:
+    - desert
+    - desert_hills
+    - desert_lakes
+
+  On-Ground: true
+
+  On-Block: true
+  AllowedBlocks:
+    - SAND
+    - RED_SAND
+    - SANDSTONE
+    - CUT_SANDSTONE
+
+#########################################
+# 🧱 Spawner Levels & Upgrade Paths
+# Define behavior and drops for each upgrade tier
+#########################################
+
+Spawner-Levels:
+  '1':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
+    CustomDrops:
+      '1':
+        Material: ROTTEN_FLESH
+        Amount: 1
+        Drop-Percent: 35.0
+        Custom-Data: {}
+
+  '2':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: ROTTEN_FLESH
+        Amount: 2
+        Drop-Percent: 50.0
+        Custom-Data: {}
+
+  '3':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: BONE
+        Amount: 1
+        Drop-Percent: 65.0
+        Custom-Data: {}
+
+  '4':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: IRON_INGOT
+        Amount: 1
+        Drop-Percent: 80.0
+        Custom-Data: {}
+
+  '5':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: GOLDEN_APPLE
+        Amount: 1
+        Drop-Percent: 100.0
+        Custom-Data: {}
+
+#########################################
+# ✅ End of Husk.yml Configuration
+#########################################

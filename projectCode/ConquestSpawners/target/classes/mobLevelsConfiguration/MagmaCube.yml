@@ -1,0 +1,137 @@
+#########################################
+# 🔥 Magma Cube Spawner Configuration
+# Overrides and custom values for Magma Cube-type spawners
+#########################################
+
+# If false, Magma Cube spawners won't work or be placeable
+Spawner-Enabled: true
+
+# If false, uses global whitelist from config.yml
+Custom-Whitelisted-Worlds: true
+Worlds:
+  - world_nether
+
+# Distance from player required to keep spawner active
+Player-Activation-Range: default
+
+# If true, disables AI on spawned mobs (not recommended for bouncing mobs)
+Disable-Mob-AI: default
+
+# Maximum number of this mob’s spawners allowed per chunk
+Allowed-Spawners-Per-Chunk: default
+
+# Override name/lore display in GUI (optional)
+OverrideDefaultDisplay: false
+DisplayName: "&f&l[&cMagma Cube Spawner&f&l] &7Level &8{level}"
+DisplayLore:
+  - "&7Collect me with Silk Touch!"
+  - "&7Bounces with blazing fury..."
+
+#########################################
+# 📏 Spawner Requirements
+# Conditions that must be met for the spawner to function
+#########################################
+
+SpawnerRequirements:
+  Air: true
+  Above-Sea-Level: true
+  Below-Sea-Level: false
+  Above-Y-Axis: false
+  Below-Y-Axis: false
+  Darkness: false
+  Total-Darkness: false
+  Light: false
+  Max-Entities-Nearby: false
+
+  Fluid: true
+  AllowedFluids:
+    - LAVA
+
+  InBiome: true
+  # Typical magma cube biomes
+  AllowedBiomes:
+    - basalt_deltas
+    - nether_wastes
+
+  On-Ground: true
+
+  On-Block: true
+  AllowedBlocks:
+    - NETHERRACK
+    - MAGMA_BLOCK
+    - BASALT
+    - BLACKSTONE
+
+#########################################
+# 🧱 Spawner Levels & Upgrade Paths
+# Define behavior and drops for each upgrade tier
+#########################################
+
+Spawner-Levels:
+  '1':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
+    CustomDrops:
+      '1':
+        Material: MAGMA_CREAM
+        Amount: 1
+        Drop-Percent: 40.0
+        Custom-Data: {}
+
+  '2':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: MAGMA_CREAM
+        Amount: 2
+        Drop-Percent: 55.0
+        Custom-Data: {}
+
+  '3':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: MAGMA_BLOCK
+        Amount: 1
+        Drop-Percent: 70.0
+        Custom-Data: {}
+
+  '4':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: MAGMA_BLOCK
+        Amount: 1
+        Drop-Percent: 85.0
+        Custom-Data: {}
+
+  '5':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: MAGMA_BLOCK
+        Amount: 2
+        Drop-Percent: 100.0
+        Custom-Data: {}
+
+#########################################
+# ✅ End of MagmaCube.yml Configuration
+#########################################

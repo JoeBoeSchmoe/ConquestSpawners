@@ -1,0 +1,146 @@
+#########################################
+# 🧙‍♂️ Illusioner Spawner Configuration
+# Overrides and custom values for Illusioner-type spawners
+#########################################
+
+# If false, Illusioner spawners won't work or be placeable
+Spawner-Enabled: true
+
+# If false, uses global whitelist from config.yml
+Custom-Whitelisted-Worlds: false
+Worlds:
+  - world
+  - world_the_end
+  - world_nether
+  - OtherWorld
+
+# Distance from player required to keep spawner active
+Player-Activation-Range: 48     # Bosses should stay active from farther away
+
+# If true, disables AI on spawned mobs (not recommended for magic mobs)
+Disable-Mob-AI: false
+
+# Maximum number of this mob’s spawners allowed per chunk
+Allowed-Spawners-Per-Chunk: 1   # Limit boss mobs per chunk
+
+# Override name/lore display in GUI (optional)
+OverrideDefaultDisplay: false
+DisplayName: "&f&l[&9Illusioner Spawner&f&l] &7Level &8{level}"
+DisplayLore:
+  - "&7Collect me with Silk Touch!"
+  - "&7Master of clones and confusion..."
+
+#########################################
+# 📏 Spawner Requirements
+# Conditions that must be met for the spawner to function
+#########################################
+
+SpawnerRequirements:
+  Air: true
+  Above-Sea-Level: true
+  Below-Sea-Level: false
+  Above-Y-Axis: false
+  Below-Y-Axis: false
+  Darkness: false
+  Total-Darkness: false
+  Light: true
+  Max-Entities-Nearby: true
+
+  Fluid: false
+
+  InBiome: true
+  # Magical, rare, or forested biomes
+  AllowedBiomes:
+    - dark_forest
+    - taiga
+    - grove
+    - wooded_badlands
+
+  On-Ground: true
+
+  On-Block: true
+  AllowedBlocks:
+    - STONE_BRICKS
+    - MOSSY_COBBLESTONE
+    - SPRUCE_PLANKS
+    - CARPET
+
+#########################################
+# 🧱 Spawner Levels & Upgrade Paths
+# Define behavior and drops for each upgrade tier
+#########################################
+
+Spawner-Levels:
+  '1':
+    SpawnerDelay: 800
+    MobCount: 1
+    XPDrop: 150
+    VanillaDrops: false
+    CustomDrops:
+      '1':
+        Material: BOOK
+        Amount: 1
+        Drop-Percent: 40.0
+        Custom-Data:
+          display:
+            Name: "{\"text\":\"Trickster's Notes\",\"italic\":false,\"color\":\"blue\"}"
+
+  '2':
+    SpawnerDelay: 700
+    MobCount: 1
+    XPDrop: 200
+    VanillaDrops: false
+    CostToUpgrade: 2500
+    CustomDrops:
+      '1':
+        Material: EMERALD
+        Amount: 2
+        Drop-Percent: 55.0
+        Custom-Data: {}
+
+  '3':
+    SpawnerDelay: 600
+    MobCount: 1
+    XPDrop: 300
+    VanillaDrops: false
+    CostToUpgrade: 3500
+    CustomDrops:
+      '1':
+        Material: TIPPED_ARROW
+        Amount: 4
+        Drop-Percent: 65.0
+        Custom-Data:
+          Potion: invisibility
+
+  '4':
+    SpawnerDelay: 500
+    MobCount: 1
+    XPDrop: 400
+    VanillaDrops: false
+    CostToUpgrade: 5000
+    CustomDrops:
+      '1':
+        Material: ENCHANTED_BOOK
+        Amount: 1
+        Drop-Percent: 85.0
+        Custom-Data:
+          StoredEnchantments:
+            - id: piercing
+              lvl: 4
+
+  '5':
+    SpawnerDelay: 400
+    MobCount: 1
+    XPDrop: 500
+    VanillaDrops: false
+    CostToUpgrade: 7000
+    CustomDrops:
+      '1':
+        Material: TOTEM_OF_UNDYING
+        Amount: 1
+        Drop-Percent: 100.0
+        Custom-Data: {}
+
+#########################################
+# ✅ End of Illusioner.yml Configuration
+#########################################

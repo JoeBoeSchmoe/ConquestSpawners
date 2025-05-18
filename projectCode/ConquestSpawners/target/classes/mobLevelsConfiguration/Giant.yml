@@ -1,0 +1,140 @@
+#########################################
+# 🗿 Giant Spawner Configuration
+# Overrides and custom values for Giant-type spawners
+#########################################
+
+# If false, Giant spawners won't work or be placeable
+Spawner-Enabled: true
+
+# If false, uses global whitelist from config.yml
+Custom-Whitelisted-Worlds: false
+Worlds:
+  - world
+  - world_the_end
+  - world_nether
+  - OtherWorld
+
+# Distance from player required to keep spawner active
+Player-Activation-Range: 64     # Large mobs should activate from further away
+
+# If true, disables AI on spawned mobs (not recommended for a boss)
+Disable-Mob-AI: false
+
+# Maximum number of this mob’s spawners allowed per chunk
+Allowed-Spawners-Per-Chunk: 1   # One giant per chunk, it's massive
+
+# Override name/lore display in GUI (optional)
+OverrideDefaultDisplay: false
+DisplayName: "&f&l[&2Giant Spawner&f&l] &7Level &8{level}"
+DisplayLore:
+  - "&7Collect me with Silk Touch!"
+  - "&7A towering undead brute..."
+
+#########################################
+# 📏 Spawner Requirements
+# Conditions that must be met for the spawner to function
+#########################################
+
+SpawnerRequirements:
+  Air: true                     # Needs very tall air space
+  Above-Sea-Level: true
+  Below-Sea-Level: false
+  Above-Y-Axis: false
+  Below-Y-Axis: false
+  Darkness: false
+  Total-Darkness: false
+  Light: true
+  Max-Entities-Nearby: true     # Prevent stacking of multiple giants
+
+  Fluid: false
+
+  InBiome: false
+  # Giants are fantasy — biome-free by default
+  AllowedBiomes:
+    - plains
+    - savanna
+    - dark_forest
+    - mountain_meadow
+
+  On-Ground: true
+
+  On-Block: true
+  AllowedBlocks:
+    - STONE
+    - GRASS_BLOCK
+    - MOSS_BLOCK
+    - MYCELIUM
+
+#########################################
+# 🧱 Spawner Levels & Upgrade Paths
+# Define behavior and drops for each upgrade tier
+#########################################
+
+Spawner-Levels:
+  '1':
+    SpawnerDelay: 800
+    MobCount: 1
+    XPDrop: 200
+    VanillaDrops: false
+    CustomDrops:
+      '1':
+        Material: IRON_SWORD
+        Amount: 1
+        Drop-Percent: 25.0
+        Custom-Data: {}
+
+  '2':
+    SpawnerDelay: 700
+    MobCount: 1
+    XPDrop: 300
+    VanillaDrops: false
+    CostToUpgrade: 2000
+    CustomDrops:
+      '1':
+        Material: ZOMBIE_HEAD
+        Amount: 1
+        Drop-Percent: 40.0
+        Custom-Data: {}
+
+  '3':
+    SpawnerDelay: 600
+    MobCount: 1
+    XPDrop: 400
+    VanillaDrops: false
+    CostToUpgrade: 3500
+    CustomDrops:
+      '1':
+        Material: GOLD_BLOCK
+        Amount: 2
+        Drop-Percent: 55.0
+        Custom-Data: {}
+
+  '4':
+    SpawnerDelay: 500
+    MobCount: 1
+    XPDrop: 500
+    VanillaDrops: false
+    CostToUpgrade: 5000
+    CustomDrops:
+      '1':
+        Material: ENCHANTED_GOLDEN_APPLE
+        Amount: 1
+        Drop-Percent: 75.0
+        Custom-Data: {}
+
+  '5':
+    SpawnerDelay: 400
+    MobCount: 1
+    XPDrop: 750
+    VanillaDrops: false
+    CostToUpgrade: 8000
+    CustomDrops:
+      '1':
+        Material: NETHERITE_SWORD
+        Amount: 1
+        Drop-Percent: 100.0
+        Custom-Data: {}
+
+#########################################
+# ✅ End of Giant.yml Configuration
+#########################################

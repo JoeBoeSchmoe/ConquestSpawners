@@ -1,0 +1,122 @@
+#########################################
+# 🐡 Pufferfish Spawner Configuration
+# Overrides and custom values for Pufferfish-type spawners
+#########################################
+
+# If false, Pufferfish spawners won't work or be placeable
+Spawner-Enabled: true
+
+# If false, uses global whitelist from config.yml
+Custom-Whitelisted-Worlds: false
+Worlds:
+  - world
+  - world_nether
+  - world_the_end
+  - OtherWorld
+
+# Distance from player required to keep spawner active
+Player-Activation-Range: default
+
+# If true, disables AI on spawned mobs (not needed for passive fish)
+Disable-Mob-AI: default
+
+# Maximum number of this mob’s spawners allowed per chunk
+Allowed-Spawners-Per-Chunk: default
+
+# Override name/lore display in GUI (optional)
+OverrideDefaultDisplay: false
+DisplayName: "&f&l[&ePufferfish Spawner&f&l] &7Level &8{level}"
+DisplayLore:
+  - "&7Collect me with Silk Touch!"
+  - "&7Watch out! I sting..."
+
+#########################################
+# 📏 Spawner Requirements
+# Conditions that must be met for the spawner to function
+#########################################
+
+SpawnerRequirements:
+  Air: false
+  Above-Sea-Level: false
+  Below-Sea-Level: true
+  Above-Y-Axis: false
+  Below-Y-Axis: false
+  Darkness: false
+  Total-Darkness: false
+  Light: true
+  Max-Entities-Nearby: false
+
+  Fluid: true
+  AllowedFluids:
+    - WATER
+
+  InBiome: true
+  # Ocean biomes where pufferfish spawn
+  AllowedBiomes:
+    - warm_ocean
+    - lukewarm_ocean
+    - river
+
+  On-Ground: false
+
+  On-Block: false
+  AllowedBlocks:
+    - WATER
+
+#########################################
+# 🧱 Spawner Levels & Upgrade Paths
+# Define behavior and drops for each upgrade tier
+#########################################
+
+Spawner-Levels:
+  '1':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
+    CustomDrops:
+      '1':
+        Material: PUFFERFISH
+        Amount: 1
+        Drop-Percent: 45.0
+        Custom-Data: {}
+
+  '2':
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: PUFFERFISH
+        Amount: 2
+        Drop-Percent: 60.0
+        Custom-Data: {}
+
+  '3':
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: PUFFERFISH
+        Amount: 3
+        Drop-Percent: 70.0
+        Custom-Data: {}
+
+  '4':
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: PUFFERFISH
+        Amount: 4
+        Drop-Percent: 85.0
+        Custom-Data: {}
+
+  '5':
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: PUFFERFISH
+        Amount: 5
+        Drop-Percent: 100.0
+        Custom-Data: {}
+
+#########################################
+# ✅ End of Pufferfish.yml Configuration
+#########################################

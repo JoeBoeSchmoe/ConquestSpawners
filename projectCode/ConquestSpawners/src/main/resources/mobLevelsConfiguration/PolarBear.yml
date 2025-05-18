@@ -1,0 +1,126 @@
+#########################################
+# 🐻‍❄️ Polar Bear Spawner Configuration
+# Overrides and custom values for Polar Bear-type spawners
+#########################################
+
+# If false, Polar Bear spawners won't work or be placeable
+Spawner-Enabled: true
+
+# If false, uses global whitelist from config.yml
+Custom-Whitelisted-Worlds: false
+Worlds:
+  - world
+  - world_nether
+  - world_the_end
+  - OtherWorld
+
+# Distance from player required to keep spawner active
+Player-Activation-Range: default
+
+# If true, disables AI on spawned mobs (not recommended for hostile moms)
+Disable-Mob-AI: default
+
+# Maximum number of this mob’s spawners allowed per chunk
+Allowed-Spawners-Per-Chunk: default
+
+# Override name/lore display in GUI (optional)
+OverrideDefaultDisplay: false
+DisplayName: "&f&l[&fPolar Bear Spawner&f&l] &7Level &8{level}"
+DisplayLore:
+  - "&7Collect me with Silk Touch!"
+  - "&7Roams cold biomes with frosty fury."
+
+#########################################
+# 📏 Spawner Requirements
+# Conditions that must be met for the spawner to function
+#########################################
+
+SpawnerRequirements:
+  Air: true
+  Above-Sea-Level: true
+  Below-Sea-Level: false
+  Above-Y-Axis: false
+  Below-Y-Axis: false
+  Darkness: false
+  Total-Darkness: false
+  Light: true                   # Daylight mob
+  Max-Entities-Nearby: false
+
+  Fluid: false
+
+  InBiome: true
+  # Arctic biome list
+  AllowedBiomes:
+    - snowy_plains
+    - ice_spikes
+    - frozen_ocean
+    - snowy_beach
+    - snowy_taiga
+
+  On-Ground: true
+
+  On-Block: true
+  AllowedBlocks:
+    - ICE
+    - PACKED_ICE
+    - SNOW_BLOCK
+    - SNOW
+    - BLUE_ICE
+
+#########################################
+# 🧱 Spawner Levels & Upgrade Paths
+# Define behavior and drops for each upgrade tier
+#########################################
+
+Spawner-Levels:
+  '1':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
+    CustomDrops:
+      '1':
+        Material: COD
+        Amount: 1
+        Drop-Percent: 35.0
+        Custom-Data: {}
+
+  '2':
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: SALMON
+        Amount: 2
+        Drop-Percent: 50.0
+        Custom-Data: {}
+
+  '3':
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: ICE
+        Amount: 2
+        Drop-Percent: 65.0
+        Custom-Data: {}
+
+  '4':
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: SNOWBALL
+        Amount: 4
+        Drop-Percent: 80.0
+        Custom-Data: {}
+
+  '5':
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: TOTEM_OF_UNDYING
+        Amount: 1
+        Drop-Percent: 100.0
+        Custom-Data: {}
+
+#########################################
+# ✅ End of PolarBear.yml Configuration
+#########################################

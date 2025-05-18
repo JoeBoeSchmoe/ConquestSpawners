@@ -1,0 +1,142 @@
+#########################################
+# 🟣 Enderman Spawner Configuration
+# Overrides and custom values for Enderman-type spawners
+#########################################
+
+# If false, Enderman spawners won't work or be placeable
+Spawner-Enabled: true
+
+# If false, uses global whitelist from config.yml
+Custom-Whitelisted-Worlds: false
+Worlds:
+  - world
+  - world_the_end
+  - world_nether
+  - OtherWorld
+
+# Distance from player required to keep spawner active
+Player-Activation-Range: default
+
+# If true, disables AI on spawned mobs (not recommended for Enderman)
+Disable-Mob-AI: default
+
+# Maximum number of this mob’s spawners allowed per chunk
+Allowed-Spawners-Per-Chunk: default
+
+# Override name/lore display in GUI (optional)
+OverrideDefaultDisplay: false
+DisplayName: "&f&l[&5Enderman Spawner&f&l] &7Level &8{level}"
+DisplayLore:
+  - "&7Collect me with Silk Touch!"
+  - "&7Don’t look into their eyes..."
+
+#########################################
+# 📏 Spawner Requirements
+# Conditions that must be met for the spawner to function
+#########################################
+
+SpawnerRequirements:
+  Air: true                     # Needs air blocks to spawn
+  Above-Sea-Level: false
+  Below-Sea-Level: false
+  Above-Y-Axis: false
+  Below-Y-Axis: false
+  Darkness: true                # Spawns in light level < 8
+  Total-Darkness: false
+  Light: false
+  Max-Entities-Nearby: false
+
+  Fluid: false                  # Will not spawn in water or lava
+
+  InBiome: true
+  # End and overworld biomes
+  AllowedBiomes:
+    - end_highlands
+    - end_midlands
+    - plains
+    - desert
+    - savanna
+
+  On-Ground: true
+
+  On-Block: true
+  AllowedBlocks:
+    - END_STONE
+    - GRASS_BLOCK
+    - DIRT
+    - STONE
+    - SAND
+
+#########################################
+# 🧱 Spawner Levels & Upgrade Paths
+# Define behavior and drops for each upgrade tier
+#########################################
+
+Spawner-Levels:
+  '1':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
+    CustomDrops:
+      '1':
+        Material: ENDER_PEARL
+        Amount: 1
+        Drop-Percent: 35.0
+        Custom-Data: {}
+
+  '2':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: ENDER_PEARL
+        Amount: 2
+        Drop-Percent: 55.0
+        Custom-Data: {}
+
+  '3':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: OBSIDIAN
+        Amount: 2
+        Drop-Percent: 65.0
+        Custom-Data: {}
+
+  '4':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: ENDER_PEARL
+        Amount: 3
+        Drop-Percent: 85.0
+        Custom-Data: {}
+
+  '5':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: DRAGON_BREATH
+        Amount: 1
+        Drop-Percent: 100.0
+        Custom-Data: {}
+
+#########################################
+# ✅ End of Enderman.yml Configuration
+#########################################

@@ -27,7 +27,7 @@ chat-prefix: "<dark_gray>[<green>ConquestSpawners<dark_gray>]<gray> "
 # If enabled, restrict spawner usage and upgrades to specific worlds.
 # ===================================================
 world-restrictions:
-  whitelist-worlds: false # If true, restrict duel commands to specific worlds
+  whitelist-worlds: false # If true, restrict spawners to specific worlds
   allowed-worlds:
     - world                    # Overworld
     - world_nether             # Nether

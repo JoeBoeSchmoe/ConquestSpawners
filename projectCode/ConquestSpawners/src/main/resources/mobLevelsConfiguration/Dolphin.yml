@@ -1,0 +1,139 @@
+#########################################
+# 🐬 Dolphin Spawner Configuration
+# Overrides and custom values for Dolphin-type spawners
+#########################################
+
+# If false, Dolphin spawners won't work or be placeable
+Spawner-Enabled: true
+
+# If false, uses global whitelist from config.yml
+Custom-Whitelisted-Worlds: false
+Worlds:
+  - world
+  - world_nether
+  - world_the_end
+  - OtherWorld
+
+# Distance from player required to keep spawner active
+Player-Activation-Range: default
+
+# If true, disables AI on spawned mobs (not recommended for dolphins)
+Disable-Mob-AI: default
+
+# Maximum number of this mob’s spawners allowed per chunk
+Allowed-Spawners-Per-Chunk: default
+
+# Override name/lore display in GUI (optional)
+OverrideDefaultDisplay: false
+DisplayName: "&f&l[&bDolphin Spawner&f&l] &7Level &8{level}"
+DisplayLore:
+  - "&7Collect me with Silk Touch!"
+  - "&7Graceful allies of the sea."
+
+#########################################
+# 📏 Spawner Requirements
+# Conditions that must be met for the spawner to function
+#########################################
+
+SpawnerRequirements:
+  Air: false                    # Dolphins spawn underwater
+  Above-Sea-Level: false
+  Below-Sea-Level: true         # Must be submerged
+  Above-Y-Axis: false
+  Below-Y-Axis: false
+  Darkness: false
+  Total-Darkness: false
+  Light: false
+  Max-Entities-Nearby: false
+
+  Fluid: true                   # Requires water to spawn
+  AllowedFluids:
+    - WATER
+
+  InBiome: true
+  # Ocean-dwelling creatures
+  AllowedBiomes:
+    - ocean
+    - deep_ocean
+    - warm_ocean
+    - lukewarm_ocean
+
+  On-Ground: false              # They swim freely — no ground needed
+
+  On-Block: false
+  AllowedBlocks:
+    - WATER
+
+#########################################
+# 🧱 Spawner Levels & Upgrade Paths
+# Define behavior and drops for each upgrade tier
+#########################################
+
+Spawner-Levels:
+  '1':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
+    CustomDrops:
+      '1':
+        Material: COD
+        Amount: 1
+        Drop-Percent: 35.0
+        Custom-Data: {}
+
+  '2':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: NAUTILUS_SHELL
+        Amount: 1
+        Drop-Percent: 50.0
+        Custom-Data: {}
+
+  '3':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: COD
+        Amount: 2
+        Drop-Percent: 65.0
+        Custom-Data: {}
+
+  '4':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: PRISMARINE_SHARD
+        Amount: 2
+        Drop-Percent: 80.0
+        Custom-Data: {}
+
+  '5':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: HEART_OF_THE_SEA
+        Amount: 1
+        Drop-Percent: 100.0
+        Custom-Data: {}
+
+#########################################
+# ✅ End of Dolphin.yml Configuration
+#########################################

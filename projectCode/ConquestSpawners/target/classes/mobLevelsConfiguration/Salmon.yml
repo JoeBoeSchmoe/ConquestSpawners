@@ -1,0 +1,123 @@
+#########################################
+# 🐟 Salmon Spawner Configuration
+# Overrides and custom values for Salmon-type spawners
+#########################################
+
+# If false, Salmon spawners won't work or be placeable
+Spawner-Enabled: true
+
+# If false, uses global whitelist from config.yml
+Custom-Whitelisted-Worlds: false
+Worlds:
+  - world
+  - world_nether
+  - world_the_end
+  - OtherWorld
+
+# Distance from player required to keep spawner active
+Player-Activation-Range: default
+
+# If true, disables AI on spawned mobs (optional for decorative fish tanks)
+Disable-Mob-AI: default
+
+# Maximum number of this mob’s spawners allowed per chunk
+Allowed-Spawners-Per-Chunk: default
+
+# Override name/lore display in GUI (optional)
+OverrideDefaultDisplay: false
+DisplayName: "&f&l[&cSalmon Spawner&f&l] &7Level &8{level}"
+DisplayLore:
+  - "&7Collect me with Silk Touch!"
+  - "&7Freshwater fish with nutritious rewards."
+
+#########################################
+# 📏 Spawner Requirements
+# Conditions that must be met for the spawner to function
+#########################################
+
+SpawnerRequirements:
+  Air: false
+  Above-Sea-Level: false
+  Below-Sea-Level: true
+  Above-Y-Axis: false
+  Below-Y-Axis: false
+  Darkness: false
+  Total-Darkness: false
+  Light: true
+  Max-Entities-Nearby: false
+
+  Fluid: true
+  AllowedFluids:
+    - WATER
+
+  InBiome: true
+  # Salmon spawn in rivers and cold/lukewarm ocean regions
+  AllowedBiomes:
+    - river
+    - frozen_river
+    - cold_ocean
+    - lukewarm_ocean
+
+  On-Ground: false
+
+  On-Block: false
+  AllowedBlocks:
+    - WATER
+
+#########################################
+# 🧱 Spawner Levels & Upgrade Paths
+# Define behavior and drops for each upgrade tier
+#########################################
+
+Spawner-Levels:
+  '1':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
+    CustomDrops:
+      '1':
+        Material: SALMON
+        Amount: 1
+        Drop-Percent: 40.0
+        Custom-Data: {}
+
+  '2':
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: SALMON
+        Amount: 2
+        Drop-Percent: 55.0
+        Custom-Data: {}
+
+  '3':
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: COOKED_SALMON
+        Amount: 2
+        Drop-Percent: 70.0
+        Custom-Data: {}
+
+  '4':
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: BONE_MEAL
+        Amount: 3
+        Drop-Percent: 85.0
+        Custom-Data: {}
+
+  '5':
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: HEART_OF_THE_SEA
+        Amount: 1
+        Drop-Percent: 100.0
+        Custom-Data: {}
+
+#########################################
+# ✅ End of Salmon.yml Configuration
+#########################################

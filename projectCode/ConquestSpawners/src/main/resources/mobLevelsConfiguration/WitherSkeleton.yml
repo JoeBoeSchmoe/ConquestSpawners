@@ -1,0 +1,120 @@
+#########################################
+# 💀 Wither Skeleton Spawner Configuration
+# Overrides and custom values for Wither Skeleton-type spawners
+#########################################
+
+# If false, Wither Skeleton spawners won't work or be placeable
+Spawner-Enabled: true
+
+# If false, uses global whitelist from config.yml
+Custom-Whitelisted-Worlds: true
+Worlds:
+  - world_nether
+
+# Distance from player required to keep spawner active
+Player-Activation-Range: default
+
+# Disabling AI not recommended for Wither Skeletons
+Disable-Mob-AI: default
+
+# Maximum number of this mob’s spawners allowed per chunk
+Allowed-Spawners-Per-Chunk: default
+
+# Override name/lore display in GUI (optional)
+OverrideDefaultDisplay: false
+DisplayName: "&f&l[&8Wither Skeleton Spawner&f&l] &7Level &8{level}"
+DisplayLore:
+  - "&7Collect me with Silk Touch!"
+  - "&7Dark knights of the nether fortress."
+
+#########################################
+# 📏 Spawner Requirements
+# Conditions that must be met for the spawner to function
+#########################################
+
+SpawnerRequirements:
+  Air: true
+  Above-Sea-Level: false
+  Below-Sea-Level: true
+  Above-Y-Axis: false
+  Below-Y-Axis: false
+  Darkness: false
+  Total-Darkness: false
+  Light: false
+  Max-Entities-Nearby: false
+
+  Fluid: false
+
+  InBiome: true
+  # Fortress and nether zones
+  AllowedBiomes:
+    - soul_sand_valley
+    - nether_wastes
+    - basalt_deltas
+
+  On-Ground: true
+
+  On-Block: true
+  AllowedBlocks:
+    - NETHER_BRICKS
+    - SOUL_SAND
+    - BASALT
+    - BLACKSTONE
+
+#########################################
+# 🧱 Spawner Levels & Upgrade Paths
+# Define behavior and drops for each upgrade tier
+#########################################
+
+Spawner-Levels:
+  '1':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
+    CustomDrops:
+      '1':
+        Material: COAL
+        Amount: 1
+        Drop-Percent: 40.0
+        Custom-Data: {}
+
+  '2':
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: BONE
+        Amount: 2
+        Drop-Percent: 55.0
+        Custom-Data: {}
+
+  '3':
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: STONE_SWORD
+        Amount: 1
+        Drop-Percent: 65.0
+        Custom-Data: {}
+
+  '4':
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: WITHER_SKELETON_SKULL
+        Amount: 1
+        Drop-Percent: 25.0
+        Custom-Data: {}
+
+  '5':
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: WITHER_SKELETON_SPAWN_EGG
+        Amount: 1
+        Drop-Percent: 100.0
+        Custom-Data: {}
+
+#########################################
+# ✅ End of WitherSkeleton.yml Configuration
+#########################################

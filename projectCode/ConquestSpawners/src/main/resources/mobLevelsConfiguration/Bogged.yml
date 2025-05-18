@@ -36,28 +36,32 @@ DisplayLore:
 #########################################
 
 SpawnerRequirements:
-  Air: true
-  Above-Sea-Level: false
-  Below-Sea-Level: false
-  Above-Y-Axis: false
-  Below-Y-Axis: false
-  Darkness: false
-  Total-Darkness: false
-  Light: false
-  Max-Entities-Nearby: false
+  Air: true                     # Requires air blocks above spawn position
+  Above-Sea-Level: false        # Must be above Y=63
+  Below-Sea-Level: false        # Must be below Y=63
+  Above-Y-Axis: false           # Requires being above a specific Y value
+  Below-Y-Axis: false           # Requires being below a specific Y value
+  Darkness: false               # Requires light level < 8
+  Total-Darkness: false         # Requires light level = 0
+  Light: false                  # Requires light level > 8
+  Max-Entities-Nearby: false    # Restricts spawning if nearby entity count exceeds threshold
 
+  # Fluid check: if true, must be within one of the following fluids
   Fluid: false
 
+  # Biome restriction: requires the spawner to be in a specific biome
   InBiome: true
-  # Fits swamp and jungle-like environments
+  # Full biome list: https://minecraft.fandom.com/wiki/Biome#List_of_biomes
   AllowedBiomes:
     - swamp
     - mangrove_swamp
     - lush_caves
 
-  On-Ground: true
+  On-Ground: true               # Requires solid block below spawn location
 
+  # Specific block check: requires the spawner to be placed on a block in this list
   On-Block: true
+  # Full block list: https://minecraft.fandom.com/wiki/Category:Blocks
   AllowedBlocks:
     - MOSS_BLOCK
     - MUD
@@ -77,11 +81,10 @@ Spawner-Levels:
     VanillaDrops: false
     CustomDrops:
       '1':
-        Material: TIPPED_ARROW
+        Material: ARROW
         Amount: 1
         Drop-Percent: 40.0
-        Custom-Data:
-          Potion: poison
+        Custom-Data: {}
 
   '2':
     SpawnerDelay: default
@@ -91,11 +94,10 @@ Spawner-Levels:
     CostToUpgrade: default
     CustomDrops:
       '1':
-        Material: TIPPED_ARROW
+        Material: ARROW
         Amount: 2
         Drop-Percent: 55.0
-        Custom-Data:
-          Potion: poison
+        Custom-Data: {}
 
   '3':
     SpawnerDelay: default
@@ -105,11 +107,10 @@ Spawner-Levels:
     CostToUpgrade: default
     CustomDrops:
       '1':
-        Material: TIPPED_ARROW
+        Material: ARROW
         Amount: 3
         Drop-Percent: 70.0
-        Custom-Data:
-          Potion: poison
+        Custom-Data: {}
 
   '4':
     SpawnerDelay: default
@@ -119,11 +120,10 @@ Spawner-Levels:
     CostToUpgrade: default
     CustomDrops:
       '1':
-        Material: TIPPED_ARROW
+        Material: ARROW
         Amount: 4
         Drop-Percent: 85.0
-        Custom-Data:
-          Potion: poison
+        Custom-Data: {}
 
   '5':
     SpawnerDelay: default
@@ -133,11 +133,10 @@ Spawner-Levels:
     CostToUpgrade: default
     CustomDrops:
       '1':
-        Material: TIPPED_ARROW
+        Material: ARROW
         Amount: 5
         Drop-Percent: 100.0
-        Custom-Data:
-          Potion: poison
+        Custom-Data: {}
 
 #########################################
 # ✅ End of Bogged.yml Configuration

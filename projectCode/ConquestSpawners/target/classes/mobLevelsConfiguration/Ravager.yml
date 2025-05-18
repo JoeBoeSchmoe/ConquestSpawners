@@ -1,0 +1,135 @@
+#########################################
+# 🐃 Ravager Spawner Configuration
+# Overrides and custom values for Ravager-type spawners
+#########################################
+
+# If false, Ravager spawners won't work or be placeable
+Spawner-Enabled: true
+
+# If false, uses global whitelist from config.yml
+Custom-Whitelisted-Worlds: false
+Worlds:
+  - world
+  - world_the_end
+  - OtherWorld
+
+# Use plugin default values below unless specifically overridden
+Player-Activation-Range: default
+Disable-Mob-AI: default
+Allowed-Spawners-Per-Chunk: 1
+
+# Override name/lore display in GUI (optional)
+OverrideDefaultDisplay: false
+DisplayName: "&f&l[&4Ravager Spawner&f&l] &7Level &8{level}"
+DisplayLore:
+  - "&7Collect me with Silk Touch!"
+  - "&7Wrecks crops, villagers, and hopes."
+
+#########################################
+# 📏 Spawner Requirements
+# Conditions that must be met for the spawner to function
+#########################################
+
+SpawnerRequirements:
+  Air: true
+  Above-Sea-Level: true
+  Below-Sea-Level: false
+  Above-Y-Axis: false
+  Below-Y-Axis: false
+  Darkness: false
+  Total-Darkness: false
+  Light: true
+  Max-Entities-Nearby: false
+
+  Fluid: false
+
+  InBiome: true
+  AllowedBiomes:
+    - plains
+    - savanna
+    - taiga
+    - sunflower_plains
+
+  On-Ground: true
+
+  On-Block: true
+  AllowedBlocks:
+    - GRASS_BLOCK
+    - COARSE_DIRT
+    - DIRT_PATH
+    - HAY_BLOCK
+    - STONE_BRICKS
+
+#########################################
+# 🧱 Spawner Levels & Upgrade Paths
+# Define behavior and drops for each upgrade tier
+#########################################
+
+Spawner-Levels:
+  '1':
+    SpawnerDelay: 400
+    MobCount: 1
+    XPDrop: 150
+    VanillaDrops: false
+    CustomDrops:
+      '1':
+        Material: SADDLE
+        Amount: 1
+        Drop-Percent: 40.0
+        Custom-Data: {}
+
+  '2':
+    CostToUpgrade: default
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
+    CustomDrops:
+      '1':
+        Material: EMERALD
+        Amount: 2
+        Drop-Percent: 50.0
+        Custom-Data: {}
+
+  '3':
+    CostToUpgrade: default
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
+    CustomDrops:
+      '1':
+        Material: IRON_BLOCK
+        Amount: 1
+        Drop-Percent: 65.0
+        Custom-Data: {}
+
+  '4':
+    CostToUpgrade: default
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
+    CustomDrops:
+      '1':
+        Material: RAVAGER_SPAWN_EGG
+        Amount: 1
+        Drop-Percent: 80.0
+        Custom-Data: {}
+
+  '5':
+    CostToUpgrade: default
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
+    CustomDrops:
+      '1':
+        Material: NETHERITE_INGOT
+        Amount: 1
+        Drop-Percent: 100.0
+        Custom-Data: {}
+
+#########################################
+# ✅ End of Ravager.yml Configuration
+#########################################

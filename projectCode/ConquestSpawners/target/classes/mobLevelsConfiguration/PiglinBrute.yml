@@ -1,0 +1,86 @@
+#########################################
+# 💢 Piglin Brute Spawner Configuration
+# Overrides and custom values for Piglin Brute-type spawners
+#########################################
+
+Spawner-Enabled: true
+Custom-Whitelisted-Worlds: true
+Worlds:
+  - world_nether
+
+Player-Activation-Range: 48
+Disable-Mob-AI: false
+Allowed-Spawners-Per-Chunk: 1
+
+OverrideDefaultDisplay: false
+DisplayName: "&f&l[&cPiglin Brute Spawner&f&l] &7Level &8{level}"
+DisplayLore:
+  - "&7Collect me with Silk Touch!"
+  - "&7No bartering. Only smashing."
+
+SpawnerRequirements:
+  Air: true
+  Above-Sea-Level: true
+  Light: false
+  Total-Darkness: false
+  Darkness: false
+  Fluid: false
+  Max-Entities-Nearby: false
+  InBiome: true
+  AllowedBiomes:
+    - bastion_remnant
+  On-Ground: true
+  On-Block: true
+  AllowedBlocks:
+    - POLISHED_BLACKSTONE
+    - GILDED_BLACKSTONE
+    - NETHER_BRICKS
+
+Spawner-Levels:
+  '1':
+    SpawnerDelay: 600
+    MobCount: 1
+    XPDrop: 200
+    VanillaDrops: false
+    CustomDrops:
+      '1':
+        Material: GOLDEN_AXE
+        Amount: 1
+        Drop-Percent: 50.0
+        Custom-Data: {}
+  '2':
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: GOLD_BLOCK
+        Amount: 1
+        Drop-Percent: 65.0
+        Custom-Data: {}
+  '3':
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: NETHERITE_SCRAP
+        Amount: 1
+        Drop-Percent: 75.0
+        Custom-Data: {}
+  '4':
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: ANVIL
+        Amount: 1
+        Drop-Percent: 85.0
+        Custom-Data: {}
+  '5':
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: TOTEM_OF_UNDYING
+        Amount: 1
+        Drop-Percent: 100.0
+        Custom-Data: {}
+
+#########################################
+# ✅ End of PiglinBrute.yml Configuration
+#########################################

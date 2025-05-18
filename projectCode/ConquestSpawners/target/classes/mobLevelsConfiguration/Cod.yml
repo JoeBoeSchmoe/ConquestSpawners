@@ -1,0 +1,140 @@
+#########################################
+# 🐟 Cod Spawner Configuration
+# Overrides and custom values for Cod-type spawners
+#########################################
+
+# If false, Cod spawners won't work or be placeable
+Spawner-Enabled: true
+
+# If false, uses global whitelist from config.yml
+Custom-Whitelisted-Worlds: false
+Worlds:
+  - world
+  - world_nether
+  - world_the_end
+  - OtherWorld
+
+# Distance from player required to keep spawner active
+Player-Activation-Range: default
+
+# If true, disables AI on spawned mobs (recommended for performance)
+Disable-Mob-AI: default
+
+# Maximum number of this mob’s spawners allowed per chunk
+Allowed-Spawners-Per-Chunk: default
+
+# Override name/lore display in GUI (optional)
+OverrideDefaultDisplay: false
+DisplayName: "&f&l[&3Cod Spawner&f&l] &7Level &8{level}"
+DisplayLore:
+  - "&7Collect me with Silk Touch!"
+  - "&7Fresh catch of the day."
+
+#########################################
+# 📏 Spawner Requirements
+# Conditions that must be met for the spawner to function
+#########################################
+
+SpawnerRequirements:
+  Air: false                    # Fish do not require air blocks above
+  Above-Sea-Level: false
+  Below-Sea-Level: true         # Commonly found underwater
+  Above-Y-Axis: false
+  Below-Y-Axis: false
+  Darkness: false
+  Total-Darkness: false
+  Light: false
+  Max-Entities-Nearby: false
+
+  Fluid: true                   # Must be in fluid to spawn
+  AllowedFluids:
+    - WATER
+
+  InBiome: true
+  # Ocean biomes only
+  AllowedBiomes:
+    - ocean
+    - deep_ocean
+    - cold_ocean
+    - lukewarm_ocean
+    - river
+
+  On-Ground: false              # Cod can float and don't need ground
+
+  On-Block: false
+  AllowedBlocks:
+    - WATER
+
+#########################################
+# 🧱 Spawner Levels & Upgrade Paths
+# Define behavior and drops for each upgrade tier
+#########################################
+
+Spawner-Levels:
+  '1':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: true
+    CustomDrops:
+      '1':
+        Material: COD
+        Amount: 1
+        Drop-Percent: 40.0
+        Custom-Data: {}
+
+  '2':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: true
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: COD
+        Amount: 2
+        Drop-Percent: 55.0
+        Custom-Data: {}
+
+  '3':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: true
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: COOKED_COD
+        Amount: 2
+        Drop-Percent: 70.0
+        Custom-Data: {}
+
+  '4':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: true
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: COOKED_COD
+        Amount: 3
+        Drop-Percent: 85.0
+        Custom-Data: {}
+
+  '5':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: true
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: NAUTILUS_SHELL
+        Amount: 1
+        Drop-Percent: 100.0
+        Custom-Data: {}
+
+#########################################
+# ✅ End of Cod.yml Configuration
+#########################################

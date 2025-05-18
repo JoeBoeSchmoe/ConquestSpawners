@@ -1,0 +1,122 @@
+#########################################
+# ☠️ Wither Spawner Configuration
+# Overrides and custom values for Wither-type spawners
+#########################################
+
+# If false, Wither spawners won't work or be placeable
+Spawner-Enabled: true
+
+# If false, uses global whitelist from config.yml
+Custom-Whitelisted-Worlds: true
+Worlds:
+  - world_the_end
+  - world_nether
+
+# Distance from player required to keep spawner active
+Player-Activation-Range: 64   # Extended range for boss awareness
+
+# AI is required — disabling it would break Wither behavior
+Disable-Mob-AI: false
+
+# Limit Withers per chunk to avoid server-killing chaos
+Allowed-Spawners-Per-Chunk: 1
+
+# Override name/lore display in GUI (optional)
+OverrideDefaultDisplay: false
+DisplayName: "&f&l[&8Wither Spawner&f&l] &7Level &8{level}"
+DisplayLore:
+  - "&7Collect me with Silk Touch!"
+  - "&7Unleashes destruction incarnate..."
+
+#########################################
+# 📏 Spawner Requirements
+# Conditions that must be met for the spawner to function
+#########################################
+
+SpawnerRequirements:
+  Air: true
+  Above-Sea-Level: false
+  Below-Sea-Level: true
+  Above-Y-Axis: false
+  Below-Y-Axis: true
+  Darkness: false
+  Total-Darkness: false
+  Light: false
+  Max-Entities-Nearby: false
+
+  Fluid: false
+
+  InBiome: true
+  # Wither-compatible chaos zones
+  AllowedBiomes:
+    - soul_sand_valley
+    - end_highlands
+    - deep_dark
+
+  On-Ground: true
+
+  On-Block: true
+  AllowedBlocks:
+    - SOUL_SAND
+    - OBSIDIAN
+    - BEDROCK
+    - ANCIENT_DEBRIS
+    - DEEPSLATE
+
+#########################################
+# 🧱 Spawner Levels & Upgrade Paths
+# Define behavior and drops for each upgrade tier
+#########################################
+
+Spawner-Levels:
+  '1':
+    SpawnerDelay: 800
+    MobCount: 1
+    XPDrop: 500
+    VanillaDrops: false
+    CustomDrops:
+      '1':
+        Material: SOUL_SAND
+        Amount: 2
+        Drop-Percent: 30.0
+        Custom-Data: {}
+
+  '2':
+    CostToUpgrade: 5000
+    CustomDrops:
+      '1':
+        Material: COAL_BLOCK
+        Amount: 2
+        Drop-Percent: 45.0
+        Custom-Data: {}
+
+  '3':
+    CostToUpgrade: 8000
+    CustomDrops:
+      '1':
+        Material: BONE_BLOCK
+        Amount: 4
+        Drop-Percent: 60.0
+        Custom-Data: {}
+
+  '4':
+    CostToUpgrade: 12000
+    CustomDrops:
+      '1':
+        Material: NETHER_STAR
+        Amount: 1
+        Drop-Percent: 75.0
+        Custom-Data: {}
+
+  '5':
+    CostToUpgrade: 20000
+    CustomDrops:
+      '1':
+        Material: WITHER_SPAWN_EGG
+        Amount: 1
+        Drop-Percent: 100.0
+        Custom-Data: {}
+
+#########################################
+# ✅ End of Wither.yml Configuration
+#########################################

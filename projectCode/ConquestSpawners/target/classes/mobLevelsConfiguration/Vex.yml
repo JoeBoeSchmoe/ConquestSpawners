@@ -1,0 +1,123 @@
+#########################################
+# 👻 Vex Spawner Configuration
+# Overrides and custom values for Vex-type spawners
+#########################################
+
+# If false, Vex spawners won't work or be placeable
+Spawner-Enabled: true
+
+# If false, uses global whitelist from config.yml
+Custom-Whitelisted-Worlds: false
+Worlds:
+  - world
+  - world_nether
+  - world_the_end
+  - OtherWorld
+
+# Distance from player required to keep spawner active
+Player-Activation-Range: default
+
+# If true, disables AI on spawned mobs (not recommended for Vexes)
+Disable-Mob-AI: default
+
+# Maximum number of this mob’s spawners allowed per chunk
+Allowed-Spawners-Per-Chunk: default
+
+# Override name/lore display in GUI (optional)
+OverrideDefaultDisplay: false
+DisplayName: "&f&l[&7Vex Spawner&f&l] &7Level &8{level}"
+DisplayLore:
+  - "&7Collect me with Silk Touch!"
+  - "&7Phantom blades summoned by dark forces."
+
+#########################################
+# 📏 Spawner Requirements
+# Conditions that must be met for the spawner to function
+#########################################
+
+SpawnerRequirements:
+  Air: true
+  Above-Sea-Level: true
+  Below-Sea-Level: false
+  Above-Y-Axis: false
+  Below-Y-Axis: false
+  Darkness: true
+  Total-Darkness: false
+  Light: false
+  Max-Entities-Nearby: false
+
+  Fluid: false
+
+  InBiome: true
+  # Illager and raid-related biomes
+  AllowedBiomes:
+    - dark_forest
+    - old_growth_pine_taiga
+    - windswept_hills
+
+  On-Ground: false
+
+  On-Block: true
+  AllowedBlocks:
+    - STONE
+    - COBBLESTONE
+    - DEEPSLATE
+    - SPRUCE_PLANKS
+
+#########################################
+# 🧱 Spawner Levels & Upgrade Paths
+# Define behavior and drops for each upgrade tier
+#########################################
+
+Spawner-Levels:
+  '1':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
+    CustomDrops:
+      '1':
+        Material: IRON_NUGGET
+        Amount: 2
+        Drop-Percent: 35.0
+        Custom-Data: {}
+
+  '2':
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: IRON_NUGGET
+        Amount: 4
+        Drop-Percent: 50.0
+        Custom-Data: {}
+
+  '3':
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: ECHO_SHARD
+        Amount: 1
+        Drop-Percent: 65.0
+        Custom-Data: {}
+
+  '4':
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: IRON_SWORD
+        Amount: 1
+        Drop-Percent: 85.0
+        Custom-Data: {}
+
+  '5':
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: VEX_SPAWN_EGG
+        Amount: 1
+        Drop-Percent: 100.0
+        Custom-Data: {}
+
+#########################################
+# ✅ End of Vex.yml Configuration
+#########################################

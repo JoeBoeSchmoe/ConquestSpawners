@@ -36,28 +36,32 @@ DisplayLore:
 #########################################
 
 SpawnerRequirements:
-  Air: true                     # Requires air above
-  Above-Sea-Level: false
-  Below-Sea-Level: false
-  Above-Y-Axis: false
-  Below-Y-Axis: false
-  Darkness: false
-  Total-Darkness: true         # Must be pitch black (light level 0)
-  Light: false
-  Max-Entities-Nearby: false
+  Air: true                     # Requires air blocks above spawn position
+  Above-Sea-Level: false        # Must be above Y=63
+  Below-Sea-Level: false        # Must be below Y=63
+  Above-Y-Axis: false           # Requires being above a specific Y value
+  Below-Y-Axis: false           # Requires being below a specific Y value
+  Darkness: false               # Requires light level < 8
+  Total-Darkness: true          # Requires light level = 0
+  Light: false                  # Requires light level > 8
+  Max-Entities-Nearby: false    # Restricts spawning if nearby entity count exceeds threshold
 
+  # Fluid check: if true, must be within one of the following fluids
   Fluid: false
 
+  # Biome restriction: requires the spawner to be in a specific biome
   InBiome: true
-  # Caves & dark biomes
+  # Full biome list: https://minecraft.fandom.com/wiki/Biome#List_of_biomes
   AllowedBiomes:
     - dripstone_caves
     - lush_caves
     - deep_dark
 
-  On-Ground: false
+  On-Ground: false              # Requires solid block below spawn location
 
+  # Specific block check: requires the spawner to be placed on a block in this list
   On-Block: false
+  # Full block list: https://minecraft.fandom.com/wiki/Category:Blocks
   AllowedBlocks:
     - STONE
     - COBBLESTONE

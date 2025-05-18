@@ -1,0 +1,121 @@
+#########################################
+# 🐷⚔️ Zombified Piglin Spawner Configuration
+# Overrides and custom values for Zombified Piglin-type spawners
+#########################################
+
+# If false, Zombified Piglin spawners won't work or be placeable
+Spawner-Enabled: true
+
+# If false, uses global whitelist from config.yml
+Custom-Whitelisted-Worlds: true
+Worlds:
+  - world_nether
+
+# Distance from player required to keep spawner active
+Player-Activation-Range: default
+
+# Disable AI only for mob statue displays (not recommended otherwise)
+Disable-Mob-AI: default
+
+# Maximum number of this mob’s spawners allowed per chunk
+Allowed-Spawners-Per-Chunk: default
+
+# Override name/lore display in GUI (optional)
+OverrideDefaultDisplay: false
+DisplayName: "&f&l[&6Zombified Piglin Spawner&f&l] &7Level &8{level}"
+DisplayLore:
+  - "&7Collect me with Silk Touch!"
+  - "&7Silent... until you hit one."
+
+#########################################
+# 📏 Spawner Requirements
+# Conditions that must be met for the spawner to function
+#########################################
+
+SpawnerRequirements:
+  Air: true
+  Above-Sea-Level: false
+  Below-Sea-Level: true
+  Above-Y-Axis: false
+  Below-Y-Axis: false
+  Darkness: false
+  Total-Darkness: false
+  Light: false
+  Max-Entities-Nearby: false
+
+  Fluid: false
+
+  InBiome: true
+  # Nether-native undead biomes
+  AllowedBiomes:
+    - nether_wastes
+    - crimson_forest
+    - basalt_deltas
+
+  On-Ground: true
+
+  On-Block: true
+  AllowedBlocks:
+    - NETHERRACK
+    - NETHER_BRICKS
+    - BLACKSTONE
+    - CRIMSON_NYLIUM
+    - LAVA
+
+#########################################
+# 🧱 Spawner Levels & Upgrade Paths
+# Define behavior and drops for each upgrade tier
+#########################################
+
+Spawner-Levels:
+  '1':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
+    CustomDrops:
+      '1':
+        Material: GOLD_NUGGET
+        Amount: 2
+        Drop-Percent: 40.0
+        Custom-Data: {}
+
+  '2':
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: GOLD_INGOT
+        Amount: 1
+        Drop-Percent: 55.0
+        Custom-Data: {}
+
+  '3':
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: ROTTEN_FLESH
+        Amount: 3
+        Drop-Percent: 65.0
+        Custom-Data: {}
+
+  '4':
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: GOLD_BLOCK
+        Amount: 1
+        Drop-Percent: 80.0
+        Custom-Data: {}
+
+  '5':
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: ZOMBIFIED_PIGLIN_SPAWN_EGG
+        Amount: 1
+        Drop-Percent: 100.0
+        Custom-Data: {}
+
+#########################################
+# ✅ End of ZombifiedPiglin.yml Configuration
+#########################################

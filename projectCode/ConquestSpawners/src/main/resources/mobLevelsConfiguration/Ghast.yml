@@ -1,0 +1,135 @@
+#########################################
+# 👻 Ghast Spawner Configuration
+# Overrides and custom values for Ghast-type spawners
+#########################################
+
+# If false, Ghast spawners won't work or be placeable
+Spawner-Enabled: true
+
+# If false, uses global whitelist from config.yml
+Custom-Whitelisted-Worlds: true
+Worlds:
+  - world_nether
+
+# Distance from player required to keep spawner active
+Player-Activation-Range: default
+
+# If true, disables AI on spawned mobs (not recommended for projectile mobs)
+Disable-Mob-AI: default
+
+# Maximum number of this mob’s spawners allowed per chunk
+Allowed-Spawners-Per-Chunk: 1   # Typically boss-tier mobs are limited
+
+# Override name/lore display in GUI (optional)
+OverrideDefaultDisplay: false
+DisplayName: "&f&l[&fGhast Spawner&f&l] &7Level &8{level}"
+DisplayLore:
+  - "&7Collect me with Silk Touch!"
+  - "&7Cries echo from the lava seas..."
+
+#########################################
+# 📏 Spawner Requirements
+# Conditions that must be met for the spawner to function
+#########################################
+
+SpawnerRequirements:
+  Air: true                     # Needs open air space (they're huge!)
+  Above-Sea-Level: false
+  Below-Sea-Level: false
+  Above-Y-Axis: false
+  Below-Y-Axis: false
+  Darkness: false
+  Total-Darkness: false
+  Light: false
+  Max-Entities-Nearby: true     # Helps avoid large entity spam
+
+  Fluid: false
+
+  InBiome: true
+  # Natural Ghast zones
+  AllowedBiomes:
+    - soul_sand_valley
+    - nether_wastes
+    - basalt_deltas
+
+  On-Ground: false
+
+  On-Block: false
+  AllowedBlocks:
+    - NETHERRACK
+    - BASALT
+    - SOUL_SAND
+
+#########################################
+# 🧱 Spawner Levels & Upgrade Paths
+# Define behavior and drops for each upgrade tier
+#########################################
+
+Spawner-Levels:
+  '1':
+    SpawnerDelay: 600
+    MobCount: 1
+    XPDrop: 100
+    VanillaDrops: false
+    CustomDrops:
+      '1':
+        Material: GHAST_TEAR
+        Amount: 1
+        Drop-Percent: 30.0
+        Custom-Data: {}
+
+  '2':
+    SpawnerDelay: 500
+    MobCount: 1
+    XPDrop: 150
+    VanillaDrops: false
+    CostToUpgrade: 1500
+    CustomDrops:
+      '1':
+        Material: GUNPOWDER
+        Amount: 2
+        Drop-Percent: 45.0
+        Custom-Data: {}
+
+  '3':
+    SpawnerDelay: 400
+    MobCount: 1
+    XPDrop: 200
+    VanillaDrops: false
+    CostToUpgrade: 2500
+    CustomDrops:
+      '1':
+        Material: GHAST_TEAR
+        Amount: 2
+        Drop-Percent: 60.0
+        Custom-Data: {}
+
+  '4':
+    SpawnerDelay: 300
+    MobCount: 1
+    XPDrop: 300
+    VanillaDrops: false
+    CostToUpgrade: 4000
+    CustomDrops:
+      '1':
+        Material: BLAZE_POWDER
+        Amount: 3
+        Drop-Percent: 75.0
+        Custom-Data: {}
+
+  '5':
+    SpawnerDelay: 200
+    MobCount: 1
+    XPDrop: 400
+    VanillaDrops: false
+    CostToUpgrade: 6000
+    CustomDrops:
+      '1':
+        Material: ENDER_CRYSTAL
+        Amount: 1
+        Drop-Percent: 100.0
+        Custom-Data: {}
+
+#########################################
+# ✅ End of Ghast.yml Configuration
+#########################################

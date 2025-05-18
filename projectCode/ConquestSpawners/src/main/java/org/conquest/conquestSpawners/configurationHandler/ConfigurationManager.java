@@ -8,6 +8,7 @@ import org.conquest.conquestSpawners.configurationHandler.configurationFiles.Use
 import org.conquest.conquestSpawners.configurationHandler.integrationFiles.DecentHologramsManager;
 import org.conquest.conquestSpawners.configurationHandler.integrationFiles.PlaceHolderAPIManager;
 import org.conquest.conquestSpawners.configurationHandler.integrationFiles.VaultManager;
+import org.conquest.conquestSpawners.mobSpawningHandler.MobManager;
 
 import java.util.logging.Logger;
 
@@ -15,12 +16,15 @@ import java.util.logging.Logger;
  * 🧩 ConfigurationManager
  * Handles loading config.yml and initializing external integrations (Vault, PlaceholderAPI, DecentHolograms).
  * Loads statically managed configuration files like ConfigFile and message files.
+ * Also initializes and loads mob configuration from /mobs.
  */
 public class ConfigurationManager {
 
     private final ConquestSpawners plugin = ConquestSpawners.getInstance();
     private final Logger log = plugin.getLogger();
     private FileConfiguration config;
+
+    private MobManager mobManager;
 
     public void initialize() {
         try {
@@ -41,8 +45,13 @@ public class ConfigurationManager {
             setupPlaceholderAPI();
             setupDecentHolograms();
 
+            // 🧟 Mob Configurations
+            this.mobManager = new MobManager(plugin);
+            mobManager.loadAllMobs();
+
             log.info("✅  Configuration loading complete.");
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             log.severe("❌  Failed to load configuration: " + e.getMessage());
         }
     }
@@ -87,5 +96,9 @@ public class ConfigurationManager {
 
     public FileConfiguration getConfig() {
         return config;
+    }
+
+    public MobManager getMobManager() {
+        return mobManager;
     }
 }

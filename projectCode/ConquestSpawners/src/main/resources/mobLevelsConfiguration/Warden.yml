@@ -1,0 +1,123 @@
+#########################################
+# 🛡️ Warden Spawner Configuration
+# Overrides and custom values for Warden-type spawners
+#########################################
+
+# If false, Warden spawners won't work or be placeable
+Spawner-Enabled: true
+
+# If false, uses global whitelist from config.yml
+Custom-Whitelisted-Worlds: false
+Worlds:
+  - world
+  - world_the_end
+  - OtherWorld
+
+# Distance from player required to keep spawner active
+Player-Activation-Range: 64   # Give it a bit more range by default
+
+# Disable Warden AI (NOT recommended — breaks most of its behavior)
+Disable-Mob-AI: false
+
+# Maximum number of this mob’s spawners allowed per chunk
+Allowed-Spawners-Per-Chunk: 1
+
+# Override name/lore display in GUI (optional)
+OverrideDefaultDisplay: false
+DisplayName: "&f&l[&9Warden Spawner&f&l] &7Level &8{level}"
+DisplayLore:
+  - "&7Collect me with Silk Touch!"
+  - "&7You sure you want to summon this?"
+
+#########################################
+# 📏 Spawner Requirements
+# Conditions that must be met for the spawner to function
+#########################################
+
+SpawnerRequirements:
+  Air: true
+  Above-Sea-Level: false
+  Below-Sea-Level: true
+  Above-Y-Axis: false
+  Below-Y-Axis: true       # Wardens belong deep underground
+  Darkness: true
+  Total-Darkness: false
+  Light: false
+  Max-Entities-Nearby: false
+
+  Fluid: false
+
+  InBiome: true
+  # Deep dark only!
+  AllowedBiomes:
+    - deep_dark
+
+  On-Ground: true
+
+  On-Block: true
+  AllowedBlocks:
+    - SCULK
+    - SCULK_VEIN
+    - SCULK_SENSOR
+    - SCULK_CATALYST
+    - DEEPSLATE
+
+#########################################
+# 🧱 Spawner Levels & Upgrade Paths
+# Define behavior and drops for each upgrade tier
+#########################################
+
+Spawner-Levels:
+  '1':
+    SpawnerDelay: 600
+    MobCount: 1
+    XPDrop: 500
+    VanillaDrops: false
+    CustomDrops:
+      '1':
+        Material: ECHO_SHARD
+        Amount: 1
+        Drop-Percent: 40.0
+        Custom-Data: {}
+
+  '2':
+    CostToUpgrade: 5000
+    SpawnerDelay: 500
+    XPDrop: 600
+    CustomDrops:
+      '1':
+        Material: SCULK
+        Amount: 4
+        Drop-Percent: 55.0
+        Custom-Data: {}
+
+  '3':
+    CostToUpgrade: 7000
+    CustomDrops:
+      '1':
+        Material: SCULK_SENSOR
+        Amount: 2
+        Drop-Percent: 70.0
+        Custom-Data: {}
+
+  '4':
+    CostToUpgrade: 10000
+    CustomDrops:
+      '1':
+        Material: SCULK_CATALYST
+        Amount: 1
+        Drop-Percent: 85.0
+        Custom-Data: {}
+
+  '5':
+    CostToUpgrade: 15000
+    CustomDrops:
+      '1':
+        Material: WARDEN_SPAWN_EGG
+        Amount: 1
+        Drop-Percent: 100.0
+        Custom-Data: {}
+
+#########################################
+# ✅ End of Warden.yml Configuration
+#########################################

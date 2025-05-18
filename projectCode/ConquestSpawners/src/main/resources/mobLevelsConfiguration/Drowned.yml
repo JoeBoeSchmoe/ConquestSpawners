@@ -1,0 +1,140 @@
+#########################################
+# 🧟‍♂️ Drowned Spawner Configuration
+# Overrides and custom values for Drowned-type spawners
+#########################################
+
+# If false, Drowned spawners won't work or be placeable
+Spawner-Enabled: true
+
+# If false, uses global whitelist from config.yml
+Custom-Whitelisted-Worlds: false
+Worlds:
+  - world
+  - world_nether
+  - world_the_end
+  - OtherWorld
+
+# Distance from player required to keep spawner active
+Player-Activation-Range: default
+
+# If true, disables AI on spawned mobs (not recommended for hostile mobs)
+Disable-Mob-AI: default
+
+# Maximum number of this mob’s spawners allowed per chunk
+Allowed-Spawners-Per-Chunk: default
+
+# Override name/lore display in GUI (optional)
+OverrideDefaultDisplay: false
+DisplayName: "&f&l[&3Drowned Spawner&f&l] &7Level &8{level}"
+DisplayLore:
+  - "&7Collect me with Silk Touch!"
+  - "&7Risen from the depths to drag you under..."
+
+#########################################
+# 📏 Spawner Requirements
+# Conditions that must be met for the spawner to function
+#########################################
+
+SpawnerRequirements:
+  Air: false                    # Drowned must spawn in water
+  Above-Sea-Level: false
+  Below-Sea-Level: true         # Typically spawn below Y=63
+  Above-Y-Axis: false
+  Below-Y-Axis: false
+  Darkness: true                # Spawns in dark waters
+  Total-Darkness: false
+  Light: false
+  Max-Entities-Nearby: false
+
+  Fluid: true                   # Must be submerged
+  AllowedFluids:
+    - WATER
+
+  InBiome: true
+  # Swamp and ocean biomes are their home
+  AllowedBiomes:
+    - river
+    - ocean
+    - swamp
+    - deep_ocean
+    - lukewarm_ocean
+
+  On-Ground: false              # They float or swim — no ground needed
+
+  On-Block: false
+  AllowedBlocks:
+    - WATER
+
+#########################################
+# 🧱 Spawner Levels & Upgrade Paths
+# Define behavior and drops for each upgrade tier
+#########################################
+
+Spawner-Levels:
+  '1':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
+    CustomDrops:
+      '1':
+        Material: GOLD_INGOT
+        Amount: 1
+        Drop-Percent: 30.0
+        Custom-Data: {}
+
+  '2':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: COPPER_INGOT
+        Amount: 2
+        Drop-Percent: 45.0
+        Custom-Data: {}
+
+  '3':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: NAUTILUS_SHELL
+        Amount: 1
+        Drop-Percent: 60.0
+        Custom-Data: {}
+
+  '4':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: TRIDENT
+        Amount: 1
+        Drop-Percent: 10.0
+        Custom-Data: {}
+
+  '5':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: TRIDENT
+        Amount: 1
+        Drop-Percent: 100.0
+        Custom-Data: {}
+
+#########################################
+# ✅ End of Drowned.yml Configuration
+#########################################

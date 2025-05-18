@@ -1,0 +1,136 @@
+#########################################
+# 🔥 Blaze Spawner Configuration
+# Overrides and custom values for Blaze-type spawners
+#########################################
+
+# If false, Blaze spawners won't work or be placeable
+Spawner-Enabled: true
+
+# If false, uses global whitelist from config.yml
+Custom-Whitelisted-Worlds: true
+Worlds:
+  - world_nether
+
+# Distance from player required to keep spawner active
+Player-Activation-Range: default
+
+# Disable Blaze AI (generally not recommended unless for farming)
+Disable-Mob-AI: default
+
+# Maximum number of this mob’s spawners allowed per chunk
+Allowed-Spawners-Per-Chunk: default
+
+# Override name/lore display in GUI (optional)
+OverrideDefaultDisplay: false
+DisplayName: "&f&l[&6Blaze Spawner&f&l] &7Level &8{level}"
+DisplayLore:
+  - "&7Collect me with Silk Touch!"
+  - "&7Handle with fire resistance..."
+
+#########################################
+# 📏 Spawner Requirements
+# Conditions that must be met for the spawner to function
+#########################################
+
+SpawnerRequirements:
+  Air: true
+  Above-Sea-Level: false
+  Below-Sea-Level: false
+  Above-Y-Axis: false
+  Below-Y-Axis: false
+  Darkness: false
+  Total-Darkness: false
+  Light: false
+  Max-Entities-Nearby: false
+
+  Fluid: true
+  AllowedFluids:
+    - LAVA
+
+  InBiome: true
+  AllowedBiomes:
+    - nether_wastes
+    - soul_sand_valley
+    - basalt_deltas
+
+  On-Ground: false
+
+  On-Block: false
+  AllowedBlocks:
+    - NETHER_BRICKS
+    - MAGMA_BLOCK
+    - SOUL_SAND
+
+#########################################
+# 🧱 Spawner Levels & Upgrade Paths
+# Define behavior and drops for each upgrade tier
+#########################################
+
+Spawner-Levels:
+  '1':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: true
+    CustomDrops:
+      '1':
+        Material: BLAZE_ROD
+        Amount: 1
+        Drop-Percent: 40.0
+        Custom-Data: {}
+
+  '2':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: true
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: BLAZE_ROD
+        Amount: 2
+        Drop-Percent: 55.0
+        Custom-Data: {}
+
+  '3':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: true
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: BLAZE_ROD
+        Amount: 3
+        Drop-Percent: 70.0
+        Custom-Data: {}
+
+  '4':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: true
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: BLAZE_ROD
+        Amount: 4
+        Drop-Percent: 85.0
+        Custom-Data: {}
+
+  '5':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: true
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: BLAZE_ROD
+        Amount: 5
+        Drop-Percent: 100.0
+        Custom-Data: {}
+
+#########################################
+# ✅ End of Blaze.yml Configuration
+#########################################

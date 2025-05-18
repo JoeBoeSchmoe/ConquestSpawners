@@ -1,0 +1,133 @@
+#########################################
+# 💨 Breeze Spawner Configuration
+# Overrides and custom values for Breeze-type spawners
+#########################################
+
+# If false, Breeze spawners won't work or be placeable
+Spawner-Enabled: true
+
+# If false, uses global whitelist from config.yml
+Custom-Whitelisted-Worlds: false
+Worlds:
+  - world
+  - world_nether
+  - world_the_end
+  - OtherWorld
+
+# Distance from player required to keep spawner active
+Player-Activation-Range: default
+
+# Disable Breeze AI (generally not recommended)
+Disable-Mob-AI: default
+
+# Maximum number of this mob’s spawners allowed per chunk
+Allowed-Spawners-Per-Chunk: default
+
+# Override name/lore display in GUI (optional)
+OverrideDefaultDisplay: false
+DisplayName: "&f&l[&bBreeze Spawner&f&l] &7Level &8{level}"
+DisplayLore:
+  - "&7Collect me with Silk Touch!"
+  - "&7Unleashes the wind itself..."
+
+#########################################
+# 📏 Spawner Requirements
+# Conditions that must be met for the spawner to function
+#########################################
+
+SpawnerRequirements:
+  Air: true
+  Above-Sea-Level: false
+  Below-Sea-Level: false
+  Above-Y-Axis: false
+  Below-Y-Axis: true     # Must be below Y value (Trial Chambers spawn deep)
+  Darkness: false
+  Total-Darkness: false
+  Light: false
+  Max-Entities-Nearby: false
+
+  Fluid: false
+
+  InBiome: false         # Breeze spawns in structures, not biome-restricted
+
+  On-Ground: false
+
+  On-Block: true
+  AllowedBlocks:
+    - CHISELED_STONE_BRICKS
+    - COPPER_BLOCK
+    - DEEPSLATE_TILES
+
+#########################################
+# 🧱 Spawner Levels & Upgrade Paths
+# Define behavior and drops for each upgrade tier
+#########################################
+
+Spawner-Levels:
+  '1':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
+    CustomDrops:
+      '1':
+        Material: FEATHER
+        Amount: 1
+        Drop-Percent: 40.0
+        Custom-Data: {}
+
+  '2':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: FEATHER
+        Amount: 2
+        Drop-Percent: 55.0
+        Custom-Data: {}
+
+  '3':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: FEATHER
+        Amount: 3
+        Drop-Percent: 70.0
+        Custom-Data: {}
+
+  '4':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: FEATHER
+        Amount: 4
+        Drop-Percent: 85.0
+        Custom-Data: {}
+
+  '5':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: FEATHER
+        Amount: 5
+        Drop-Percent: 100.0
+        Custom-Data: {}
+
+#########################################
+# ✅ End of Breeze.yml Configuration
+#########################################

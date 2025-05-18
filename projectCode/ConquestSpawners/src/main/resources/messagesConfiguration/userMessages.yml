@@ -22,7 +22,7 @@ messages:
     title:
       text: "<red><bold>Players Only</bold></red>"
       subtitle: "<gray>This command must be used by a player."
-      timings: [ fadeIn: 10, stay: 40, fadeOut: 20 ]
+      timings: { fadeIn: 10, stay: 40, fadeOut: 20 }
 
   # 🌀 UNKNOWN USER COMMAND
   unknown-command:
@@ -39,7 +39,7 @@ messages:
     title:
       text: "<red><bold>Unknown Command</bold></red>"
       subtitle: "<gray>Try /spawners admin help"
-      timings: [ fadeIn: 10, stay: 40, fadeOut: 20 ]
+      timings: { fadeIn: 10, stay: 40, fadeOut: 20 }
 
   # ⏱️ COMMAND COOLDOWN
   command-on-cooldown:
@@ -57,7 +57,7 @@ messages:
     title:
       text: "<red><bold>Slow Down</bold></red>"
       subtitle: "<gray>Please wait before using that again."
-      timings: [ fadeIn: 10, stay: 40, fadeOut: 20 ]
+      timings: { fadeIn: 10, stay: 40, fadeOut: 20 }
 
   # 💡 USAGE HINT
   usage-hint:
@@ -81,6 +81,6 @@ messages:
     title:
       text: "<gold><bold>Spawner Help</bold></gold>"
       subtitle: "<gray>Try /spawners admin help to get started."
-      timings: [ fadeIn: 10, stay: 40, fadeOut: 20 ]
+      timings: { fadeIn: 10, stay: 40, fadeOut: 20 }
 
 # End Of Config :D

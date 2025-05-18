@@ -1,0 +1,142 @@
+#########################################
+# 🛡️ Armadillo Spawner Configuration
+# Overrides and custom values for Armadillo-type spawners
+#########################################
+
+# If false, Armadillo spawners won't work or be placeable
+Spawner-Enabled: true
+
+# If false, uses global whitelist from config.yml
+Custom-Whitelisted-Worlds: false
+Worlds:
+  - world
+  - world_nether
+  - world_the_end
+  - OtherWorld
+
+# Distance from player required to keep spawner active
+Player-Activation-Range: default
+
+# If true, disables AI on spawned mobs (recommended for performance)
+Disable-Mob-AI: default
+
+# Maximum number of this mob’s spawners allowed per chunk
+Allowed-Spawners-Per-Chunk: default
+
+# Override name/lore display in GUI (optional)
+OverrideDefaultDisplay: false
+DisplayName: "&f&l[&6Armadillo Spawner&f&l] &7Level &8{level}"
+DisplayLore:
+  - "&7Collect me with Silk Touch!"
+  - "&7Drops shell fragments!"
+
+#########################################
+# 📏 Spawner Requirements
+# Conditions that must be met for the spawner to function
+#########################################
+
+SpawnerRequirements:
+  Air: false                    # Requires air blocks above spawn position
+  Above-Sea-Level: false        # Must be above Y=63
+  Below-Sea-Level: false        # Must be below Y=63
+  Above-Y-Axis: false           # Requires being above a specific Y value
+  Below-Y-Axis: false           # Requires being below a specific Y value
+  Darkness: false               # Requires light level < 8
+  Total-Darkness: false         # Requires light level = 0
+  Light: false                  # Requires light level > 8
+  Max-Entities-Nearby: false    # Restricts spawning if nearby entity count exceeds threshold
+
+  # Fluid check: if true, must be within one of the following fluids
+  Fluid: false
+
+  # Biome restriction: requires the spawner to be in a specific biome
+  InBiome: true
+  # Full biome list: https://minecraft.fandom.com/wiki/Biome#List_of_biomes
+  AllowedBiomes:
+    - savanna
+    - savanna_plateau
+    - windswept_savanna
+
+  On-Ground: false              # Requires solid block below spawn location
+
+  # Specific block check: requires the spawner to be placed on a block in this list
+  On-Block: false
+  # Full block list: https://minecraft.fandom.com/wiki/Category:Blocks
+  AllowedBlocks:
+    - DIRT
+    - SAND
+    - GRASS_BLOCK
+
+#########################################
+# 🧱 Spawner Levels & Upgrade Paths
+# Define behavior and drops for each upgrade tier
+#########################################
+
+Spawner-Levels:
+  '1':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: default
+    CustomDrops:
+      '1':
+        Material: RABBIT_HIDE
+        Amount: 1
+        Drop-Percent: 40.0
+        Custom-Data: {}
+
+  '2':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: default
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: RABBIT_HIDE
+        Amount: 2
+        Drop-Percent: 55.0
+        Custom-Data: {}
+
+  '3':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: default
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: RABBIT_HIDE
+        Amount: 3
+        Drop-Percent: 70.0
+        Custom-Data: {}
+
+  '4':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: default
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: RABBIT_HIDE
+        Amount: 4
+        Drop-Percent: 85.0
+        Custom-Data: {}
+
+  '5':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: default
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: RABBIT_HIDE
+        Amount: 5
+        Drop-Percent: 100.0
+        Custom-Data: {}
+
+#########################################
+# ✅ End of Armadillo.yml Configuration
+#########################################

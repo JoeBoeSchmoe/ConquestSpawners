@@ -52,6 +52,13 @@ placeholders:
   use-placeholderapi: true
 
 # ===================================================
+# 📡 DecentHolograms Integration
+# Enables holographic displays for spawners if DecentHolograms is installed.
+# ===================================================
+holograms:
+  use-decentholograms: true
+
+# ===================================================
 # ⏱️ Cooldowns (in milliseconds)
 # Prevents spam and regulates plugin actions.
 # ===================================================
@@ -67,5 +74,44 @@ cooldowns:
 # ===================================================
 gui-settings:
   timeout-seconds: 60     # Auto-close after inactivity (0 = disabled)
+
+# ===================================================
+# ⚙️ Default Spawner Settings
+# Controls base behaviors for all spawners unless overridden.
+# ===================================================
+
+default-values:
+  # Number of blocks a player must be within for a spawner to be active.
+  player-activation-range: 32
+
+  # Disables AI for spawned mobs (recommended true for performance).
+  disable-mob-ai: true
+
+  # Max number of this specific spawner allowed per chunk.
+  allowed-spawners-per-chunk: 8
+
+  # Default number of mobs to spawn per cycle.
+  mob-count: 4
+
+  # Spawn delay between mob spawns (ticks).
+  spawn-delay: 8
+
+  # Default XP dropped per spawn.
+  xp-drop: 100
+
+  # Whether to allow default vanilla item drops. If false, drops dirt unless configured.
+  vanilla-drop: true
+
+  # Default cost to upgrade the spawner.
+  cost-to-upgrade: 1000
+
+  # ===================================================
+  # 🎨 Default Spawner Display Format
+  # Used if a specific mob config does not override it.
+  # ===================================================
+  default-display:
+    display-name: "&f&l[&b{Spawner} Spawner&f&l] &7Level &8{level}"
+    display-lore:
+      - "&7Collect me with Silk Touch!"
 
 # End of config.yml

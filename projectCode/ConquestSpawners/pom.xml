@@ -16,20 +16,32 @@
     <maven.compiler.target>${java.version}</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <paper.version>1.21.4-R0.1-SNAPSHOT</paper.version>
+    <decentholograms.version>2.8.3</decentholograms.version> <!-- ✅ Update as needed -->
   </properties>
 
   <repositories>
+    <!-- Paper -->
     <repository>
       <id>papermc</id>
       <url>https://repo.papermc.io/repository/maven-public/</url>
     </repository>
+
+    <!-- Vault -->
     <repository>
       <id>vault-repo</id>
       <url>https://nexus.hc.to/content/repositories/pub_releases/</url>
     </repository>
+
+    <!-- PlaceholderAPI -->
     <repository>
       <id>placeholderapi-repo</id>
       <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
+    </repository>
+
+    <!-- ✅ DecentHolograms via JitPack -->
+    <repository>
+      <id>jitpack.io</id>
+      <url>https://jitpack.io</url>
     </repository>
   </repositories>
 
@@ -57,12 +69,20 @@
       <version>2.11.5</version>
       <scope>provided</scope>
     </dependency>
+
+    <!-- ✅ DecentHolograms -->
+    <dependency>
+      <groupId>com.github.DecentSoftware-eu</groupId>
+      <artifactId>DecentHolograms</artifactId>
+      <version>${decentholograms.version}</version>
+      <scope>provided</scope>
+    </dependency>
   </dependencies>
 
   <build>
     <finalName>ConquestSpawners-1.0</finalName>
     <plugins>
-      <!-- Java Compiler Plugin -->
+      <!-- Compiler Plugin -->
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.11.0</version>
@@ -71,7 +91,7 @@
         </configuration>
       </plugin>
 
-      <!-- Shade Plugin (no relocation for now) -->
+      <!-- Shade Plugin -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-shade-plugin</artifactId>
@@ -79,9 +99,7 @@
         <executions>
           <execution>
             <phase>package</phase>
-            <goals>
-              <goal>shade</goal>
-            </goals>
+            <goals><goal>shade</goal></goals>
             <configuration>
               <minimizeJar>false</minimizeJar>
             </configuration>

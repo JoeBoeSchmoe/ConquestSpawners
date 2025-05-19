@@ -8,27 +8,35 @@ Spawner-Enabled: true
 
 # If false, uses global whitelist from config.yml
 Custom-Whitelisted-Worlds: false
+
+# List of worlds where this spawner is allowed (if Custom-Whitelisted-Worlds is true)
 Worlds:
   - world
   - world_nether
   - world_the_end
   - OtherWorld
 
-# Distance from player required to keep spawner active
+# Distance from player required to keep spawner active (in blocks)
 Player-Activation-Range: default
 
-# If true, disables AI on spawned mobs (not recommended for bosses)
+# If true, disables AI on spawned mobs (not recommended for boss mobs)
 Disable-Mob-AI: default
 
+# If true, disables collisions on spawned mobs (recommended to reduce entity lag)
+Disable-Collisions: default
+
+# Radius around the spawner to search for valid spawn positions (blocks)
+Spawn-Radius: default
+
 # Maximum number of this mob’s spawners allowed per chunk
-Allowed-Spawners-Per-Chunk: 1   # Typically boss-tier mobs are limited
+Allowed-Spawners-Per-Chunk: 1   # Limit to 1 per chunk due to boss status
 
 # Override name/lore display in GUI (optional)
 OverrideDefaultDisplay: false
-DisplayName: "&f&l[&9Elder Guardian Spawner&f&l] &7Level &8{level}"
+DisplayName: "<white><bold>[<gold>Elder Guardian Spawner</gold><white>]</bold> <white><bold>Level {level}</bold>"
 DisplayLore:
-  - "&7Collect me with Silk Touch!"
-  - "&7Ancient beast of the deep sea..."
+  - "<gray>Collect me with Silk Touch!"
+  - "<gray>Ancient beast of the deep sea..."
 
 #########################################
 # 📏 Spawner Requirements
@@ -36,30 +44,31 @@ DisplayLore:
 #########################################
 
 SpawnerRequirements:
-  Air: false                    # Elder Guardians must spawn in water
-  Above-Sea-Level: false
-  Below-Sea-Level: true         # Monument depth spawning
-  Above-Y-Axis: false
-  Below-Y-Axis: true
-  Darkness: false
-  Total-Darkness: false
-  Light: false
-  Max-Entities-Nearby: true     # Avoid boss stacking
+  Air: false                    # Requires no air blocks above spawn position (must be submerged)
+  Above-Sea-Level: false        # Must not be above Y=63
+  Below-Sea-Level: true         # Requires spawning below sea level (Y<63)
+  Above-Y-Axis: false           # Requires Y > custom value (if configured)
+  Below-Y-Axis: true            # Requires Y < custom value (typically monument depth, e.g. Y<40)
+  Darkness: false               # Light level < 8 not required
+  Total-Darkness: false         # Full darkness (light = 0) not required
+  Light: false                  # Light level > 8 not required
 
-  Fluid: true                   # Requires full water coverage
+  # Fluid check: must be submerged in water
+  Fluid: true
   AllowedFluids:
     - WATER
 
+  # Biome restriction: matches natural elder guardian biomes
   InBiome: false
-  # Ocean monument biomes
   AllowedBiomes:
     - deep_ocean
     - ocean
     - cold_ocean
     - deep_cold_ocean
 
-  On-Ground: false              # Floats in water
+  On-Ground: false              # Floats freely in water
 
+  # Specific block check: must be placed on one of these
   On-Block: true
   AllowedBlocks:
     - PRISMARINE
@@ -73,10 +82,10 @@ SpawnerRequirements:
 
 Spawner-Levels:
   '1':
-    SpawnerDelay: 600
-    MobCount: 1
-    XPDrop: 100
-    VanillaDrops: false
+    SpawnerDelay: 600           # Delay in ticks between spawn attempts
+    MobCount: 1                 # Spawns 1 Elder Guardian per cycle
+    XPDrop: 100                 # XP dropped on kill
+    VanillaDrops: false         # Use only custom-defined drops
     CustomDrops:
       '1':
         Material: PRISMARINE_SHARD
@@ -89,7 +98,7 @@ Spawner-Levels:
     MobCount: 1
     XPDrop: 150
     VanillaDrops: false
-    CostToUpgrade: 2500
+    CostToUpgrade: 2500         # Currency/item cost to upgrade to this level
     CustomDrops:
       '1':
         Material: PRISMARINE_CRYSTALS

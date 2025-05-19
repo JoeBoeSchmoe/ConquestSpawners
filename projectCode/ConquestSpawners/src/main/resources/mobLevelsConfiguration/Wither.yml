@@ -1,5 +1,5 @@
 #########################################
-# ☠️ Wither Spawner Configuration
+# 💀 Wither Spawner Configuration
 # Overrides and custom values for Wither-type spawners
 #########################################
 
@@ -7,26 +7,34 @@
 Spawner-Enabled: true
 
 # If false, uses global whitelist from config.yml
-Custom-Whitelisted-Worlds: true
+Custom-Whitelisted-Worlds: false
 Worlds:
-  - world_the_end
+  - world
   - world_nether
+  - world_the_end
+  - OtherWorld
 
-# Distance from player required to keep spawner active
-Player-Activation-Range: 64   # Extended range for boss awareness
+# Distance from player required to keep spawner active (in blocks)
+Player-Activation-Range: 64       # Long range due to boss behavior
 
-# AI is required — disabling it would break Wither behavior
+# If true, disables AI on spawned mobs (not recommended for Withers)
 Disable-Mob-AI: false
 
-# Limit Withers per chunk to avoid server-killing chaos
-Allowed-Spawners-Per-Chunk: 1
+# If true, disables collisions on spawned mobs (not recommended)
+Disable-Collisions: false
+
+# Radius around the spawner to search for valid spawn positions (blocks)
+Spawn-Radius: default
+
+# Maximum number of this mob’s spawners allowed per chunk
+Allowed-Spawners-Per-Chunk: 1     # Boss limit
 
 # Override name/lore display in GUI (optional)
 OverrideDefaultDisplay: false
-DisplayName: "&f&l[&8Wither Spawner&f&l] &7Level &8{level}"
+DisplayName: "<white><bold>[<dark_gray>Wither Spawner</dark_gray><white>]</bold> <white><bold>Level {level}</bold>"
 DisplayLore:
-  - "&7Collect me with Silk Touch!"
-  - "&7Unleashes destruction incarnate..."
+  - "<gray>Collect me with Silk Touch!"
+  - "<gray>Summons the most destructive force in the Nether..."
 
 #########################################
 # 📏 Spawner Requirements
@@ -34,33 +42,33 @@ DisplayLore:
 #########################################
 
 SpawnerRequirements:
-  Air: true
-  Above-Sea-Level: false
-  Below-Sea-Level: true
-  Above-Y-Axis: false
-  Below-Y-Axis: true
-  Darkness: false
-  Total-Darkness: false
-  Light: false
-  Max-Entities-Nearby: false
+  Air: true                      # Requires open air above spawn position
+  Above-Sea-Level: false         # No sea level restriction
+  Below-Sea-Level: false         # No depth restriction
+  Above-Y-Axis: false            # No Y-min constraint
+  Below-Y-Axis: false            # No Y-max constraint
+  Darkness: false                # Doesn't care about light
+  Total-Darkness: false          # Doesn't require full darkness
+  Light: false                   # Can spawn regardless of light level
 
   Fluid: false
 
   InBiome: false
-  # Wither-compatible chaos zones
+  # Any hellish or endgame biomes
   AllowedBiomes:
     - soul_sand_valley
+    - basalt_deltas
     - end_highlands
-    - deep_dark
+    - the_end
 
   On-Ground: false
 
-  On-Block: false
+  On-Block: true
   AllowedBlocks:
     - SOUL_SAND
+    - NETHERRACK
+    - END_STONE
     - OBSIDIAN
-    - BEDROCK
-    - ANCIENT_DEBRIS
     - DEEPSLATE
 
 #########################################
@@ -70,49 +78,49 @@ SpawnerRequirements:
 
 Spawner-Levels:
   '1':
-    SpawnerDelay: 800
+    SpawnerDelay: 1200
     MobCount: 1
     XPDrop: 500
     VanillaDrops: false
     CustomDrops:
       '1':
-        Material: SOUL_SAND
+        Material: COAL_BLOCK
         Amount: 2
-        Drop-Percent: 30.0
+        Drop-Percent: 40.0
         Custom-Data: {}
 
   '2':
     CostToUpgrade: 5000
     CustomDrops:
       '1':
-        Material: COAL_BLOCK
-        Amount: 2
-        Drop-Percent: 45.0
+        Material: SOUL_SAND
+        Amount: 8
+        Drop-Percent: 55.0
         Custom-Data: {}
 
   '3':
     CostToUpgrade: 8000
     CustomDrops:
       '1':
-        Material: BONE_BLOCK
-        Amount: 4
-        Drop-Percent: 60.0
+        Material: WITHER_ROSE
+        Amount: 2
+        Drop-Percent: 70.0
         Custom-Data: {}
 
   '4':
-    CostToUpgrade: 12000
+    CostToUpgrade: 10000
     CustomDrops:
       '1':
         Material: NETHER_STAR
         Amount: 1
-        Drop-Percent: 75.0
+        Drop-Percent: 85.0
         Custom-Data: {}
 
   '5':
-    CostToUpgrade: 20000
+    CostToUpgrade: 15000
     CustomDrops:
       '1':
-        Material: WITHER_SPAWN_EGG
+        Material: BEACON
         Amount: 1
         Drop-Percent: 100.0
         Custom-Data: {}

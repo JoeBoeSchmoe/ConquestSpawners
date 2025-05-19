@@ -8,27 +8,35 @@ Spawner-Enabled: true
 
 # If false, uses global whitelist from config.yml
 Custom-Whitelisted-Worlds: false
+
+# List of worlds where this spawner is allowed (if Custom-Whitelisted-Worlds is true)
 Worlds:
   - world
   - world_the_end
   - world_nether
   - OtherWorld
 
-# Distance from player required to keep spawner active
+# Distance from player required to keep spawner active (in blocks)
 Player-Activation-Range: default
 
 # If true, disables AI on spawned mobs (not recommended for casters)
 Disable-Mob-AI: default
 
+# If true, disables collisions on spawned mobs (optional)
+Disable-Collisions: default
+
+# Radius around the spawner to search for valid spawn positions (blocks)
+Spawn-Radius: default
+
 # Maximum number of this mob’s spawners allowed per chunk
-Allowed-Spawners-Per-Chunk: 2
+Allowed-Spawners-Per-Chunk: default
 
 # Override name/lore display in GUI (optional)
 OverrideDefaultDisplay: false
-DisplayName: "&f&l[&dEvoker Spawner&f&l] &7Level &8{level}"
+DisplayName: "<white><bold>[<gold>Evoker Spawner</gold><white>]</bold> <white><bold>Level {level}</bold>"
 DisplayLore:
-  - "&7Collect me with Silk Touch!"
-  - "&7Summons fangs and fright..."
+  - "<gray>Collect me with Silk Touch!"
+  - "<gray>Summons fangs and fright..."
 
 #########################################
 # 📏 Spawner Requirements
@@ -36,28 +44,33 @@ DisplayLore:
 #########################################
 
 SpawnerRequirements:
-  Air: true                     # Requires headspace
-  Above-Sea-Level: false
-  Below-Sea-Level: false
-  Above-Y-Axis: false
-  Below-Y-Axis: false
-  Darkness: false
-  Total-Darkness: false
-  Light: true                   # Spawns in ambient or daylight
-  Max-Entities-Nearby: false
+  Air: true                     # Requires air blocks above spawn position
+  Above-Sea-Level: false        # No Y=63 restriction
+  Below-Sea-Level: false        # No depth constraint
+  Above-Y-Axis: false           # Requires Y > custom value (if configured)
+  Below-Y-Axis: false           # Requires Y < custom value (if configured)
+  Darkness: false               # Light level < 8 not required
+  Total-Darkness: false         # Full darkness not required
+  Light: true                   # Requires light level > 8
 
+  # Fluid check: must not be inside fluid blocks
   Fluid: false
+  AllowedFluids:
+    - LAVA
+    - WATER
 
+  # Biome restriction: matches raid and mansion biomes
   InBiome: false
-  # Woodland mansion and raid locations
   AllowedBiomes:
     - dark_forest
     - plains
     - taiga
     - savanna
 
+  # Ground check: not required
   On-Ground: false
 
+  # Specific block check: spawner must be placed on one of the listed blocks
   On-Block: true
   AllowedBlocks:
     - STONE_BRICKS
@@ -72,10 +85,10 @@ SpawnerRequirements:
 
 Spawner-Levels:
   '1':
-    SpawnerDelay: default
-    MobCount: default
-    XPDrop: default
-    VanillaDrops: false
+    SpawnerDelay: default       # Delay in ticks between spawn attempts
+    MobCount: default           # Number of mobs to spawn per cycle
+    XPDrop: default             # XP dropped on kill
+    VanillaDrops: false         # Do not include vanilla loot table
     CustomDrops:
       '1':
         Material: EMERALD

@@ -1,34 +1,42 @@
 #########################################
-# 🧟‍♂️ Drowned Spawner Configuration
-# Overrides and custom values for Drowned-type spawners
+# 🐴 Donkey Spawner Configuration
+# Overrides and custom values for Donkey-type spawners
 #########################################
 
-# If false, Drowned spawners won't work or be placeable
+# If false, Donkey spawners won't work or be placeable
 Spawner-Enabled: true
 
 # If false, uses global whitelist from config.yml
 Custom-Whitelisted-Worlds: false
+
+# List of worlds where this spawner is allowed (if Custom-Whitelisted-Worlds is true)
 Worlds:
   - world
   - world_nether
   - world_the_end
   - OtherWorld
 
-# Distance from player required to keep spawner active
+# Distance from player required to keep spawner active (in blocks)
 Player-Activation-Range: default
 
-# If true, disables AI on spawned mobs (not recommended for hostile mobs)
+# If true, disables AI on spawned mobs (not recommended for utility mobs)
 Disable-Mob-AI: default
+
+# If true, disables collisions on spawned mobs (recommended to reduce entity lag)
+Disable-Collisions: default
+
+# Radius around the spawner to search for valid spawn positions (in blocks)
+Spawn-Radius: default
 
 # Maximum number of this mob’s spawners allowed per chunk
 Allowed-Spawners-Per-Chunk: default
 
 # Override name/lore display in GUI (optional)
 OverrideDefaultDisplay: false
-DisplayName: "&f&l[&3Drowned Spawner&f&l] &7Level &8{level}"
+DisplayName: "<white><bold>[<gold>Donkey Spawner</gold><white>]</bold> <white><bold>Level {level}</bold>"
 DisplayLore:
-  - "&7Collect me with Silk Touch!"
-  - "&7Risen from the depths to drag you under..."
+  - "<gray>Collect me with Silk Touch!"
+  - "<gray>Sturdy pack mule for your world."
 
 #########################################
 # 📏 Spawner Requirements
@@ -36,34 +44,39 @@ DisplayLore:
 #########################################
 
 SpawnerRequirements:
-  Air: false                    # Drowned must spawn in water
-  Above-Sea-Level: false
-  Below-Sea-Level: true         # Typically spawn below Y=63
-  Above-Y-Axis: false
-  Below-Y-Axis: false
-  Darkness: true                # Spawns in dark waters
-  Total-Darkness: false
-  Light: false
-  Max-Entities-Nearby: false
+  Air: true                     # Requires air blocks above spawn position
+  Above-Sea-Level: false        # Must be above Y=63
+  Below-Sea-Level: false        # Must be below Y=63
+  Above-Y-Axis: false           # Requires Y > custom value (if configured)
+  Below-Y-Axis: false           # Requires Y < custom value (if configured)
+  Darkness: false               # Requires light level < 8
+  Total-Darkness: false         # Requires light level = 0
+  Light: true                   # Requires light level > 8 (daylight)
 
-  Fluid: true                   # Must be submerged
+  # Fluid check: if true, must be within one of the allowed fluids
+  Fluid: false
   AllowedFluids:
+    - LAVA
     - WATER
 
+  # Biome restriction: requires the spawner to be in a specific biome
   InBiome: false
-  # Swamp and ocean biomes are their home
   AllowedBiomes:
-    - river
-    - ocean
-    - swamp
-    - deep_ocean
-    - lukewarm_ocean
+    - plains
+    - savanna
+    - windswept_savanna
+    - meadow
 
-  On-Ground: false              # They float or swim — no ground needed
+  On-Ground: false              # Requires solid block below spawn location
 
+  # Specific block check: spawner must be placed on one of the listed blocks
   On-Block: false
   AllowedBlocks:
-    - WATER
+    - GRASS_BLOCK
+    - DIRT
+    - HAY_BLOCK
+    - COARSE_DIRT
+    - FARMLAND
 
 #########################################
 # 🧱 Spawner Levels & Upgrade Paths
@@ -72,13 +85,13 @@ SpawnerRequirements:
 
 Spawner-Levels:
   '1':
-    SpawnerDelay: default
-    MobCount: default
-    XPDrop: default
-    VanillaDrops: false
+    SpawnerDelay: default       # Delay in ticks between spawn attempts
+    MobCount: default           # Number of mobs to spawn per cycle
+    XPDrop: default             # Amount of XP dropped
+    VanillaDrops: false         # If true, vanilla loot drops are included
     CustomDrops:
       '1':
-        Material: GOLD_INGOT
+        Material: LEATHER
         Amount: 1
         Drop-Percent: 30.0
         Custom-Data: {}
@@ -88,10 +101,10 @@ Spawner-Levels:
     MobCount: default
     XPDrop: default
     VanillaDrops: false
-    CostToUpgrade: default
+    CostToUpgrade: default      # Cost required to upgrade to this level
     CustomDrops:
       '1':
-        Material: COPPER_INGOT
+        Material: LEATHER
         Amount: 2
         Drop-Percent: 45.0
         Custom-Data: {}
@@ -104,7 +117,7 @@ Spawner-Levels:
     CostToUpgrade: default
     CustomDrops:
       '1':
-        Material: NAUTILUS_SHELL
+        Material: CHEST
         Amount: 1
         Drop-Percent: 60.0
         Custom-Data: {}
@@ -117,9 +130,9 @@ Spawner-Levels:
     CostToUpgrade: default
     CustomDrops:
       '1':
-        Material: TRIDENT
-        Amount: 1
-        Drop-Percent: 10.0
+        Material: HAY_BLOCK
+        Amount: 2
+        Drop-Percent: 80.0
         Custom-Data: {}
 
   '5':
@@ -130,11 +143,11 @@ Spawner-Levels:
     CostToUpgrade: default
     CustomDrops:
       '1':
-        Material: TRIDENT
+        Material: SADDLE
         Amount: 1
         Drop-Percent: 100.0
         Custom-Data: {}
 
 #########################################
-# ✅ End of Drowned.yml Configuration
+# ✅ End of Donkey.yml Configuration
 #########################################

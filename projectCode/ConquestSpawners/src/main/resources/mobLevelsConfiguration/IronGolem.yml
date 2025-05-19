@@ -14,21 +14,27 @@ Worlds:
   - world_nether
   - OtherWorld
 
-# Distance from player required to keep spawner active
+# Distance from player required to keep spawner active (in blocks)
 Player-Activation-Range: 48     # Keeps it active at guard post range
 
 # If true, disables AI on spawned mobs (not recommended for utility mobs)
 Disable-Mob-AI: false
+
+# If true, disables collisions on spawned mobs (recommended to reduce entity lag)
+Disable-Collisions: default
+
+# Radius around the spawner to search for valid spawn positions (blocks)
+Spawn-Radius: default
 
 # Maximum number of this mob’s spawners allowed per chunk
 Allowed-Spawners-Per-Chunk: 2
 
 # Override name/lore display in GUI (optional)
 OverrideDefaultDisplay: false
-DisplayName: "&f&l[&7Iron Golem Spawner&f&l] &7Level &8{level}"
+DisplayName: "<white><bold>[<gold>Iron Golem Spawner</gold><white>]</bold> <white><bold>Level {level}</bold>"
 DisplayLore:
-  - "&7Collect me with Silk Touch!"
-  - "&7The village’s ancient defender..."
+  - "<gray>Collect me with Silk Touch!"
+  - "<gray>The village’s ancient defender..."
 
 #########################################
 # 📏 Spawner Requirements
@@ -36,19 +42,23 @@ DisplayLore:
 #########################################
 
 SpawnerRequirements:
-  Air: true
-  Above-Sea-Level: false
-  Below-Sea-Level: false
-  Above-Y-Axis: false
-  Below-Y-Axis: false
-  Darkness: false
-  Total-Darkness: false
-  Light: true                   # Iron Golems spawn in any light, but favor open areas
-  Max-Entities-Nearby: true     # Avoid spamming golems
+  Air: true                     # Requires air blocks above spawn position
+  Above-Sea-Level: false        # No sea level requirement
+  Below-Sea-Level: false        # No below-sea constraint
+  Above-Y-Axis: false           # Requires Y > custom value (if configured)
+  Below-Y-Axis: false           # Requires Y < custom value (if configured)
+  Darkness: false               # Can spawn in any light level
+  Total-Darkness: false         # Pitch black not required
+  Light: true                   # Golems are often seen in daylight
 
+  # Fluid check: must not be submerged
   Fluid: false
+  AllowedFluids:
+    - WATER
+    - LAVA
 
-  InBiome: false                # They can exist anywhere if built
+  # Biome restriction: optional, matches typical village settings
+  InBiome: false
   AllowedBiomes:
     - plains
     - savanna
@@ -56,8 +66,9 @@ SpawnerRequirements:
     - taiga
     - snowy_plains
 
-  On-Ground: false
+  On-Ground: false              # Ground check not required
 
+  # Specific block check: spawner must be placed on one of these
   On-Block: true
   AllowedBlocks:
     - GRASS_BLOCK

@@ -13,17 +13,27 @@ Worlds:
   - world_the_end
   - OtherWorld
 
-# Use plugin default values below unless specifically overridden
+# Distance from player required to keep spawner active (in blocks)
 Player-Activation-Range: default
+
+# If true, disables AI on spawned mobs (not recommended for aggressive mobs)
 Disable-Mob-AI: default
+
+# If true, disables collisions on spawned mobs (optional)
+Disable-Collisions: default
+
+# Radius around the spawner to search for valid spawn positions (blocks)
+Spawn-Radius: default
+
+# Maximum number of this mob’s spawners allowed per chunk
 Allowed-Spawners-Per-Chunk: 1
 
 # Override name/lore display in GUI (optional)
 OverrideDefaultDisplay: false
-DisplayName: "&f&l[&4Ravager Spawner&f&l] &7Level &8{level}"
+DisplayName: "<white><bold>[<dark_red>Ravager Spawner</dark_red><white>]</bold> <white><bold>Level {level}</bold>"
 DisplayLore:
-  - "&7Collect me with Silk Touch!"
-  - "&7Wrecks crops, villagers, and hopes."
+  - "<gray>Collect me with Silk Touch!"
+  - "<gray>Wrecks crops, villagers, and hopes."
 
 #########################################
 # 📏 Spawner Requirements
@@ -31,19 +41,19 @@ DisplayLore:
 #########################################
 
 SpawnerRequirements:
-  Air: true
-  Above-Sea-Level: false
-  Below-Sea-Level: false
-  Above-Y-Axis: false
-  Below-Y-Axis: false
-  Darkness: false
-  Total-Darkness: false
-  Light: true
-  Max-Entities-Nearby: false
+  Air: true                    # Requires open air above spawn position
+  Above-Sea-Level: false       # No sea level restriction
+  Below-Sea-Level: false       # No depth restriction
+  Above-Y-Axis: false          # Requires Y > custom value (if configured)
+  Below-Y-Axis: false          # Requires Y < custom value (if configured)
+  Darkness: false              # Light level < 8 not required
+  Total-Darkness: false        # Light level = 0 not required
+  Light: true                  # Requires light level > 8
 
   Fluid: false
 
   InBiome: false
+  # Biomes where ravagers might appear during raids
   AllowedBiomes:
     - plains
     - savanna
@@ -79,11 +89,11 @@ Spawner-Levels:
         Custom-Data: {}
 
   '2':
-    CostToUpgrade: default
     SpawnerDelay: default
     MobCount: default
     XPDrop: default
     VanillaDrops: false
+    CostToUpgrade: default
     CustomDrops:
       '1':
         Material: EMERALD
@@ -92,11 +102,11 @@ Spawner-Levels:
         Custom-Data: {}
 
   '3':
-    CostToUpgrade: default
     SpawnerDelay: default
     MobCount: default
     XPDrop: default
     VanillaDrops: false
+    CostToUpgrade: default
     CustomDrops:
       '1':
         Material: IRON_BLOCK
@@ -105,11 +115,11 @@ Spawner-Levels:
         Custom-Data: {}
 
   '4':
-    CostToUpgrade: default
     SpawnerDelay: default
     MobCount: default
     XPDrop: default
     VanillaDrops: false
+    CostToUpgrade: default
     CustomDrops:
       '1':
         Material: RAVAGER_SPAWN_EGG
@@ -118,11 +128,11 @@ Spawner-Levels:
         Custom-Data: {}
 
   '5':
-    CostToUpgrade: default
     SpawnerDelay: default
     MobCount: default
     XPDrop: default
     VanillaDrops: false
+    CostToUpgrade: default
     CustomDrops:
       '1':
         Material: NETHERITE_INGOT

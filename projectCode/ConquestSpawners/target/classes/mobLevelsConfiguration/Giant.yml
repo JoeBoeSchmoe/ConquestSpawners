@@ -8,27 +8,35 @@ Spawner-Enabled: true
 
 # If false, uses global whitelist from config.yml
 Custom-Whitelisted-Worlds: false
+
+# List of worlds where this spawner is allowed (if Custom-Whitelisted-Worlds is true)
 Worlds:
   - world
   - world_the_end
   - world_nether
   - OtherWorld
 
-# Distance from player required to keep spawner active
+# Distance from player required to keep spawner active (in blocks)
 Player-Activation-Range: 64     # Large mobs should activate from further away
 
 # If true, disables AI on spawned mobs (not recommended for a boss)
 Disable-Mob-AI: false
+
+# If true, disables collisions on spawned mobs (optional for performance)
+Disable-Collisions: false
+
+# Radius around the spawner to search for valid spawn positions (blocks)
+Spawn-Radius: default
 
 # Maximum number of this mob’s spawners allowed per chunk
 Allowed-Spawners-Per-Chunk: 1   # One giant per chunk, it's massive
 
 # Override name/lore display in GUI (optional)
 OverrideDefaultDisplay: false
-DisplayName: "&f&l[&2Giant Spawner&f&l] &7Level &8{level}"
+DisplayName: "<white><bold>[<gold>Giant Spawner</gold><white>]</bold> <white><bold>Level {level}</bold>"
 DisplayLore:
-  - "&7Collect me with Silk Touch!"
-  - "&7A towering undead brute..."
+  - "<gray>Collect me with Silk Touch!"
+  - "<gray>A towering undead brute..."
 
 #########################################
 # 📏 Spawner Requirements
@@ -36,28 +44,32 @@ DisplayLore:
 #########################################
 
 SpawnerRequirements:
-  Air: true                     # Needs very tall air space
-  Above-Sea-Level: false
-  Below-Sea-Level: false
-  Above-Y-Axis: false
-  Below-Y-Axis: false
-  Darkness: false
-  Total-Darkness: false
-  Light: true
-  Max-Entities-Nearby: true     # Prevent stacking of multiple giants
+  Air: true                     # Requires a tall air column to spawn
+  Above-Sea-Level: false        # No restriction above sea level
+  Below-Sea-Level: false        # No restriction below sea level
+  Above-Y-Axis: false           # Requires Y > custom value (if configured)
+  Below-Y-Axis: false           # Requires Y < custom value (if configured)
+  Darkness: false               # Can spawn in any light level
+  Total-Darkness: false         # Full darkness not required
+  Light: true                   # Spawns in light > 8
 
+  # Fluid check: must not spawn in or near fluids
   Fluid: false
+  AllowedFluids:
+    - LAVA
+    - WATER
 
+  # Biome restriction: lore-friendly overworld settings
   InBiome: false
-  # Giants are fantasy — biome-free by default
   AllowedBiomes:
     - plains
     - savanna
     - dark_forest
     - mountain_meadow
 
-  On-Ground: false
+  On-Ground: false              # May float slightly due to size
 
+  # Specific block check: ground beneath spawner must match one of these
   On-Block: true
   AllowedBlocks:
     - STONE
@@ -72,10 +84,10 @@ SpawnerRequirements:
 
 Spawner-Levels:
   '1':
-    SpawnerDelay: 800
-    MobCount: 1
-    XPDrop: 200
-    VanillaDrops: false
+    SpawnerDelay: 800           # Delay in ticks between spawn attempts
+    MobCount: 1                 # One Giant per spawn
+    XPDrop: 200                 # Base experience dropped
+    VanillaDrops: false         # Use custom drops only
     CustomDrops:
       '1':
         Material: IRON_SWORD

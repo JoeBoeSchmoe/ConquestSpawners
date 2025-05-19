@@ -14,21 +14,27 @@ Worlds:
   - world_nether
   - OtherWorld
 
-# Distance from player required to keep spawner active
+# Distance from player required to keep spawner active (in blocks)
 Player-Activation-Range: 48     # Larger range for airborne mobs
 
 # If true, disables AI on spawned mobs (not recommended for phantoms)
 Disable-Mob-AI: false
+
+# If true, disables collisions on spawned mobs (optional)
+Disable-Collisions: default
+
+# Radius around the spawner to search for valid spawn positions (blocks)
+Spawn-Radius: default
 
 # Maximum number of this mob’s spawners allowed per chunk
 Allowed-Spawners-Per-Chunk: 2
 
 # Override name/lore display in GUI (optional)
 OverrideDefaultDisplay: false
-DisplayName: "&f&l[&5Phantom Spawner&f&l] &7Level &8{level}"
+DisplayName: "<white><bold>[<dark_purple>Phantom Spawner</dark_purple><white>]</bold> <white><bold>Level {level}</bold>"
 DisplayLore:
-  - "&7Collect me with Silk Touch!"
-  - "&7Haunts the skies above sleepless players."
+  - "<gray>Collect me with Silk Touch!"
+  - "<gray>Haunts the skies above sleepless players."
 
 #########################################
 # 📏 Spawner Requirements
@@ -36,29 +42,34 @@ DisplayLore:
 #########################################
 
 SpawnerRequirements:
-  Air: true                    # Must spawn in open sky
-  Above-Sea-Level: false
-  Below-Sea-Level: false
-  Above-Y-Axis: false
-  Below-Y-Axis: false
-  Darkness: false
-  Total-Darkness: true         # Night sky only
-  Light: false
-  Max-Entities-Nearby: false
+  Air: true                     # Requires air blocks above spawn position
+  Above-Sea-Level: false        # No elevation constraints
+  Below-Sea-Level: false        # No depth constraint
+  Above-Y-Axis: false           # Requires Y > custom value (if configured)
+  Below-Y-Axis: false           # Requires Y < custom value (if configured)
+  Darkness: false               # Light level < 8 not enforced
+  Total-Darkness: true          # Requires pitch black conditions (e.g., night sky)
+  Light: false                  # Light level > 8 not allowed
 
+  # Fluid check: should not be submerged
   Fluid: false
+  AllowedFluids:
+    - LAVA
+    - WATER
 
-  InBiome: false               # Not biome-locked by default
+  # Biome restriction: suitable phantom habitats
+  InBiome: false
   AllowedBiomes:
     - plains
     - dark_forest
     - end_highlands
 
-  On-Ground: false             # Floating mob
+  On-Ground: false              # Flying mob; no ground required
 
+  # Specific block check: phantoms spawn in open air
   On-Block: false
   AllowedBlocks:
-    - AIR                      # Placeholder for logic compliance
+    - AIR
 
 #########################################
 # 🧱 Spawner Levels & Upgrade Paths

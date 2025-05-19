@@ -20,15 +20,21 @@ Player-Activation-Range: default
 # If true, disables AI on spawned mobs (recommended for performance)
 Disable-Mob-AI: default
 
+# If true, disables collisions on spawned mobs (recommended to reduce entity lag)
+Disable-Collisions: default
+
+# Radius around the spawner to search for valid spawn positions (blocks)
+Spawn-Radius: default
+
 # Maximum number of this mob’s spawners allowed per chunk
 Allowed-Spawners-Per-Chunk: default
 
 # Override name/lore display in GUI (optional)
 OverrideDefaultDisplay: false
-DisplayName: "&f&l[&bBreeze Spawner&f&l] &7Level &8{level}"
+DisplayName: "<white><bold>[<gold>Breeze Spawner</gold><white>]</bold> <white><bold>Level {level}</bold>"
 DisplayLore:
-  - "&7Collect me with Silk Touch!"
-  - "&7Unleashes the wind itself..."
+  - "<gray>Collect me with Silk Touch!"
+  - "<gray>Unleashes the wind itself..."
 
 #########################################
 # 📏 Spawner Requirements
@@ -44,19 +50,23 @@ SpawnerRequirements:
   Darkness: false               # Requires light level < 8
   Total-Darkness: false         # Requires light level = 0
   Light: false                  # Requires light level > 8
-  Max-Entities-Nearby: false    # Restricts spawning if nearby entity count exceeds threshold
 
   # Fluid check: if true, must be within one of the following fluids
   Fluid: false
+  AllowedFluids:
+    - LAVA
+    - WATER
 
   # Biome restriction: requires the spawner to be in a specific biome
   InBiome: false
   # Breeze spawns in structures, not biomes
+  AllowedBiomes:
+    - plains
 
   On-Ground: false              # Requires solid block below spawn location
 
   # Specific block check: requires the spawner to be placed on a block in this list
-  On-Block: true
+  On-Block: false
   # Full block list: https://minecraft.fandom.com/wiki/Category:Blocks
   AllowedBlocks:
     - CHISELED_STONE_BRICKS

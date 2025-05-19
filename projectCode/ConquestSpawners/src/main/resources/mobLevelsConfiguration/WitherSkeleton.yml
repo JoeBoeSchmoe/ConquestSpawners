@@ -1,5 +1,5 @@
 #########################################
-# 💀 Wither Skeleton Spawner Configuration
+# ☠️ Wither Skeleton Spawner Configuration
 # Overrides and custom values for Wither Skeleton-type spawners
 #########################################
 
@@ -11,21 +11,27 @@ Custom-Whitelisted-Worlds: true
 Worlds:
   - world_nether
 
-# Distance from player required to keep spawner active
+# Distance from player required to keep spawner active (in blocks)
 Player-Activation-Range: default
 
-# Disabling AI not recommended for Wither Skeletons
-Disable-Mob-AI: default
+# If true, disables AI on spawned mobs (not recommended for hostile mobs)
+Disable-Mob-AI: false
+
+# If true, disables collisions on spawned mobs (optional)
+Disable-Collisions: default
+
+# Radius around the spawner to search for valid spawn positions (blocks)
+Spawn-Radius: default
 
 # Maximum number of this mob’s spawners allowed per chunk
 Allowed-Spawners-Per-Chunk: default
 
 # Override name/lore display in GUI (optional)
 OverrideDefaultDisplay: false
-DisplayName: "&f&l[&8Wither Skeleton Spawner&f&l] &7Level &8{level}"
+DisplayName: "<white><bold>[<dark_gray>Wither Skeleton Spawner</dark_gray><white>]</bold> <white><bold>Level {level}</bold>"
 DisplayLore:
-  - "&7Collect me with Silk Touch!"
-  - "&7Dark knights of the nether fortress."
+  - "<gray>Collect me with Silk Touch!"
+  - "<gray>Guards Nether fortresses with fiery blades."
 
 #########################################
 # 📏 Spawner Requirements
@@ -33,20 +39,19 @@ DisplayLore:
 #########################################
 
 SpawnerRequirements:
-  Air: true
-  Above-Sea-Level: false
-  Below-Sea-Level: true
-  Above-Y-Axis: false
-  Below-Y-Axis: false
-  Darkness: false
-  Total-Darkness: false
-  Light: false
-  Max-Entities-Nearby: false
+  Air: true                      # Requires open air above spawn position
+  Above-Sea-Level: false         # No sea level restriction
+  Below-Sea-Level: false         # No depth restriction
+  Above-Y-Axis: false            # No Y-min constraint
+  Below-Y-Axis: false            # No Y-max constraint
+  Darkness: false                # Light level < 8 not required
+  Total-Darkness: false          # Doesn't need pitch-black
+  Light: false                   # Can spawn regardless of light
 
   Fluid: false
 
   InBiome: false
-  # Fortress and nether zones
+  # Fortresses and Nether terrain
   AllowedBiomes:
     - soul_sand_valley
     - nether_wastes
@@ -54,11 +59,11 @@ SpawnerRequirements:
 
   On-Ground: false
 
-  On-Block: false
+  On-Block: true
   AllowedBlocks:
     - NETHER_BRICKS
     - SOUL_SAND
-    - BASALT
+    - NETHERRACK
     - BLACKSTONE
 
 #########################################
@@ -101,16 +106,16 @@ Spawner-Levels:
     CostToUpgrade: default
     CustomDrops:
       '1':
-        Material: WITHER_SKELETON_SKULL
-        Amount: 1
-        Drop-Percent: 25.0
+        Material: BLAZE_POWDER
+        Amount: 2
+        Drop-Percent: 85.0
         Custom-Data: {}
 
   '5':
     CostToUpgrade: default
     CustomDrops:
       '1':
-        Material: WITHER_SKELETON_SPAWN_EGG
+        Material: WITHER_SKELETON_SKULL
         Amount: 1
         Drop-Percent: 100.0
         Custom-Data: {}

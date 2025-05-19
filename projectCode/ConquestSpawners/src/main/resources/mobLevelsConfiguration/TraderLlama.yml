@@ -1,5 +1,5 @@
 #########################################
-# 🦙 Trader Llama Spawner Configuration
+# 🧳 Trader Llama Spawner Configuration
 # Overrides and custom values for Trader Llama-type spawners
 #########################################
 
@@ -14,21 +14,27 @@ Worlds:
   - world_the_end
   - OtherWorld
 
-# Distance from player required to keep spawner active
+# Distance from player required to keep spawner active (in blocks)
 Player-Activation-Range: default
 
-# If true, disables AI on spawned mobs (useful for passive displays)
+# If true, disables AI on spawned mobs (not recommended for caravan mobs)
 Disable-Mob-AI: default
+
+# If true, disables collisions on spawned mobs (optional)
+Disable-Collisions: default
+
+# Radius around the spawner to search for valid spawn positions (blocks)
+Spawn-Radius: default
 
 # Maximum number of this mob’s spawners allowed per chunk
 Allowed-Spawners-Per-Chunk: default
 
 # Override name/lore display in GUI (optional)
 OverrideDefaultDisplay: false
-DisplayName: "&f&l[&eTrader Llama Spawner&f&l] &7Level &8{level}"
+DisplayName: "<white><bold>[<yellow>Trader Llama Spawner</yellow><white>]</bold> <white><bold>Level {level}</bold>"
 DisplayLore:
-  - "&7Collect me with Silk Touch!"
-  - "&7A merchant's loyal companion."
+  - "<gray>Collect me with Silk Touch!"
+  - "<gray>Wanders with trades and attitude."
 
 #########################################
 # 📏 Spawner Requirements
@@ -36,36 +42,34 @@ DisplayLore:
 #########################################
 
 SpawnerRequirements:
-  Air: true
-  Above-Sea-Level: false
-  Below-Sea-Level: false
-  Above-Y-Axis: false
-  Below-Y-Axis: false
-  Darkness: false
-  Total-Darkness: false
-  Light: true
-  Max-Entities-Nearby: false
+  Air: true                      # Requires open air above spawn position
+  Above-Sea-Level: false         # No sea level restriction
+  Below-Sea-Level: false         # No depth restriction
+  Above-Y-Axis: false            # No Y-min constraint
+  Below-Y-Axis: false            # No Y-max constraint
+  Darkness: false                # Doesn't need low light
+  Total-Darkness: false          # Not required
+  Light: true                    # Daylight preferred
 
   Fluid: false
 
   InBiome: false
-  # Wandering trader-compatible areas
+  # Common wandering trader paths
   AllowedBiomes:
     - plains
     - savanna
     - taiga
-    - forest
-    - snowy_plains
+    - wooded_badlands
 
   On-Ground: false
 
-  On-Block: false
+  On-Block: true
   AllowedBlocks:
     - GRASS_BLOCK
-    - DIRT_PATH
     - COARSE_DIRT
-    - STONE
     - HAY_BLOCK
+    - DIRT
+    - DIRT_PATH
 
 #########################################
 # 🧱 Spawner Levels & Upgrade Paths
@@ -82,7 +86,7 @@ Spawner-Levels:
       '1':
         Material: LEAD
         Amount: 1
-        Drop-Percent: 40.0
+        Drop-Percent: 35.0
         Custom-Data: {}
 
   '2':
@@ -90,8 +94,8 @@ Spawner-Levels:
     CustomDrops:
       '1':
         Material: LEATHER
-        Amount: 1
-        Drop-Percent: 55.0
+        Amount: 2
+        Drop-Percent: 50.0
         Custom-Data: {}
 
   '3':
@@ -100,14 +104,14 @@ Spawner-Levels:
       '1':
         Material: HAY_BLOCK
         Amount: 1
-        Drop-Percent: 70.0
+        Drop-Percent: 65.0
         Custom-Data: {}
 
   '4':
     CostToUpgrade: default
     CustomDrops:
       '1':
-        Material: CHEST
+        Material: TRADER_LLAMA_SPAWN_EGG
         Amount: 1
         Drop-Percent: 85.0
         Custom-Data: {}
@@ -116,7 +120,7 @@ Spawner-Levels:
     CostToUpgrade: default
     CustomDrops:
       '1':
-        Material: TRADER_LLAMA_SPAWN_EGG
+        Material: NAME_TAG
         Amount: 1
         Drop-Percent: 100.0
         Custom-Data: {}

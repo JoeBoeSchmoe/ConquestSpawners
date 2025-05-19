@@ -8,27 +8,35 @@ Spawner-Enabled: true
 
 # If false, uses global whitelist from config.yml
 Custom-Whitelisted-Worlds: false
+
+# List of worlds where this spawner is allowed (if Custom-Whitelisted-Worlds is true)
 Worlds:
   - world
   - world_the_end
   - world_nether
   - OtherWorld
 
-# Distance from player required to keep spawner active
+# Distance from player required to keep spawner active (in blocks)
 Player-Activation-Range: default
 
-# If true, disables AI on spawned mobs (not recommended for Enderman)
+# If true, disables AI on spawned mobs (not recommended for Endermen)
 Disable-Mob-AI: default
+
+# If true, disables collisions on spawned mobs (recommended to reduce entity lag)
+Disable-Collisions: default
+
+# Radius around the spawner to search for valid spawn positions (blocks)
+Spawn-Radius: default
 
 # Maximum number of this mob’s spawners allowed per chunk
 Allowed-Spawners-Per-Chunk: default
 
 # Override name/lore display in GUI (optional)
 OverrideDefaultDisplay: false
-DisplayName: "&f&l[&5Enderman Spawner&f&l] &7Level &8{level}"
+DisplayName: "<white><bold>[<gold>Enderman Spawner</gold><white>]</bold> <white><bold>Level {level}</bold>"
 DisplayLore:
-  - "&7Collect me with Silk Touch!"
-  - "&7Don’t look into their eyes..."
+  - "<gray>Collect me with Silk Touch!"
+  - "<gray>Don’t look into their eyes..."
 
 #########################################
 # 📏 Spawner Requirements
@@ -36,20 +44,23 @@ DisplayLore:
 #########################################
 
 SpawnerRequirements:
-  Air: true                     # Needs air blocks to spawn
-  Above-Sea-Level: false
-  Below-Sea-Level: false
-  Above-Y-Axis: false
-  Below-Y-Axis: false
-  Darkness: true                # Spawns in light level < 8
-  Total-Darkness: false
-  Light: false
-  Max-Entities-Nearby: false
+  Air: true                     # Requires air blocks above spawn position
+  Above-Sea-Level: false        # Not restricted to sea level height
+  Below-Sea-Level: false        # Not restricted to below sea level
+  Above-Y-Axis: false           # Requires Y > custom value (if configured)
+  Below-Y-Axis: false           # Requires Y < custom value (if configured)
+  Darkness: true                # Requires light level < 8
+  Total-Darkness: false         # Does not require full darkness
+  Light: false                  # Should not spawn in high light
 
-  Fluid: false                  # Will not spawn in water or lava
+  # Fluid check: must not be in fluid blocks
+  Fluid: false
+  AllowedFluids:
+    - LAVA
+    - WATER
 
+  # Biome restriction: matches natural Enderman biomes
   InBiome: false
-  # End and overworld biomes
   AllowedBiomes:
     - end_highlands
     - end_midlands
@@ -57,8 +68,10 @@ SpawnerRequirements:
     - desert
     - savanna
 
+  # Ground check: if true, requires solid block below spawn location
   On-Ground: false
 
+  # Specific block check: spawner must be placed on one of the listed blocks
   On-Block: true
   AllowedBlocks:
     - END_STONE
@@ -74,10 +87,10 @@ SpawnerRequirements:
 
 Spawner-Levels:
   '1':
-    SpawnerDelay: default
-    MobCount: default
-    XPDrop: default
-    VanillaDrops: false
+    SpawnerDelay: default       # Delay in ticks between spawn attempts
+    MobCount: default           # Number of mobs to spawn per cycle
+    XPDrop: default             # XP dropped on kill
+    VanillaDrops: false         # Do not include vanilla loot table
     CustomDrops:
       '1':
         Material: ENDER_PEARL

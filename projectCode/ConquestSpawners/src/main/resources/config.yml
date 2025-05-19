@@ -87,6 +87,12 @@ default-values:
   # Disables AI for spawned mobs (recommended true for performance).
   disable-mob-ai: true
 
+  # Disables collisions for spawned mobs (recommended true to reduce physics lag).
+  disable-collisions: true
+
+  # Default radius around the spawner to search for valid spawn positions.
+  spawn-radius: 4
+
   # Max number of this specific spawner allowed per chunk.
   allowed-spawners-per-chunk: 8
 

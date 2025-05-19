@@ -14,21 +14,27 @@ Worlds:
   - world_the_end
   - OtherWorld
 
-# Distance from player required to keep spawner active
+# Distance from player required to keep spawner active (in blocks)
 Player-Activation-Range: default
 
-# If true, disables AI on spawned mobs (not recommended — tadpoles need movement)
+# If true, disables AI on spawned mobs (usually fine for tadpoles)
 Disable-Mob-AI: default
+
+# If true, disables collisions on spawned mobs (optional for water display)
+Disable-Collisions: default
+
+# Radius around the spawner to search for valid spawn positions (blocks)
+Spawn-Radius: default
 
 # Maximum number of this mob’s spawners allowed per chunk
 Allowed-Spawners-Per-Chunk: default
 
 # Override name/lore display in GUI (optional)
 OverrideDefaultDisplay: false
-DisplayName: "&f&l[&aTadpole Spawner&f&l] &7Level &8{level}"
+DisplayName: "<white><bold>[<green>Tadpole Spawner</green><white>]</bold> <white><bold>Level {level}</bold>"
 DisplayLore:
-  - "&7Collect me with Silk Touch!"
-  - "&7Wiggles into froggy transformation..."
+  - "<gray>Collect me with Silk Touch!"
+  - "<gray>Swims today, leaps tomorrow..."
 
 #########################################
 # 📏 Spawner Requirements
@@ -36,27 +42,25 @@ DisplayLore:
 #########################################
 
 SpawnerRequirements:
-  Air: false
-  Above-Sea-Level: false
-  Below-Sea-Level: true
-  Above-Y-Axis: false
-  Below-Y-Axis: false
-  Darkness: false
-  Total-Darkness: false
-  Light: true
-  Max-Entities-Nearby: false
+  Air: false                     # Spawns in water, not air
+  Above-Sea-Level: false         # No sea level restriction
+  Below-Sea-Level: true          # Typically underwater
+  Above-Y-Axis: false            # No Y-min constraint
+  Below-Y-Axis: false            # No Y-max constraint
+  Darkness: false                # Can spawn in any light level
+  Total-Darkness: false          # Full darkness not required
+  Light: true                    # Daylight spawns are fine
 
   Fluid: true
   AllowedFluids:
     - WATER
 
   InBiome: false
-  # Amphibian habitats
+  # Amphibious, swampy habitats
   AllowedBiomes:
     - swamp
     - mangrove_swamp
     - river
-    - lush_caves
 
   On-Ground: false
 
@@ -79,14 +83,14 @@ Spawner-Levels:
       '1':
         Material: WATER_BUCKET
         Amount: 1
-        Drop-Percent: 35.0
+        Drop-Percent: 30.0
         Custom-Data: {}
 
   '2':
     CostToUpgrade: default
     CustomDrops:
       '1':
-        Material: SEAGRASS
+        Material: SLIME_BALL
         Amount: 1
         Drop-Percent: 50.0
         Custom-Data: {}
@@ -95,8 +99,8 @@ Spawner-Levels:
     CostToUpgrade: default
     CustomDrops:
       '1':
-        Material: SLIME_BALL
-        Amount: 1
+        Material: LILY_PAD
+        Amount: 2
         Drop-Percent: 65.0
         Custom-Data: {}
 
@@ -104,16 +108,16 @@ Spawner-Levels:
     CostToUpgrade: default
     CustomDrops:
       '1':
-        Material: LILY_PAD
-        Amount: 2
-        Drop-Percent: 85.0
+        Material: SEAGRASS
+        Amount: 4
+        Drop-Percent: 80.0
         Custom-Data: {}
 
   '5':
     CostToUpgrade: default
     CustomDrops:
       '1':
-        Material: TADPOLE_SPAWN_EGG
+        Material: TADPOLE_BUCKET
         Amount: 1
         Drop-Percent: 100.0
         Custom-Data: {}

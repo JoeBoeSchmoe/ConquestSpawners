@@ -14,21 +14,27 @@ Worlds:
   - world_the_end
   - OtherWorld
 
-# Distance from player required to keep spawner active
+# Distance from player required to keep spawner active (in blocks)
 Player-Activation-Range: default
 
 # If true, disables AI on spawned mobs (can be good for snowmen displays)
 Disable-Mob-AI: default
+
+# If true, disables collisions on spawned mobs (optional for tight displays)
+Disable-Collisions: default
+
+# Radius around the spawner to search for valid spawn positions (blocks)
+Spawn-Radius: default
 
 # Maximum number of this mob’s spawners allowed per chunk
 Allowed-Spawners-Per-Chunk: default
 
 # Override name/lore display in GUI (optional)
 OverrideDefaultDisplay: false
-DisplayName: "&f&l[&bSnow Golem Spawner&f&l] &7Level &8{level}"
+DisplayName: "<white><bold>[<aqua>Snow Golem Spawner</aqua><white>]</bold> <white><bold>Level {level}</bold>"
 DisplayLore:
-  - "&7Collect me with Silk Touch!"
-  - "&7Throws snowballs, makes snow trails."
+  - "<gray>Collect me with Silk Touch!"
+  - "<gray>Throws snowballs, makes snow trails."
 
 #########################################
 # 📏 Spawner Requirements
@@ -36,20 +42,19 @@ DisplayLore:
 #########################################
 
 SpawnerRequirements:
-  Air: true
-  Above-Sea-Level: false
-  Below-Sea-Level: false
-  Above-Y-Axis: false
-  Below-Y-Axis: false
-  Darkness: false
-  Total-Darkness: false
-  Light: true
-  Max-Entities-Nearby: false
+  Air: true                      # Requires open air above spawn position
+  Above-Sea-Level: false         # No sea level restriction
+  Below-Sea-Level: false         # No depth restriction
+  Above-Y-Axis: false            # No Y-min constraint
+  Below-Y-Axis: false            # No Y-max constraint
+  Darkness: false                # Light level < 8 not required
+  Total-Darkness: false          # Can't spawn in any light level
+  Light: true                    # Requires light level > 8
 
-  Fluid: false
+  Fluid: false                   # Cannot spawn in liquid
 
   InBiome: false
-  # Cold biomes preferred for snowmen
+  # Preferred snow-based environments
   AllowedBiomes:
     - snowy_plains
     - snowy_taiga
@@ -85,6 +90,10 @@ Spawner-Levels:
         Custom-Data: {}
 
   '2':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
     CostToUpgrade: default
     CustomDrops:
       '1':
@@ -94,6 +103,10 @@ Spawner-Levels:
         Custom-Data: {}
 
   '3':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
     CostToUpgrade: default
     CustomDrops:
       '1':
@@ -103,6 +116,10 @@ Spawner-Levels:
         Custom-Data: {}
 
   '4':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
     CostToUpgrade: default
     CustomDrops:
       '1':
@@ -112,6 +129,10 @@ Spawner-Levels:
         Custom-Data: {}
 
   '5':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
     CostToUpgrade: default
     CustomDrops:
       '1':

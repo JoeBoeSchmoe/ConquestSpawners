@@ -14,21 +14,27 @@ Worlds:
   - world_nether
   - OtherWorld
 
-# Distance from player required to keep spawner active
+# Distance from player required to keep spawner active (in blocks)
 Player-Activation-Range: 48     # Bosses should stay active from farther away
 
 # If true, disables AI on spawned mobs (not recommended for magic mobs)
 Disable-Mob-AI: false
+
+# If true, disables collisions on spawned mobs (recommended to reduce entity lag)
+Disable-Collisions: default
+
+# Radius around the spawner to search for valid spawn positions (blocks)
+Spawn-Radius: default
 
 # Maximum number of this mob’s spawners allowed per chunk
 Allowed-Spawners-Per-Chunk: 1   # Limit boss mobs per chunk
 
 # Override name/lore display in GUI (optional)
 OverrideDefaultDisplay: false
-DisplayName: "&f&l[&9Illusioner Spawner&f&l] &7Level &8{level}"
+DisplayName: "<white><bold>[<gold>Illusioner Spawner</gold><white>]</bold> <white><bold>Level {level}</bold>"
 DisplayLore:
-  - "&7Collect me with Silk Touch!"
-  - "&7Master of clones and confusion..."
+  - "<gray>Collect me with Silk Touch!"
+  - "<gray>Master of clones and confusion..."
 
 #########################################
 # 📏 Spawner Requirements
@@ -36,28 +42,32 @@ DisplayLore:
 #########################################
 
 SpawnerRequirements:
-  Air: true
-  Above-Sea-Level: false
-  Below-Sea-Level: false
-  Above-Y-Axis: false
-  Below-Y-Axis: false
-  Darkness: false
-  Total-Darkness: false
-  Light: true
-  Max-Entities-Nearby: true
+  Air: true                     # Requires air blocks above spawn position
+  Above-Sea-Level: false        # No restriction above sea level
+  Below-Sea-Level: false        # No restriction below sea level
+  Above-Y-Axis: false           # Requires Y > configured value (if used)
+  Below-Y-Axis: false           # Requires Y < configured value (if used)
+  Darkness: false               # Can spawn in light or dark
+  Total-Darkness: false         # Pitch black not required
+  Light: true                   # Spawns in light level > 8
 
+  # Fluid check: must not be submerged in water/lava
   Fluid: false
+  AllowedFluids:
+    - LAVA
+    - WATER
 
+  # Biome restriction: mystical or forest biomes
   InBiome: false
-  # Magical, rare, or forested biomes
   AllowedBiomes:
     - dark_forest
     - taiga
     - grove
     - wooded_badlands
 
-  On-Ground: false
+  On-Ground: false              # Ground presence not required
 
+  # Specific block check: spawner must be placed on one of the listed blocks
   On-Block: true
   AllowedBlocks:
     - STONE_BRICKS

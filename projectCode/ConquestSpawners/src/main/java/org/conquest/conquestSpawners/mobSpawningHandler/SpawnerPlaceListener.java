@@ -71,7 +71,7 @@ public class SpawnerPlaceListener implements Listener {
             return;
         }
 
-        // === Save spawner data into block ===
+        // === Store persistent data ===
         Block block = event.getBlockPlaced();
         if (!(block.getState() instanceof TileState tile)) {
             reject(player, event, "Block does not support persistent data.");
@@ -83,26 +83,26 @@ public class SpawnerPlaceListener implements Listener {
         placedData.set(ItemUtility.key("level"), PersistentDataType.INTEGER, level);
         placedData.set(ItemUtility.key("id"), PersistentDataType.STRING,
                 Objects.requireNonNull(data.get(ItemUtility.key("id"), PersistentDataType.STRING)));
+        tile.update(true);
 
-        tile.update(true, false);
-
-        // === Delay visual setup to allow block placement to fully register ===
+        // === Visual spinning mob setup (no spawn logic) ===
         Bukkit.getScheduler().runTask(ConquestSpawners.getInstance(), () -> {
-            BlockState delayedState = block.getState();
-            if (delayedState instanceof CreatureSpawner spawner) {
+            BlockState bs = block.getState();
+            if (bs instanceof CreatureSpawner spawner) {
                 try {
                     EntityType visual = EntityType.valueOf(mob.getMobType().toUpperCase(Locale.ROOT));
                     spawner.setSpawnedType(visual);
                 } catch (IllegalArgumentException e) {
-                    spawner.setSpawnedType(EntityType.PIG); // Fallback
+                    spawner.setSpawnedType(EntityType.PIG);
                 }
 
-                spawner.setDelay(Integer.MAX_VALUE);
-                spawner.setMinSpawnDelay(Integer.MAX_VALUE);
-                spawner.setMaxSpawnDelay(Integer.MAX_VALUE);
-                spawner.setSpawnCount(0);
-                spawner.setSpawnRange(0);
-                spawner.update(true, false);
+                spawner.setDelay(20);                 // Short delay to trigger animation
+                spawner.setMinSpawnDelay(120);
+                spawner.setMaxSpawnDelay(240);
+                spawner.setSpawnCount(0);             // Prevent actual spawning
+                spawner.setRequiredPlayerRange(0);    // No player needed
+                spawner.setSpawnRange(0);             // No spawn range
+                spawner.update(true);
             }
         });
     }

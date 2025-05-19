@@ -10,25 +10,31 @@ Spawner-Enabled: true
 Custom-Whitelisted-Worlds: false
 Worlds:
   - world
-  - world_nether
   - world_the_end
+  - world_nether
   - OtherWorld
 
-# Distance from player required to keep spawner active
+# Distance from player required to keep spawner active (in blocks)
 Player-Activation-Range: default
 
-# If true, disables AI on spawned mobs (good for decorative NPCs)
+# If true, disables AI on spawned mobs (not recommended for villagers)
 Disable-Mob-AI: default
+
+# If true, disables collisions on spawned mobs (optional)
+Disable-Collisions: default
+
+# Radius around the spawner to search for valid spawn positions (blocks)
+Spawn-Radius: default
 
 # Maximum number of this mob’s spawners allowed per chunk
 Allowed-Spawners-Per-Chunk: default
 
 # Override name/lore display in GUI (optional)
 OverrideDefaultDisplay: false
-DisplayName: "&f&l[&aVillager Spawner&f&l] &7Level &8{level}"
+DisplayName: "<white><bold>[<green>Villager Spawner</green><white>]</bold> <white><bold>Level {level}</bold>"
 DisplayLore:
-  - "&7Collect me with Silk Touch!"
-  - "&7Spawns friendly villagers for trade and defense."
+  - "<gray>Collect me with Silk Touch!"
+  - "<gray>Wandering trades and sleepy beds await."
 
 #########################################
 # 📏 Spawner Requirements
@@ -36,25 +42,24 @@ DisplayLore:
 #########################################
 
 SpawnerRequirements:
-  Air: true
-  Above-Sea-Level: false
-  Below-Sea-Level: false
-  Above-Y-Axis: false
-  Below-Y-Axis: false
-  Darkness: false
-  Total-Darkness: false
-  Light: true
-  Max-Entities-Nearby: false
+  Air: true                      # Requires open air above spawn position
+  Above-Sea-Level: false         # No sea level restriction
+  Below-Sea-Level: false         # No depth restriction
+  Above-Y-Axis: false            # No Y-min constraint
+  Below-Y-Axis: false            # No Y-max constraint
+  Darkness: false                # Doesn't require darkness
+  Total-Darkness: false          # Doesn't require pitch black
+  Light: true                    # Requires light level > 8
 
   Fluid: false
 
   InBiome: false
-  # Villager-compatible biomes
+  # Common village or farm biomes
   AllowedBiomes:
     - plains
     - savanna
-    - snowy_plains
     - taiga
+    - snowy_plains
     - desert
 
   On-Ground: false
@@ -64,8 +69,8 @@ SpawnerRequirements:
     - GRASS_BLOCK
     - DIRT_PATH
     - HAY_BLOCK
-    - WOODEN_PLANKS
     - STONE_BRICKS
+    - PODZOL
 
 #########################################
 # 🧱 Spawner Levels & Upgrade Paths
@@ -82,15 +87,15 @@ Spawner-Levels:
       '1':
         Material: EMERALD
         Amount: 1
-        Drop-Percent: 35.0
+        Drop-Percent: 30.0
         Custom-Data: {}
 
   '2':
     CostToUpgrade: default
     CustomDrops:
       '1':
-        Material: BREAD
-        Amount: 2
+        Material: BOOK
+        Amount: 1
         Drop-Percent: 50.0
         Custom-Data: {}
 
@@ -98,8 +103,8 @@ Spawner-Levels:
     CostToUpgrade: default
     CustomDrops:
       '1':
-        Material: BOOK
-        Amount: 1
+        Material: BREAD
+        Amount: 2
         Drop-Percent: 65.0
         Custom-Data: {}
 
@@ -107,10 +112,13 @@ Spawner-Levels:
     CostToUpgrade: default
     CustomDrops:
       '1':
-        Material: EXPERIENCE_BOTTLE
+        Material: ENCHANTED_BOOK
         Amount: 1
         Drop-Percent: 85.0
-        Custom-Data: {}
+        Custom-Data:
+          StoredEnchantments:
+            - id: mending
+              lvl: 1
 
   '5':
     CostToUpgrade: default

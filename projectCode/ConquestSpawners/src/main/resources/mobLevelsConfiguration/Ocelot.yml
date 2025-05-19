@@ -14,21 +14,27 @@ Worlds:
   - world_the_end
   - OtherWorld
 
-# Distance from player required to keep spawner active
+# Distance from player required to keep spawner active (in blocks)
 Player-Activation-Range: default
 
 # If true, disables AI on spawned mobs (not recommended for stealthy mobs)
 Disable-Mob-AI: default
+
+# If true, disables collisions on spawned mobs (optional)
+Disable-Collisions: default
+
+# Radius around the spawner to search for valid spawn positions (blocks)
+Spawn-Radius: default
 
 # Maximum number of this mob’s spawners allowed per chunk
 Allowed-Spawners-Per-Chunk: default
 
 # Override name/lore display in GUI (optional)
 OverrideDefaultDisplay: false
-DisplayName: "&f&l[&eOcelot Spawner&f&l] &7Level &8{level}"
+DisplayName: "<white><bold>[<gold>Ocelot Spawner</gold><white>]</bold> <white><bold>Level {level}</bold>"
 DisplayLore:
-  - "&7Collect me with Silk Touch!"
-  - "&7Elusive feline from deep jungles."
+  - "<gray>Collect me with Silk Touch!"
+  - "<gray>Elusive feline from deep jungles."
 
 #########################################
 # 📏 Spawner Requirements
@@ -36,27 +42,31 @@ DisplayLore:
 #########################################
 
 SpawnerRequirements:
-  Air: true
-  Above-Sea-Level: false
-  Below-Sea-Level: false
-  Above-Y-Axis: false
-  Below-Y-Axis: false
-  Darkness: false
-  Total-Darkness: false
-  Light: true                   # Passive daylight spawner
-  Max-Entities-Nearby: false
+  Air: true                     # Requires air blocks above spawn position
+  Above-Sea-Level: false        # No sea level restriction
+  Below-Sea-Level: false        # No depth constraint
+  Above-Y-Axis: false           # Requires Y > custom value (if configured)
+  Below-Y-Axis: false           # Requires Y < custom value (if configured)
+  Darkness: false               # No dark requirement
+  Total-Darkness: false         # Full darkness not needed
+  Light: true                   # Prefers daylight conditions
 
+  # Fluid check: should not be submerged
   Fluid: false
+  AllowedFluids:
+    - WATER
+    - LAVA
 
+  # Biome restriction: deep jungle environments
   InBiome: false
-  # Jungle and rare cat-friendly biomes
   AllowedBiomes:
     - jungle
     - bamboo_jungle
     - sparse_jungle
 
-  On-Ground: false
+  On-Ground: false              # Not required to be grounded
 
+  # Specific block check: blocks related to jungle floor
   On-Block: false
   AllowedBlocks:
     - GRASS_BLOCK

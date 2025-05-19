@@ -1,5 +1,5 @@
 #########################################
-# 🛡️ Warden Spawner Configuration
+# 🛑 Warden Spawner Configuration
 # Overrides and custom values for Warden-type spawners
 #########################################
 
@@ -10,24 +10,31 @@ Spawner-Enabled: true
 Custom-Whitelisted-Worlds: false
 Worlds:
   - world
+  - world_nether
   - world_the_end
   - OtherWorld
 
-# Distance from player required to keep spawner active
-Player-Activation-Range: 64   # Give it a bit more range by default
+# Distance from player required to keep spawner active (in blocks)
+Player-Activation-Range: 64     # Warden has a long-range awareness
 
-# Disable Warden AI (NOT recommended — breaks most of its behavior)
+# If true, disables AI on spawned mobs (not recommended for Warden)
 Disable-Mob-AI: false
+
+# If true, disables collisions on spawned mobs (optional)
+Disable-Collisions: default
+
+# Radius around the spawner to search for valid spawn positions (blocks)
+Spawn-Radius: default
 
 # Maximum number of this mob’s spawners allowed per chunk
 Allowed-Spawners-Per-Chunk: 1
 
 # Override name/lore display in GUI (optional)
 OverrideDefaultDisplay: false
-DisplayName: "&f&l[&9Warden Spawner&f&l] &7Level &8{level}"
+DisplayName: "<white><bold>[<dark_blue>Warden Spawner</dark_blue><white>]</bold> <white><bold>Level {level}</bold>"
 DisplayLore:
-  - "&7Collect me with Silk Touch!"
-  - "&7You sure you want to summon this?"
+  - "<gray>Collect me with Silk Touch!"
+  - "<gray>Blind fury from the deep dark..."
 
 #########################################
 # 📏 Spawner Requirements
@@ -35,20 +42,19 @@ DisplayLore:
 #########################################
 
 SpawnerRequirements:
-  Air: true
-  Above-Sea-Level: false
-  Below-Sea-Level: true
-  Above-Y-Axis: false
-  Below-Y-Axis: true       # Wardens belong deep underground
-  Darkness: true
-  Total-Darkness: false
-  Light: false
-  Max-Entities-Nearby: false
+  Air: true                      # Requires open air above spawn position
+  Above-Sea-Level: false         # No sea level restriction
+  Below-Sea-Level: true          # Often spawns deep underground
+  Above-Y-Axis: false            # No Y-min constraint
+  Below-Y-Axis: true             # Usually found below Y=0
+  Darkness: true                 # Requires light level < 8
+  Total-Darkness: false          # Doesn't need pitch black
+  Light: false                   # Won't spawn in bright light
 
   Fluid: false
 
   InBiome: false
-  # Deep dark only!
+  # Deep dark only
   AllowedBiomes:
     - deep_dark
 
@@ -57,10 +63,10 @@ SpawnerRequirements:
   On-Block: false
   AllowedBlocks:
     - SCULK
-    - SCULK_VEIN
-    - SCULK_SENSOR
     - SCULK_CATALYST
     - DEEPSLATE
+    - SCULK_SENSOR
+    - SCULK_SHRIEKER
 
 #########################################
 # 🧱 Spawner Levels & Upgrade Paths
@@ -69,48 +75,62 @@ SpawnerRequirements:
 
 Spawner-Levels:
   '1':
-    SpawnerDelay: 600
+    SpawnerDelay: 800
     MobCount: 1
-    XPDrop: 500
+    XPDrop: 300
     VanillaDrops: false
     CustomDrops:
       '1':
-        Material: ECHO_SHARD
-        Amount: 1
+        Material: SCULK
+        Amount: 3
         Drop-Percent: 40.0
         Custom-Data: {}
 
   '2':
     CostToUpgrade: 5000
-    SpawnerDelay: 500
-    XPDrop: 600
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
     CustomDrops:
       '1':
-        Material: SCULK
-        Amount: 4
-        Drop-Percent: 55.0
+        Material: ECHO_SHARD
+        Amount: 1
+        Drop-Percent: 60.0
         Custom-Data: {}
 
   '3':
-    CostToUpgrade: 7000
+    CostToUpgrade: 7500
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
     CustomDrops:
       '1':
         Material: SCULK_SENSOR
-        Amount: 2
+        Amount: 1
         Drop-Percent: 70.0
         Custom-Data: {}
 
   '4':
     CostToUpgrade: 10000
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
     CustomDrops:
       '1':
-        Material: SCULK_CATALYST
+        Material: SCULK_SHRIEKER
         Amount: 1
         Drop-Percent: 85.0
         Custom-Data: {}
 
   '5':
     CostToUpgrade: 15000
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
     CustomDrops:
       '1':
         Material: WARDEN_SPAWN_EGG

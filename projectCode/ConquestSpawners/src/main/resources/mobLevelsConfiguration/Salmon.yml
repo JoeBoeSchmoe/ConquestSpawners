@@ -14,21 +14,27 @@ Worlds:
   - world_the_end
   - OtherWorld
 
-# Distance from player required to keep spawner active
+# Distance from player required to keep spawner active (in blocks)
 Player-Activation-Range: default
 
 # If true, disables AI on spawned mobs (optional for decorative fish tanks)
 Disable-Mob-AI: default
+
+# If true, disables collisions on spawned mobs (recommended for water tanks)
+Disable-Collisions: default
+
+# Radius around the spawner to search for valid spawn positions (blocks)
+Spawn-Radius: default
 
 # Maximum number of this mob’s spawners allowed per chunk
 Allowed-Spawners-Per-Chunk: default
 
 # Override name/lore display in GUI (optional)
 OverrideDefaultDisplay: false
-DisplayName: "&f&l[&cSalmon Spawner&f&l] &7Level &8{level}"
+DisplayName: "<white><bold>[<red>Salmon Spawner</red><white>]</bold> <white><bold>Level {level}</bold>"
 DisplayLore:
-  - "&7Collect me with Silk Touch!"
-  - "&7Freshwater fish with nutritious rewards."
+  - "<gray>Collect me with Silk Touch!"
+  - "<gray>Freshwater fish with nutritious rewards."
 
 #########################################
 # 📏 Spawner Requirements
@@ -36,29 +42,28 @@ DisplayLore:
 #########################################
 
 SpawnerRequirements:
-  Air: false
-  Above-Sea-Level: false
-  Below-Sea-Level: true
-  Above-Y-Axis: false
-  Below-Y-Axis: false
-  Darkness: false
-  Total-Darkness: false
-  Light: true
-  Max-Entities-Nearby: false
+  Air: false                    # Must spawn in fluid
+  Above-Sea-Level: false        # No elevation restriction
+  Below-Sea-Level: true         # Typically found below sea level
+  Above-Y-Axis: false           # No custom Y height required
+  Below-Y-Axis: false           # No custom Y limit
+  Darkness: false               # No darkness required
+  Total-Darkness: false         # Total blackness not required
+  Light: true                   # Requires ambient or daylight
 
-  Fluid: true
+  Fluid: true                   # Spawner must be submerged
   AllowedFluids:
     - WATER
 
   InBiome: false
-  # Salmon spawn in rivers and cold/lukewarm ocean regions
+  # Salmon spawn in freshwater and colder marine zones
   AllowedBiomes:
     - river
     - frozen_river
     - cold_ocean
     - lukewarm_ocean
 
-  On-Ground: false
+  On-Ground: false              # Doesn't need to be on solid ground
 
   On-Block: false
   AllowedBlocks:
@@ -83,6 +88,10 @@ Spawner-Levels:
         Custom-Data: {}
 
   '2':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
     CostToUpgrade: default
     CustomDrops:
       '1':
@@ -92,6 +101,10 @@ Spawner-Levels:
         Custom-Data: {}
 
   '3':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
     CostToUpgrade: default
     CustomDrops:
       '1':
@@ -101,6 +114,10 @@ Spawner-Levels:
         Custom-Data: {}
 
   '4':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
     CostToUpgrade: default
     CustomDrops:
       '1':
@@ -110,14 +127,12 @@ Spawner-Levels:
         Custom-Data: {}
 
   '5':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
     CostToUpgrade: default
     CustomDrops:
       '1':
         Material: HEART_OF_THE_SEA
         Amount: 1
-        Drop-Percent: 100.0
-        Custom-Data: {}
-
-#########################################
-# ✅ End of Salmon.yml Configuration
-#########################################

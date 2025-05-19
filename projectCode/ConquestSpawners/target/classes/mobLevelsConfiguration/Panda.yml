@@ -14,21 +14,27 @@ Worlds:
   - world_the_end
   - OtherWorld
 
-# Distance from player required to keep spawner active
+# Distance from player required to keep spawner active (in blocks)
 Player-Activation-Range: default
 
 # If true, disables AI on spawned mobs (not recommended for pandas)
 Disable-Mob-AI: default
+
+# If true, disables collisions on spawned mobs (optional)
+Disable-Collisions: default
+
+# Radius around the spawner to search for valid spawn positions (blocks)
+Spawn-Radius: default
 
 # Maximum number of this mob’s spawners allowed per chunk
 Allowed-Spawners-Per-Chunk: default
 
 # Override name/lore display in GUI (optional)
 OverrideDefaultDisplay: false
-DisplayName: "&f&l[&aPanda Spawner&f&l] &7Level &8{level}"
+DisplayName: "<white><bold>[<green>Panda Spawner</green><white>]</bold> <white><bold>Level {level}</bold>"
 DisplayLore:
-  - "&7Collect me with Silk Touch!"
-  - "&7Gentle giants of the bamboo groves."
+  - "<gray>Collect me with Silk Touch!"
+  - "<gray>Gentle giants of the bamboo groves."
 
 #########################################
 # 📏 Spawner Requirements
@@ -36,26 +42,30 @@ DisplayLore:
 #########################################
 
 SpawnerRequirements:
-  Air: true
-  Above-Sea-Level: false
-  Below-Sea-Level: false
-  Above-Y-Axis: false
-  Below-Y-Axis: false
-  Darkness: false
-  Total-Darkness: false
-  Light: true                   # Daylight spawner
-  Max-Entities-Nearby: false
+  Air: true                     # Requires air blocks above spawn position
+  Above-Sea-Level: false        # No elevation restrictions
+  Below-Sea-Level: false        # No depth constraint
+  Above-Y-Axis: false           # Requires Y > custom value (if configured)
+  Below-Y-Axis: false           # Requires Y < custom value (if configured)
+  Darkness: false               # Light level < 8 not required
+  Total-Darkness: false         # Total darkness not required
+  Light: true                   # Requires light level > 8 (daylight)
 
+  # Fluid check: must not be submerged
   Fluid: false
+  AllowedFluids:
+    - WATER
+    - LAVA
 
+  # Biome restriction: native panda biomes
   InBiome: false
-  # Panda-specific habitat
   AllowedBiomes:
     - bamboo_jungle
     - jungle
 
-  On-Ground: false
+  On-Ground: false              # Not required to be grounded
 
+  # Specific block check: jungle-compatible block list
   On-Block: true
   AllowedBlocks:
     - GRASS_BLOCK

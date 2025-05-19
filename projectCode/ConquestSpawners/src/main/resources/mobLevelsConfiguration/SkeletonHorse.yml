@@ -14,21 +14,27 @@ Worlds:
   - world_the_end
   - OtherWorld
 
-# Distance from player required to keep spawner active
+# Distance from player required to keep spawner active (in blocks)
 Player-Activation-Range: default
 
 # If true, disables AI on spawned mobs (optional for mount displays)
 Disable-Mob-AI: default
+
+# If true, disables collisions on spawned mobs (optional for statues)
+Disable-Collisions: default
+
+# Radius around the spawner to search for valid spawn positions (blocks)
+Spawn-Radius: default
 
 # Maximum number of this mob’s spawners allowed per chunk
 Allowed-Spawners-Per-Chunk: default
 
 # Override name/lore display in GUI (optional)
 OverrideDefaultDisplay: false
-DisplayName: "&f&l[&7Skeleton Horse Spawner&f&l] &7Level &8{level}"
+DisplayName: "<white><bold>[<gray>Skeleton Horse Spawner</gray><white>]</bold> <white><bold>Level {level}</bold>"
 DisplayLore:
-  - "&7Collect me with Silk Touch!"
-  - "&7Silent, skeletal steed from the storm..."
+  - "<gray>Collect me with Silk Touch!"
+  - "<gray>Silent, skeletal steed from the storm..."
 
 #########################################
 # 📏 Spawner Requirements
@@ -36,27 +42,26 @@ DisplayLore:
 #########################################
 
 SpawnerRequirements:
-  Air: true
-  Above-Sea-Level: false
-  Below-Sea-Level: false
-  Above-Y-Axis: false
-  Below-Y-Axis: false
-  Darkness: false
-  Total-Darkness: false
-  Light: true
-  Max-Entities-Nearby: false
+  Air: true                     # Needs open space to spawn
+  Above-Sea-Level: false        # No sea-level restriction
+  Below-Sea-Level: false        # No depth restriction
+  Above-Y-Axis: false           # No min Y requirement
+  Below-Y-Axis: false           # No max Y requirement
+  Darkness: false               # Can spawn in light or dark
+  Total-Darkness: false         # Doesn't require pitch black
+  Light: true                   # Prefers daylight or bright spaces
 
-  Fluid: false
+  Fluid: false                  # Cannot spawn in water/lava
 
   InBiome: false
-  # Spooky, open, or plains biomes
+  # Spawns in haunted or plains-like areas
   AllowedBiomes:
     - plains
     - snowy_plains
     - savanna
     - dark_forest
 
-  On-Ground: false
+  On-Ground: false              # Not required to be on solid ground
 
   On-Block: false
   AllowedBlocks:
@@ -84,6 +89,10 @@ Spawner-Levels:
         Custom-Data: {}
 
   '2':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
     CostToUpgrade: default
     CustomDrops:
       '1':
@@ -93,6 +102,10 @@ Spawner-Levels:
         Custom-Data: {}
 
   '3':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
     CostToUpgrade: default
     CustomDrops:
       '1':
@@ -102,6 +115,10 @@ Spawner-Levels:
         Custom-Data: {}
 
   '4':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
     CostToUpgrade: default
     CustomDrops:
       '1':
@@ -111,6 +128,10 @@ Spawner-Levels:
         Custom-Data: {}
 
   '5':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
     CostToUpgrade: default
     CustomDrops:
       '1':

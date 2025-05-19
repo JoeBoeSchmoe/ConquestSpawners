@@ -1,5 +1,5 @@
 #########################################
-# 👻 Vex Spawner Configuration
+# 🦴 Vex Spawner Configuration
 # Overrides and custom values for Vex-type spawners
 #########################################
 
@@ -10,25 +10,31 @@ Spawner-Enabled: true
 Custom-Whitelisted-Worlds: false
 Worlds:
   - world
-  - world_nether
   - world_the_end
+  - world_nether
   - OtherWorld
 
-# Distance from player required to keep spawner active
+# Distance from player required to keep spawner active (in blocks)
 Player-Activation-Range: default
 
-# If true, disables AI on spawned mobs (not recommended for Vexes)
+# If true, disables AI on spawned mobs (not recommended for phasing attackers)
 Disable-Mob-AI: default
+
+# If true, disables collisions on spawned mobs (optional for ghosts)
+Disable-Collisions: default
+
+# Radius around the spawner to search for valid spawn positions (blocks)
+Spawn-Radius: default
 
 # Maximum number of this mob’s spawners allowed per chunk
 Allowed-Spawners-Per-Chunk: default
 
 # Override name/lore display in GUI (optional)
 OverrideDefaultDisplay: false
-DisplayName: "&f&l[&7Vex Spawner&f&l] &7Level &8{level}"
+DisplayName: "<white><bold>[<gray>Vex Spawner</gray><white>]</bold> <white><bold>Level {level}</bold>"
 DisplayLore:
-  - "&7Collect me with Silk Touch!"
-  - "&7Phantom blades summoned by dark forces."
+  - "<gray>Collect me with Silk Touch!"
+  - "<gray>Spiteful spirit of the Evoker's call."
 
 #########################################
 # 📏 Spawner Requirements
@@ -36,33 +42,32 @@ DisplayLore:
 #########################################
 
 SpawnerRequirements:
-  Air: true
-  Above-Sea-Level: false
-  Below-Sea-Level: false
-  Above-Y-Axis: false
-  Below-Y-Axis: false
-  Darkness: true
-  Total-Darkness: false
-  Light: false
-  Max-Entities-Nearby: false
+  Air: true                      # Requires open air above spawn position
+  Above-Sea-Level: false         # No sea level restriction
+  Below-Sea-Level: false         # No depth restriction
+  Above-Y-Axis: false            # No Y-min constraint
+  Below-Y-Axis: false            # No Y-max constraint
+  Darkness: true                 # Prefers dim surroundings
+  Total-Darkness: false          # Not limited to pitch black
+  Light: false                   # Cannot spawn in bright light
 
   Fluid: false
 
   InBiome: false
-  # Illager and raid-related biomes
+  # Haunted and illager biomes
   AllowedBiomes:
     - dark_forest
+    - windswept_forest
     - old_growth_pine_taiga
-    - windswept_hills
 
   On-Ground: false
 
-  On-Block: true
+  On-Block: false
   AllowedBlocks:
-    - STONE
+    - STONE_BRICKS
     - COBBLESTONE
-    - DEEPSLATE
-    - SPRUCE_PLANKS
+    - MOSSY_COBBLESTONE
+    - DARK_OAK_PLANKS
 
 #########################################
 # 🧱 Spawner Levels & Upgrade Paths
@@ -71,49 +76,52 @@ SpawnerRequirements:
 
 Spawner-Levels:
   '1':
-    SpawnerDelay: default
-    MobCount: default
-    XPDrop: default
+    SpawnerDelay: 400
+    MobCount: 1
+    XPDrop: 100
     VanillaDrops: false
     CustomDrops:
       '1':
-        Material: IRON_NUGGET
-        Amount: 2
-        Drop-Percent: 35.0
+        Material: GLOWSTONE_DUST
+        Amount: 1
+        Drop-Percent: 40.0
         Custom-Data: {}
 
   '2':
     CostToUpgrade: default
     CustomDrops:
       '1':
-        Material: IRON_NUGGET
-        Amount: 4
-        Drop-Percent: 50.0
+        Material: ECHO_SHARD
+        Amount: 1
+        Drop-Percent: 55.0
         Custom-Data: {}
 
   '3':
     CostToUpgrade: default
     CustomDrops:
       '1':
-        Material: ECHO_SHARD
+        Material: DIAMOND
         Amount: 1
-        Drop-Percent: 65.0
+        Drop-Percent: 70.0
         Custom-Data: {}
 
   '4':
     CostToUpgrade: default
     CustomDrops:
       '1':
-        Material: IRON_SWORD
+        Material: ENCHANTED_BOOK
         Amount: 1
         Drop-Percent: 85.0
-        Custom-Data: {}
+        Custom-Data:
+          StoredEnchantments:
+            - id: sweeping
+              lvl: 3
 
   '5':
     CostToUpgrade: default
     CustomDrops:
       '1':
-        Material: VEX_SPAWN_EGG
+        Material: TOTEM_OF_UNDYING
         Amount: 1
         Drop-Percent: 100.0
         Custom-Data: {}

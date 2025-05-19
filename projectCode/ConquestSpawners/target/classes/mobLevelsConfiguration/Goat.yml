@@ -20,15 +20,21 @@ Player-Activation-Range: default
 # If true, disables AI on spawned mobs (not recommended for goats)
 Disable-Mob-AI: default
 
+# If true, disables collisions on spawned mobs (recommended to reduce entity lag)
+Disable-Collisions: default
+
+# Radius around the spawner to search for valid spawn positions (blocks)
+Spawn-Radius: default
+
 # Maximum number of this mob’s spawners allowed per chunk
 Allowed-Spawners-Per-Chunk: default
 
 # Override name/lore display in GUI (optional)
 OverrideDefaultDisplay: false
-DisplayName: "&f&l[&fGoat Spawner&f&l] &7Level &8{level}"
+DisplayName: "<white><bold>[<gold>Goat Spawner</gold><white>]</bold> <white><bold>Level {level}</bold>"
 DisplayLore:
-  - "&7Collect me with Silk Touch!"
-  - "&7Might ram you off a cliff..."
+  - "<gray>Collect me with Silk Touch!"
+  - "<gray>Might ram you off a cliff..."
 
 #########################################
 # 📏 Spawner Requirements
@@ -36,28 +42,32 @@ DisplayLore:
 #########################################
 
 SpawnerRequirements:
-  Air: true                     # Needs space to jump
-  Above-Sea-Level: false
-  Below-Sea-Level: false
-  Above-Y-Axis: true            # Mountain height preference
-  Below-Y-Axis: false
-  Darkness: false
-  Total-Darkness: false
-  Light: true                   # Passive mob, spawns in light
-  Max-Entities-Nearby: false
+  Air: true                    # Requires air blocks above spawn position
+  Above-Sea-Level: false       # No restriction above sea level
+  Below-Sea-Level: false       # No restriction below sea level
+  Above-Y-Axis: false          # Requires being above a specific Y value
+  Below-Y-Axis: false          # Requires being below a specific Y value
+  Darkness: false              # Light level < 8 not required
+  Total-Darkness: false        # Full darkness not required
+  Light: false                 # High light level not required
 
+  # Fluid check: must NOT be submerged
   Fluid: false
+  AllowedFluids:
+    - WATER
+    - LAVA
 
+  # Biome restriction: mountain biomes
   InBiome: false
-  # Mountain goat habitats
   AllowedBiomes:
     - snowy_slopes
     - jagged_peaks
     - windswept_hills
     - stony_peaks
 
-  On-Ground: false
+  On-Ground: false             # Doesn't require solid block below
 
+  # Specific block check: must be placed on one of these
   On-Block: true
   AllowedBlocks:
     - STONE
@@ -76,7 +86,7 @@ Spawner-Levels:
     SpawnerDelay: default
     MobCount: default
     XPDrop: default
-    VanillaDrops: false
+    VanillaDrops: default
     CustomDrops:
       '1':
         Material: WHEAT
@@ -88,7 +98,7 @@ Spawner-Levels:
     SpawnerDelay: default
     MobCount: default
     XPDrop: default
-    VanillaDrops: false
+    VanillaDrops: default
     CostToUpgrade: default
     CustomDrops:
       '1':
@@ -101,7 +111,7 @@ Spawner-Levels:
     SpawnerDelay: default
     MobCount: default
     XPDrop: default
-    VanillaDrops: false
+    VanillaDrops: default
     CostToUpgrade: default
     CustomDrops:
       '1':
@@ -114,7 +124,7 @@ Spawner-Levels:
     SpawnerDelay: default
     MobCount: default
     XPDrop: default
-    VanillaDrops: false
+    VanillaDrops: default
     CostToUpgrade: default
     CustomDrops:
       '1':
@@ -127,7 +137,7 @@ Spawner-Levels:
     SpawnerDelay: default
     MobCount: default
     XPDrop: default
-    VanillaDrops: false
+    VanillaDrops: default
     CostToUpgrade: default
     CustomDrops:
       '1':

@@ -14,21 +14,27 @@ Worlds:
   - world_the_end
   - OtherWorld
 
-# Distance from player required to keep spawner active
+# Distance from player required to keep spawner active (in blocks)
 Player-Activation-Range: default
 
 # If true, disables AI on spawned mobs (not recommended — breaks swarming)
 Disable-Mob-AI: default
+
+# If true, disables collisions on spawned mobs (optional)
+Disable-Collisions: default
+
+# Radius around the spawner to search for valid spawn positions (blocks)
+Spawn-Radius: default
 
 # Maximum number of this mob’s spawners allowed per chunk
 Allowed-Spawners-Per-Chunk: default
 
 # Override name/lore display in GUI (optional)
 OverrideDefaultDisplay: false
-DisplayName: "&f&l[&7Silverfish Spawner&f&l] &7Level &8{level}"
+DisplayName: "<white><bold>[<gray>Silverfish Spawner</gray><white>]</bold> <white><bold>Level {level}</bold>"
 DisplayLore:
-  - "&7Collect me with Silk Touch!"
-  - "&7Swarming pests of the Stronghold depths..."
+  - "<gray>Collect me with Silk Touch!"
+  - "<gray>Swarming pests of the Stronghold depths..."
 
 #########################################
 # 📏 Spawner Requirements
@@ -36,26 +42,25 @@ DisplayLore:
 #########################################
 
 SpawnerRequirements:
-  Air: true
-  Above-Sea-Level: false
-  Below-Sea-Level: true
-  Above-Y-Axis: false
-  Below-Y-Axis: true
-  Darkness: true
-  Total-Darkness: false
-  Light: false
-  Max-Entities-Nearby: false
+  Air: true                     # Requires air blocks above spawn position
+  Above-Sea-Level: false        # No sea level constraint
+  Below-Sea-Level: true         # Prefers spawning below sea level
+  Above-Y-Axis: false           # No min Y constraint
+  Below-Y-Axis: true            # Often found below Y=30
+  Darkness: true                # Spawns in darker areas (light < 8)
+  Total-Darkness: false         # Does not require pitch black
+  Light: false                  # Light level > 8 disallowed
 
-  Fluid: false
+  Fluid: false                  # Must not be underwater
 
   InBiome: false
-  # Often found near Strongholds or stone regions
+  # Biomes related to caves, ruins, and decay
   AllowedBiomes:
     - deep_dark
     - dripstone_caves
     - windswept_hills
 
-  On-Ground: false
+  On-Ground: false              # No solid block requirement
 
   On-Block: false
   AllowedBlocks:
@@ -84,6 +89,10 @@ Spawner-Levels:
         Custom-Data: {}
 
   '2':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
     CostToUpgrade: default
     CustomDrops:
       '1':
@@ -93,6 +102,10 @@ Spawner-Levels:
         Custom-Data: {}
 
   '3':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
     CostToUpgrade: default
     CustomDrops:
       '1':
@@ -102,6 +115,10 @@ Spawner-Levels:
         Custom-Data: {}
 
   '4':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
     CostToUpgrade: default
     CustomDrops:
       '1':
@@ -111,6 +128,10 @@ Spawner-Levels:
         Custom-Data: {}
 
   '5':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
     CostToUpgrade: default
     CustomDrops:
       '1':

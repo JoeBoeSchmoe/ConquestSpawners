@@ -15,7 +15,9 @@ public class MobDataModel {
 
     private final Object playerActivationRange;
     private final Object disableMobAI;
+    private final Object disableCollisions;
     private final Object allowedSpawnersPerChunk;
+    private final Object spawnRadius;
 
     private final boolean overrideDefaultDisplay;
     private final String displayName;
@@ -31,7 +33,9 @@ public class MobDataModel {
             List<String> allowedWorlds,
             Object playerActivationRange,
             Object disableMobAI,
+            Object disableCollisions,
             Object allowedSpawnersPerChunk,
+            Object spawnRadius,
             boolean overrideDefaultDisplay,
             String displayName,
             List<String> displayLore,
@@ -44,7 +48,9 @@ public class MobDataModel {
         this.allowedWorlds = allowedWorlds;
         this.playerActivationRange = playerActivationRange;
         this.disableMobAI = disableMobAI;
+        this.disableCollisions = disableCollisions;
         this.allowedSpawnersPerChunk = allowedSpawnersPerChunk;
+        this.spawnRadius = spawnRadius;
         this.overrideDefaultDisplay = overrideDefaultDisplay;
         this.displayName = displayName;
         this.displayLore = displayLore;
@@ -59,7 +65,9 @@ public class MobDataModel {
     public List<String> getAllowedWorlds() { return allowedWorlds; }
     public Object getPlayerActivationRange() { return playerActivationRange; }
     public Object getDisableMobAI() { return disableMobAI; }
+    public Object getDisableCollisions() { return disableCollisions; }
     public Object getAllowedSpawnersPerChunk() { return allowedSpawnersPerChunk; }
+    public Object getSpawnRadius() { return spawnRadius; }
     public boolean isOverrideDefaultDisplay() { return overrideDefaultDisplay; }
     public String getDisplayName() { return displayName; }
     public List<String> getDisplayLore() { return displayLore; }
@@ -68,24 +76,23 @@ public class MobDataModel {
 
     // === Resolved Accessors ===
 
-    /**
-     * Gets the player activation range, resolved through config.yml if 'default' is set.
-     */
     public int getPlayerActivationRangeResolved() {
         return ConfigResolver.getInt(playerActivationRange, "default-values.player-activation-range", 32);
     }
 
-    /**
-     * Returns true if AI should be disabled for spawned mobs, resolved through config.yml.
-     */
     public boolean isDisableMobAIResolved() {
         return ConfigResolver.getBoolean(disableMobAI, "default-values.disable-mob-ai", true);
     }
 
-    /**
-     * Gets the allowed spawners per chunk, resolved through config.yml if 'default' is set.
-     */
+    public boolean isDisableCollisionsResolved() {
+        return ConfigResolver.getBoolean(disableCollisions, "default-values.disable-collisions", true);
+    }
+
     public int getAllowedSpawnersPerChunkResolved() {
         return ConfigResolver.getInt(allowedSpawnersPerChunk, "default-values.allowed-spawners-per-chunk", 8);
+    }
+
+    public int getSpawnRadiusResolved() {
+        return ConfigResolver.getInt(spawnRadius, "default-values.spawn-radius", 4);
     }
 }

@@ -14,21 +14,27 @@ Worlds:
   - world_the_end
   - OtherWorld
 
-# Distance from player required to keep spawner active
+# Distance from player required to keep spawner active (in blocks)
 Player-Activation-Range: default
 
-# If true, disables AI on spawned mobs (useful for NPC markets)
-Disable-Mob-AI: default
+# If true, disables AI on spawned mobs (not recommended — disables trading)
+Disable-Mob-AI: false
+
+# If true, disables collisions on spawned mobs (optional for displays)
+Disable-Collisions: default
+
+# Radius around the spawner to search for valid spawn positions (blocks)
+Spawn-Radius: default
 
 # Maximum number of this mob’s spawners allowed per chunk
-Allowed-Spawners-Per-Chunk: default
+Allowed-Spawners-Per-Chunk: 1
 
 # Override name/lore display in GUI (optional)
 OverrideDefaultDisplay: false
-DisplayName: "&f&l[&eWandering Trader Spawner&f&l] &7Level &8{level}"
+DisplayName: "<white><bold>[<aqua>Wandering Trader Spawner</aqua><white>]</bold> <white><bold>Level {level}</bold>"
 DisplayLore:
-  - "&7Collect me with Silk Touch!"
-  - "&7Appears when you least expect... with questionable deals."
+  - "<gray>Collect me with Silk Touch!"
+  - "<gray>Always appears when you're least prepared."
 
 #########################################
 # 📏 Spawner Requirements
@@ -36,36 +42,34 @@ DisplayLore:
 #########################################
 
 SpawnerRequirements:
-  Air: true
-  Above-Sea-Level: false
-  Below-Sea-Level: false
-  Above-Y-Axis: false
-  Below-Y-Axis: false
-  Darkness: false
-  Total-Darkness: false
-  Light: true
-  Max-Entities-Nearby: false
+  Air: true                      # Requires open air above spawn position
+  Above-Sea-Level: false         # No sea level restriction
+  Below-Sea-Level: false         # No depth restriction
+  Above-Y-Axis: false            # No Y-min constraint
+  Below-Y-Axis: false            # No Y-max constraint
+  Darkness: false                # Doesn't require low light
+  Total-Darkness: false          # Doesn't require pitch black
+  Light: true                    # Prefers daylight
 
   Fluid: false
 
   InBiome: false
-  # Nomadic trader-friendly areas
+  # Found in villages, plains, or other general biomes
   AllowedBiomes:
     - plains
     - savanna
     - taiga
-    - desert
-    - snowy_plains
+    - forest
 
   On-Ground: false
 
   On-Block: false
   AllowedBlocks:
     - GRASS_BLOCK
-    - DIRT_PATH
-    - HAY_BLOCK
+    - DIRT
     - COARSE_DIRT
-    - STONE_BRICKS
+    - DIRT_PATH
+    - STONE
 
 #########################################
 # 🧱 Spawner Levels & Upgrade Paths
@@ -74,9 +78,9 @@ SpawnerRequirements:
 
 Spawner-Levels:
   '1':
-    SpawnerDelay: default
-    MobCount: default
-    XPDrop: default
+    SpawnerDelay: 6000
+    MobCount: 1
+    XPDrop: 50
     VanillaDrops: false
     CustomDrops:
       '1':
@@ -89,7 +93,7 @@ Spawner-Levels:
     CostToUpgrade: default
     CustomDrops:
       '1':
-        Material: NAUTILUS_SHELL
+        Material: LEAD
         Amount: 1
         Drop-Percent: 55.0
         Custom-Data: {}
@@ -98,8 +102,8 @@ Spawner-Levels:
     CostToUpgrade: default
     CustomDrops:
       '1':
-        Material: EXPERIENCE_BOTTLE
-        Amount: 2
+        Material: WANDERING_TRADER_SPAWN_EGG
+        Amount: 1
         Drop-Percent: 70.0
         Custom-Data: {}
 
@@ -107,8 +111,8 @@ Spawner-Levels:
     CostToUpgrade: default
     CustomDrops:
       '1':
-        Material: LEAD
-        Amount: 1
+        Material: EMERALD
+        Amount: 3
         Drop-Percent: 85.0
         Custom-Data: {}
 
@@ -116,10 +120,12 @@ Spawner-Levels:
     CostToUpgrade: default
     CustomDrops:
       '1':
-        Material: WANDERING_TRADER_SPAWN_EGG
+        Material: NAME_TAG
         Amount: 1
         Drop-Percent: 100.0
-        Custom-Data: {}
+        Custom-Data:
+          display:
+            Name: "{\"text\":\"Suspicious Trader\",\"italic\":false,\"color\":\"aqua\"}"
 
 #########################################
 # ✅ End of WanderingTrader.yml Configuration

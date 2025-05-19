@@ -8,24 +8,32 @@ Spawner-Enabled: true
 
 # If false, uses global whitelist from config.yml
 Custom-Whitelisted-Worlds: true
+
+# List of worlds where this spawner is allowed (if Custom-Whitelisted-Worlds is true)
 Worlds:
   - world_nether
 
-# Distance from player required to keep spawner active
+# Distance from player required to keep spawner active (in blocks)
 Player-Activation-Range: default
 
 # If true, disables AI on spawned mobs (not recommended for projectile mobs)
 Disable-Mob-AI: default
 
+# If true, disables collisions on spawned mobs (optional performance setting)
+Disable-Collisions: default
+
+# Radius around the spawner to search for valid spawn positions (blocks)
+Spawn-Radius: default
+
 # Maximum number of this mob’s spawners allowed per chunk
-Allowed-Spawners-Per-Chunk: 1   # Typically boss-tier mobs are limited
+Allowed-Spawners-Per-Chunk: 1   # Limit to reduce explosive chaos
 
 # Override name/lore display in GUI (optional)
 OverrideDefaultDisplay: false
-DisplayName: "&f&l[&fGhast Spawner&f&l] &7Level &8{level}"
+DisplayName: "<white><bold>[<gold>Ghast Spawner</gold><white>]</bold> <white><bold>Level {level}</bold>"
 DisplayLore:
-  - "&7Collect me with Silk Touch!"
-  - "&7Cries echo from the lava seas..."
+  - "<gray>Collect me with Silk Touch!"
+  - "<gray>Cries echo from the lava seas..."
 
 #########################################
 # 📏 Spawner Requirements
@@ -33,27 +41,31 @@ DisplayLore:
 #########################################
 
 SpawnerRequirements:
-  Air: true                     # Needs open air space (they're huge!)
-  Above-Sea-Level: false
-  Below-Sea-Level: false
-  Above-Y-Axis: false
-  Below-Y-Axis: false
-  Darkness: false
-  Total-Darkness: false
-  Light: false
-  Max-Entities-Nearby: true     # Helps avoid large entity spam
+  Air: true                     # Requires air blocks above spawn position
+  Above-Sea-Level: false        # No height limit above sea level
+  Below-Sea-Level: false        # No depth constraint
+  Above-Y-Axis: false           # Requires Y > custom value (if configured)
+  Below-Y-Axis: false           # Requires Y < custom value (if configured)
+  Darkness: false               # Spawns regardless of light level
+  Total-Darkness: false         # Full darkness not required
+  Light: false                  # Light level does not impact spawning
 
+  # Fluid check: must not be submerged in fluids
   Fluid: false
+  AllowedFluids:
+    - LAVA
+    - WATER
 
+  # Biome restriction: nether biomes where ghasts naturally spawn
   InBiome: false
-  # Natural Ghast zones
   AllowedBiomes:
     - soul_sand_valley
     - nether_wastes
     - basalt_deltas
 
-  On-Ground: false
+  On-Ground: false              # Can float, no ground needed
 
+  # Specific block check: not required but defined for flavor
   On-Block: false
   AllowedBlocks:
     - NETHERRACK
@@ -67,10 +79,10 @@ SpawnerRequirements:
 
 Spawner-Levels:
   '1':
-    SpawnerDelay: 600
-    MobCount: 1
-    XPDrop: 100
-    VanillaDrops: false
+    SpawnerDelay: 600           # Delay in ticks between spawn attempts
+    MobCount: 1                 # Spawns one ghast per cycle
+    XPDrop: 100                 # Experience dropped
+    VanillaDrops: false         # Use custom-defined drops only
     CustomDrops:
       '1':
         Material: GHAST_TEAR
@@ -83,7 +95,7 @@ Spawner-Levels:
     MobCount: 1
     XPDrop: 150
     VanillaDrops: false
-    CostToUpgrade: 1500
+    CostToUpgrade: 1500         # Upgrade cost in currency or item points
     CustomDrops:
       '1':
         Material: GUNPOWDER

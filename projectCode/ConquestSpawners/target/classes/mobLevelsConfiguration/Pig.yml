@@ -14,21 +14,27 @@ Worlds:
   - world_the_end
   - OtherWorld
 
-# Distance from player required to keep spawner active
+# Distance from player required to keep spawner active (in blocks)
 Player-Activation-Range: default
 
 # If true, disables AI on spawned mobs (fine for passive livestock)
 Disable-Mob-AI: default
+
+# If true, disables collisions on spawned mobs (recommended for farms)
+Disable-Collisions: default
+
+# Radius around the spawner to search for valid spawn positions (blocks)
+Spawn-Radius: default
 
 # Maximum number of this mob’s spawners allowed per chunk
 Allowed-Spawners-Per-Chunk: default
 
 # Override name/lore display in GUI (optional)
 OverrideDefaultDisplay: false
-DisplayName: "&f&l[&dPig Spawner&f&l] &7Level &8{level}"
+DisplayName: "<white><bold>[<light_purple>Pig Spawner</light_purple><white>]</bold> <white><bold>Level {level}</bold>"
 DisplayLore:
-  - "&7Collect me with Silk Touch!"
-  - "&7Oinks, eats carrots, rides with saddles."
+  - "<gray>Collect me with Silk Touch!"
+  - "<gray>Oinks, eats carrots, rides with saddles."
 
 #########################################
 # 📏 Spawner Requirements
@@ -36,28 +42,32 @@ DisplayLore:
 #########################################
 
 SpawnerRequirements:
-  Air: true
-  Above-Sea-Level: false
-  Below-Sea-Level: false
-  Above-Y-Axis: false
-  Below-Y-Axis: false
-  Darkness: false
-  Total-Darkness: false
-  Light: true
-  Max-Entities-Nearby: false
+  Air: true                     # Requires air blocks above spawn position
+  Above-Sea-Level: false        # No elevation constraint
+  Below-Sea-Level: false        # No depth constraint
+  Above-Y-Axis: false           # Requires Y > custom value (if configured)
+  Below-Y-Axis: false           # Requires Y < custom value (if configured)
+  Darkness: false               # Can spawn in any light level
+  Total-Darkness: false         # Pitch black not required
+  Light: true                   # Spawns in daylight
 
+  # Fluid check: should not be submerged
   Fluid: false
+  AllowedFluids:
+    - WATER
+    - LAVA
 
+  # Biome restriction: matches natural pig habitats
   InBiome: false
-  # Common overworld pig biomes
   AllowedBiomes:
     - plains
     - forest
     - sunflower_plains
     - meadow
 
-  On-Ground: false
+  On-Ground: false              # Not required to be grounded
 
+  # Specific block check: must be placed on one of the listed blocks
   On-Block: false
   AllowedBlocks:
     - GRASS_BLOCK

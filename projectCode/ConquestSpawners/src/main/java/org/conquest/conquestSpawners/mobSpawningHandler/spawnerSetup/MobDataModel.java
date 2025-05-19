@@ -4,25 +4,32 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Represents all data loaded from a mob's YAML configuration.
+ * Represents all configuration data for a custom spawner mob,
+ * loaded from that mob's YAML definition file.
  */
 public class MobDataModel {
 
+    // === Core identifiers ===
     private final String mobType;
     private final boolean spawnerEnabled;
+
+    // === World control ===
     private final boolean customWhitelistedWorlds;
     private final List<String> allowedWorlds;
 
+    // === Behavioral flags ===
     private final Object playerActivationRange;
     private final Object disableMobAI;
     private final Object disableCollisions;
     private final Object allowedSpawnersPerChunk;
     private final Object spawnRadius;
 
+    // === Display settings ===
     private final boolean overrideDefaultDisplay;
     private final String displayName;
     private final List<String> displayLore;
 
+    // === Spawn conditions and level data ===
     private final SpawnerRequirementsModel requirements;
     private final Map<Integer, SpawnerLevelModel> levels;
 
@@ -58,7 +65,7 @@ public class MobDataModel {
         this.levels = levels;
     }
 
-    // === Raw Accessors ===
+    // === Raw field accessors ===
     public String getMobType() { return mobType; }
     public boolean isSpawnerEnabled() { return spawnerEnabled; }
     public boolean hasCustomWhitelistedWorlds() { return customWhitelistedWorlds; }
@@ -74,24 +81,39 @@ public class MobDataModel {
     public SpawnerRequirementsModel getRequirements() { return requirements; }
     public Map<Integer, SpawnerLevelModel> getLevels() { return levels; }
 
-    // === Resolved Accessors ===
+    // === Resolved config accessors (fallback to config.yml) ===
 
+    /**
+     * Distance from the player required for the spawner to be active.
+     */
     public int getPlayerActivationRangeResolved() {
         return ConfigResolver.getInt(playerActivationRange, "default-values.player-activation-range", 32);
     }
 
+    /**
+     * Whether spawned mobs from this spawner should have AI disabled.
+     */
     public boolean isDisableMobAIResolved() {
         return ConfigResolver.getBoolean(disableMobAI, "default-values.disable-mob-ai", true);
     }
 
+    /**
+     * Whether spawned mobs should have collisions disabled (useful for performance).
+     */
     public boolean isDisableCollisionsResolved() {
         return ConfigResolver.getBoolean(disableCollisions, "default-values.disable-collisions", true);
     }
 
+    /**
+     * Maximum number of this spawner type allowed per chunk.
+     */
     public int getAllowedSpawnersPerChunkResolved() {
         return ConfigResolver.getInt(allowedSpawnersPerChunk, "default-values.allowed-spawners-per-chunk", 8);
     }
 
+    /**
+     * Radius (in blocks) around the spawner to evaluate possible spawn positions.
+     */
     public int getSpawnRadiusResolved() {
         return ConfigResolver.getInt(spawnRadius, "default-values.spawn-radius", 4);
     }

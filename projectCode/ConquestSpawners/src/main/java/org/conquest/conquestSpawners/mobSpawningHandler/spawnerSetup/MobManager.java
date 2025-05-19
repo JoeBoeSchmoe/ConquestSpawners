@@ -11,7 +11,8 @@ import java.util.jar.JarFile;
 import java.util.logging.Logger;
 
 /**
- * Loads and manages all custom mob data from YAML configs.
+ * Loads and manages all custom mob data from YAML config files.
+ * Responsible for parsing and resolving dynamic mob spawning properties.
  */
 public class MobManager {
 
@@ -22,13 +23,16 @@ public class MobManager {
         this.plugin = plugin;
     }
 
+    /**
+     * Loads all mob configuration files and parses their models.
+     */
     public void loadAllMobs() {
         mobData.clear();
         Logger log = plugin.getLogger();
 
         File configFolder = new File(plugin.getDataFolder(), "mobLevelsConfiguration");
         if (!configFolder.exists() && !configFolder.mkdirs()) {
-            log.warning("⚠️ Failed to create mobLevelsConfiguration/ directory.");
+            log.warning("⚠️  Failed to create mobLevelsConfiguration/ directory.");
             return;
         }
 
@@ -36,7 +40,7 @@ public class MobManager {
 
         File[] files = configFolder.listFiles((dir, name) -> name.toLowerCase().endsWith(".yml"));
         if (files == null || files.length == 0) {
-            log.warning("⚠️ No mob config files found in mobLevelsConfiguration/");
+            log.warning("⚠️  No mob config files found in mobLevelsConfiguration/");
             return;
         }
 
@@ -59,7 +63,9 @@ public class MobManager {
                     yaml.getStringList("Worlds"),
                     yaml.get("Player-Activation-Range"),
                     yaml.get("Disable-Mob-AI"),
+                    yaml.get("Disable-Collisions"),
                     yaml.get("Allowed-Spawners-Per-Chunk"),
+                    yaml.get("Spawn-Radius"),
                     yaml.getBoolean("OverrideDefaultDisplay", false),
                     yaml.getString("DisplayName"),
                     yaml.getStringList("DisplayLore"),
@@ -68,13 +74,16 @@ public class MobManager {
             );
 
             mobData.put(mobKey.toLowerCase(), model);
-            log.info("✅ Loaded mob config: " + mobKey);
+            log.info("✅  Loaded mob config: " + mobKey);
 
         } catch (Exception e) {
-            log.warning("❌ Failed to load mob file: " + file.getName() + " - " + e.getMessage());
+            log.warning("❌  Failed to load mob file: " + file.getName() + " - " + e.getMessage());
         }
     }
 
+    /**
+     * Extracts bundled default configs on first launch if missing.
+     */
     private void extractDefaultsFromJar() {
         try {
             File jarFile = new File(plugin.getClass().getProtectionDomain().getCodeSource().getLocation().toURI());
@@ -93,7 +102,7 @@ public class MobManager {
                 }
             }
         } catch (Exception e) {
-            plugin.getLogger().warning("⚠️ Failed to extract default mob config files: " + e.getMessage());
+            plugin.getLogger().warning("⚠️  Failed to extract default mob config files: " + e.getMessage());
         }
     }
 
@@ -139,7 +148,7 @@ public class MobManager {
 
                 levels.put(Integer.parseInt(levelKey), level);
             } catch (Exception e) {
-                plugin.getLogger().warning("❌ Error loading spawner level " + levelKey + ": " + e.getMessage());
+                plugin.getLogger().warning("❌  Error loading spawner level " + levelKey + ": " + e.getMessage());
             }
         }
 
@@ -165,7 +174,7 @@ public class MobManager {
 
                 drops.add(new CustomDropModel(material, amount, dropPercent, customData));
             } catch (Exception e) {
-                plugin.getLogger().warning("⚠️ Failed to parse drop: " + dropKey + " - " + e.getMessage());
+                plugin.getLogger().warning("⚠️  Failed to parse drop: " + dropKey + " - " + e.getMessage());
             }
         }
 

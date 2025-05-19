@@ -1,5 +1,5 @@
 #########################################
-# 🦶 Strider Spawner Configuration
+# 🌋 Strider Spawner Configuration
 # Overrides and custom values for Strider-type spawners
 #########################################
 
@@ -11,21 +11,27 @@ Custom-Whitelisted-Worlds: true
 Worlds:
   - world_nether
 
-# Distance from player required to keep spawner active
+# Distance from player required to keep spawner active (in blocks)
 Player-Activation-Range: default
 
-# If true, disables AI on spawned mobs (not recommended for rideables)
+# If true, disables AI on spawned mobs (not recommended for ridable mobs)
 Disable-Mob-AI: default
+
+# If true, disables collisions on spawned mobs (optional for performance)
+Disable-Collisions: default
+
+# Radius around the spawner to search for valid spawn positions (blocks)
+Spawn-Radius: default
 
 # Maximum number of this mob’s spawners allowed per chunk
 Allowed-Spawners-Per-Chunk: default
 
 # Override name/lore display in GUI (optional)
 OverrideDefaultDisplay: false
-DisplayName: "&f&l[&cStrider Spawner&f&l] &7Level &8{level}"
+DisplayName: "<white><bold>[<red>Strider Spawner</red><white>]</bold> <white><bold>Level {level}</bold>"
 DisplayLore:
-  - "&7Collect me with Silk Touch!"
-  - "&7Wanders lava lakes, loves fungus on a stick."
+  - "<gray>Collect me with Silk Touch!"
+  - "<gray>Lava walkers, calm in heat."
 
 #########################################
 # 📏 Spawner Requirements
@@ -33,34 +39,32 @@ DisplayLore:
 #########################################
 
 SpawnerRequirements:
-  Air: true
-  Above-Sea-Level: false
-  Below-Sea-Level: true
-  Above-Y-Axis: false
-  Below-Y-Axis: false
-  Darkness: false
-  Total-Darkness: false
-  Light: false
-  Max-Entities-Nearby: false
+  Air: true                      # Requires open air above spawn position
+  Above-Sea-Level: false         # No sea level restriction
+  Below-Sea-Level: false         # No depth restriction
+  Above-Y-Axis: false            # No Y-min constraint
+  Below-Y-Axis: false            # No Y-max constraint
+  Darkness: false                # Can spawn in any light level
+  Total-Darkness: false          # Doesn't require complete darkness
+  Light: true                    # Can spawn in bright environments
 
   Fluid: true
   AllowedFluids:
     - LAVA
 
   InBiome: false
-  # Strider-compatible Nether biomes
+  # Strider-compatible biomes
   AllowedBiomes:
     - nether_wastes
     - basalt_deltas
-    - lava_lake
 
   On-Ground: false
 
-  On-Block: true
+  On-Block: false
   AllowedBlocks:
     - LAVA
     - MAGMA_BLOCK
-    - BLACKSTONE
+    - NETHERRACK
 
 #########################################
 # 🧱 Spawner Levels & Upgrade Paths
@@ -77,33 +81,33 @@ Spawner-Levels:
       '1':
         Material: STRING
         Amount: 1
-        Drop-Percent: 40.0
+        Drop-Percent: 35.0
         Custom-Data: {}
 
   '2':
     CostToUpgrade: default
     CustomDrops:
       '1':
-        Material: WARPED_FUNGUS
+        Material: LEATHER
         Amount: 1
-        Drop-Percent: 55.0
+        Drop-Percent: 50.0
         Custom-Data: {}
 
   '3':
     CostToUpgrade: default
     CustomDrops:
       '1':
-        Material: STRING
-        Amount: 2
-        Drop-Percent: 70.0
+        Material: SADDLE
+        Amount: 1
+        Drop-Percent: 65.0
         Custom-Data: {}
 
   '4':
     CostToUpgrade: default
     CustomDrops:
       '1':
-        Material: SADDLE
-        Amount: 1
+        Material: WARPED_FUNGUS
+        Amount: 2
         Drop-Percent: 85.0
         Custom-Data: {}
 

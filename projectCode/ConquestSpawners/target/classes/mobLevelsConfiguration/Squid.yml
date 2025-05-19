@@ -1,0 +1,146 @@
+#########################################
+# 🦑 Squid Spawner Configuration
+# Overrides and custom values for Squid-type spawners
+#########################################
+
+# If false, Squid spawners won't work or be placeable
+Spawner-Enabled: true
+
+# If false, uses global whitelist from config.yml
+Custom-Whitelisted-Worlds: false
+Worlds:
+  - world
+  - world_the_end
+  - world_nether
+  - OtherWorld
+
+# Distance from player required to keep spawner active (in blocks)
+Player-Activation-Range: default
+
+# If true, disables AI on spawned mobs (not needed for squids)
+Disable-Mob-AI: default
+
+# If true, disables collisions on spawned mobs (optional)
+Disable-Collisions: default
+
+# Radius around the spawner to search for valid spawn positions (blocks)
+Spawn-Radius: default
+
+# Maximum number of this mob’s spawners allowed per chunk
+Allowed-Spawners-Per-Chunk: default
+
+# Override name/lore display in GUI (optional)
+OverrideDefaultDisplay: false
+DisplayName: "<white><bold>[<blue>Squid Spawner</blue><white>]</bold> <white><bold>Level {level}</bold>"
+DisplayLore:
+  - "<gray>Collect me with Silk Touch!"
+  - "<gray>Ink-spraying swimmers of the sea."
+
+#########################################
+# 📏 Spawner Requirements
+# Conditions that must be met for the spawner to function
+#########################################
+
+SpawnerRequirements:
+  Air: false                    # Must spawn in fluid
+  Above-Sea-Level: false        # No sea level restriction
+  Below-Sea-Level: true         # Typically below sea level (Y < 63)
+  Above-Y-Axis: false           # No Y-min constraint
+  Below-Y-Axis: false           # No Y-max constraint
+  Darkness: false               # No light level restriction
+  Total-Darkness: false         # Doesn't require complete darkness
+  Light: true                   # Can spawn in light
+
+  Fluid: true                   # Must be in water
+  AllowedFluids:
+    - WATER
+
+  InBiome: false
+  # Natural aquatic zones for squid
+  AllowedBiomes:
+    - river
+    - ocean
+    - deep_ocean
+    - lukewarm_ocean
+
+  On-Ground: false              # Squids are not ground-based
+
+  On-Block: false
+  AllowedBlocks:
+    - WATER                     # Placeholder for valid fluid blocks
+
+#########################################
+# 🧱 Spawner Levels & Upgrade Paths
+# Define behavior and drops for each upgrade tier
+#########################################
+
+Spawner-Levels:
+  '1':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
+    CustomDrops:
+      '1':
+        Material: INK_SAC
+        Amount: 1
+        Drop-Percent: 40.0
+        Custom-Data: {}
+
+  '2':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: INK_SAC
+        Amount: 2
+        Drop-Percent: 55.0
+        Custom-Data: {}
+
+  '3':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: GLOW_INK_SAC
+        Amount: 1
+        Drop-Percent: 65.0
+        Custom-Data: {}
+
+  '4':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: BOOK
+        Amount: 1
+        Drop-Percent: 85.0
+        Custom-Data:
+          display:
+            Name: "{\"text\":\"Dried Journal\",\"italic\":false,\"color\":\"dark_aqua\"}"
+
+  '5':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: SQUID_SPAWN_EGG
+        Amount: 1
+        Drop-Percent: 100.0
+        Custom-Data: {}
+
+#########################################
+# ✅ End of Squid.yml Configuration
+#########################################

@@ -1,5 +1,5 @@
 #########################################
-# 🐗 Zoglin Spawner Configuration
+# 🧟‍♂️ Zoglin Spawner Configuration
 # Overrides and custom values for Zoglin-type spawners
 #########################################
 
@@ -10,23 +10,28 @@ Spawner-Enabled: true
 Custom-Whitelisted-Worlds: true
 Worlds:
   - world_nether
-  - world_the_end
 
-# Distance from player required to keep spawner active
+# Distance from player required to keep spawner active (in blocks)
 Player-Activation-Range: default
 
-# Disabling AI not recommended — Zoglins are meant to be hostile
+# If true, disables AI on spawned mobs (not recommended for hostile mobs)
 Disable-Mob-AI: default
 
+# If true, disables collisions on spawned mobs (optional)
+Disable-Collisions: default
+
+# Radius around the spawner to search for valid spawn positions (blocks)
+Spawn-Radius: default
+
 # Maximum number of this mob’s spawners allowed per chunk
-Allowed-Spawners-Per-Chunk: 2
+Allowed-Spawners-Per-Chunk: default
 
 # Override name/lore display in GUI (optional)
 OverrideDefaultDisplay: false
-DisplayName: "&f&l[&4Zoglin Spawner&f&l] &7Level &8{level}"
+DisplayName: "<white><bold>[<red>Zoglin Spawner</red><white>]</bold> <white><bold>Level {level}</bold>"
 DisplayLore:
-  - "&7Collect me with Silk Touch!"
-  - "&7Twisted beasts of the Nether plane..."
+  - "<gray>Collect me with Silk Touch!"
+  - "<gray>A warped hog of pure aggression..."
 
 #########################################
 # 📏 Spawner Requirements
@@ -34,32 +39,31 @@ DisplayLore:
 #########################################
 
 SpawnerRequirements:
-  Air: true
-  Above-Sea-Level: false
-  Below-Sea-Level: true
-  Above-Y-Axis: false
-  Below-Y-Axis: false
-  Darkness: false
-  Total-Darkness: false
-  Light: false
-  Max-Entities-Nearby: false
+  Air: true                      # Requires open air above spawn position
+  Above-Sea-Level: false         # No sea level restriction
+  Below-Sea-Level: false         # No depth restriction
+  Above-Y-Axis: false            # No Y-min constraint
+  Below-Y-Axis: false            # No Y-max constraint
+  Darkness: false                # Doesn't require low light
+  Total-Darkness: false          # Doesn't need pitch-black
+  Light: false                   # Can spawn in any light level
 
   Fluid: false
 
   InBiome: false
-  # Nether corruption zones
+  # Nether-native
   AllowedBiomes:
     - crimson_forest
-    - basalt_deltas
     - nether_wastes
+    - basalt_deltas
 
   On-Ground: false
 
-  On-Block: false
+  On-Block: true
   AllowedBlocks:
     - NETHERRACK
     - CRIMSON_NYLIUM
-    - BASALT
+    - WARPED_NYLIUM
     - BLACKSTONE
 
 #########################################
@@ -85,7 +89,7 @@ Spawner-Levels:
     CustomDrops:
       '1':
         Material: BONE
-        Amount: 3
+        Amount: 2
         Drop-Percent: 55.0
         Custom-Data: {}
 
@@ -93,8 +97,8 @@ Spawner-Levels:
     CostToUpgrade: default
     CustomDrops:
       '1':
-        Material: CRIMSON_FUNGUS
-        Amount: 2
+        Material: COOKED_PORKCHOP
+        Amount: 1
         Drop-Percent: 70.0
         Custom-Data: {}
 
@@ -102,8 +106,8 @@ Spawner-Levels:
     CostToUpgrade: default
     CustomDrops:
       '1':
-        Material: ZOGLIN_SPAWN_EGG
-        Amount: 1
+        Material: GOLD_NUGGET
+        Amount: 3
         Drop-Percent: 85.0
         Custom-Data: {}
 
@@ -111,7 +115,7 @@ Spawner-Levels:
     CostToUpgrade: default
     CustomDrops:
       '1':
-        Material: NETHERITE_SCRAP
+        Material: ZOGLIN_SPAWN_EGG
         Amount: 1
         Drop-Percent: 100.0
         Custom-Data: {}

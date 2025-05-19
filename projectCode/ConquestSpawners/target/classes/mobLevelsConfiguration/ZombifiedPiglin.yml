@@ -1,5 +1,5 @@
 #########################################
-# 🐷⚔️ Zombified Piglin Spawner Configuration
+# 🧟‍♂️⚔️ Zombified Piglin Spawner Configuration
 # Overrides and custom values for Zombified Piglin-type spawners
 #########################################
 
@@ -11,21 +11,27 @@ Custom-Whitelisted-Worlds: true
 Worlds:
   - world_nether
 
-# Distance from player required to keep spawner active
+# Distance from player required to keep spawner active (in blocks)
 Player-Activation-Range: default
 
-# Disable AI only for mob statue displays (not recommended otherwise)
+# If true, disables AI on spawned mobs (not recommended for piglin combat behavior)
 Disable-Mob-AI: default
+
+# If true, disables collisions on spawned mobs (optional for nether optimization)
+Disable-Collisions: default
+
+# Radius around the spawner to search for valid spawn positions (blocks)
+Spawn-Radius: default
 
 # Maximum number of this mob’s spawners allowed per chunk
 Allowed-Spawners-Per-Chunk: default
 
 # Override name/lore display in GUI (optional)
 OverrideDefaultDisplay: false
-DisplayName: "&f&l[&6Zombified Piglin Spawner&f&l] &7Level &8{level}"
+DisplayName: "<white><bold>[<red>Zombified Piglin Spawner</red><white>]</bold> <white><bold>Level {level}</bold>"
 DisplayLore:
-  - "&7Collect me with Silk Touch!"
-  - "&7Silent... until you hit one."
+  - "<gray>Collect me with Silk Touch!"
+  - "<gray>Unwilling warriors lost to the Nether."
 
 #########################################
 # 📏 Spawner Requirements
@@ -33,20 +39,19 @@ DisplayLore:
 #########################################
 
 SpawnerRequirements:
-  Air: true
-  Above-Sea-Level: false
-  Below-Sea-Level: true
-  Above-Y-Axis: false
-  Below-Y-Axis: false
-  Darkness: false
-  Total-Darkness: false
-  Light: false
-  Max-Entities-Nearby: false
+  Air: true                      # Requires open air above spawn position
+  Above-Sea-Level: false         # No sea level restriction
+  Below-Sea-Level: false         # No depth restriction
+  Above-Y-Axis: false            # No Y-min constraint
+  Below-Y-Axis: false            # No Y-max constraint
+  Darkness: false                # Light level < 8 not required
+  Total-Darkness: false          # Pitch-black not required
+  Light: false                   # Does not require high light level
 
   Fluid: false
 
   InBiome: false
-  # Nether-native undead biomes
+  # Native Nether habitat
   AllowedBiomes:
     - nether_wastes
     - crimson_forest
@@ -57,10 +62,10 @@ SpawnerRequirements:
   On-Block: false
   AllowedBlocks:
     - NETHERRACK
-    - NETHER_BRICKS
     - BLACKSTONE
-    - CRIMSON_NYLIUM
-    - LAVA
+    - GILDED_BLACKSTONE
+    - SOUL_SOIL
+    - MAGMA_BLOCK
 
 #########################################
 # 🧱 Spawner Levels & Upgrade Paths
@@ -72,7 +77,7 @@ Spawner-Levels:
     SpawnerDelay: default
     MobCount: default
     XPDrop: default
-    VanillaDrops: false
+    VanillaDrops: true
     CustomDrops:
       '1':
         Material: GOLD_NUGGET
@@ -93,18 +98,18 @@ Spawner-Levels:
     CostToUpgrade: default
     CustomDrops:
       '1':
-        Material: ROTTEN_FLESH
-        Amount: 3
-        Drop-Percent: 65.0
+        Material: GOLDEN_SWORD
+        Amount: 1
+        Drop-Percent: 70.0
         Custom-Data: {}
 
   '4':
     CostToUpgrade: default
     CustomDrops:
       '1':
-        Material: GOLD_BLOCK
-        Amount: 1
-        Drop-Percent: 80.0
+        Material: GILDED_BLACKSTONE
+        Amount: 2
+        Drop-Percent: 85.0
         Custom-Data: {}
 
   '5':

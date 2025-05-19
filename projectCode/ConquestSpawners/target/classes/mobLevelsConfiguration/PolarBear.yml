@@ -14,21 +14,27 @@ Worlds:
   - world_the_end
   - OtherWorld
 
-# Distance from player required to keep spawner active
+# Distance from player required to keep spawner active (in blocks)
 Player-Activation-Range: default
 
-# If true, disables AI on spawned mobs (not recommended for hostile moms)
+# If true, disables AI on spawned mobs (not recommended for hostile mobs)
 Disable-Mob-AI: default
+
+# If true, disables collisions on spawned mobs (optional for large mobs)
+Disable-Collisions: default
+
+# Radius around the spawner to search for valid spawn positions (blocks)
+Spawn-Radius: default
 
 # Maximum number of this mob’s spawners allowed per chunk
 Allowed-Spawners-Per-Chunk: default
 
 # Override name/lore display in GUI (optional)
 OverrideDefaultDisplay: false
-DisplayName: "&f&l[&fPolar Bear Spawner&f&l] &7Level &8{level}"
+DisplayName: "<white><bold>[<white>Polar Bear Spawner</white><white>]</bold> <white><bold>Level {level}</bold>"
 DisplayLore:
-  - "&7Collect me with Silk Touch!"
-  - "&7Roams cold biomes with frosty fury."
+  - "<gray>Collect me with Silk Touch!"
+  - "<gray>Roams cold biomes with frosty fury."
 
 #########################################
 # 📏 Spawner Requirements
@@ -36,17 +42,19 @@ DisplayLore:
 #########################################
 
 SpawnerRequirements:
-  Air: true
-  Above-Sea-Level: false
-  Below-Sea-Level: false
-  Above-Y-Axis: false
-  Below-Y-Axis: false
-  Darkness: false
-  Total-Darkness: false
-  Light: true                   # Daylight mob
-  Max-Entities-Nearby: false
+  Air: true                     # Requires air blocks above spawn position
+  Above-Sea-Level: false        # No sea level constraint
+  Below-Sea-Level: false        # No depth constraint
+  Above-Y-Axis: false           # Requires Y > custom value (if configured)
+  Below-Y-Axis: false           # Requires Y < custom value (if configured)
+  Darkness: false               # Light level < 8 not required
+  Total-Darkness: false         # Light level = 0 not required
+  Light: true                   # Requires light level > 8
 
-  Fluid: false
+  Fluid: false                  # Cannot spawn in fluid
+  AllowedFluids:
+    - WATER
+    - LAVA
 
   InBiome: false
   # Arctic biome list
@@ -57,9 +65,9 @@ SpawnerRequirements:
     - snowy_beach
     - snowy_taiga
 
-  On-Ground: false
+  On-Ground: false              # Ground presence not required
 
-  On-Block: false
+  On-Block: false               # Block placement not restricted
   AllowedBlocks:
     - ICE
     - PACKED_ICE
@@ -86,6 +94,10 @@ Spawner-Levels:
         Custom-Data: {}
 
   '2':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
     CostToUpgrade: default
     CustomDrops:
       '1':
@@ -95,6 +107,10 @@ Spawner-Levels:
         Custom-Data: {}
 
   '3':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
     CostToUpgrade: default
     CustomDrops:
       '1':
@@ -104,6 +120,10 @@ Spawner-Levels:
         Custom-Data: {}
 
   '4':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
     CostToUpgrade: default
     CustomDrops:
       '1':
@@ -113,6 +133,10 @@ Spawner-Levels:
         Custom-Data: {}
 
   '5':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
     CostToUpgrade: default
     CustomDrops:
       '1':

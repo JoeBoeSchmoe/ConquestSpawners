@@ -14,21 +14,27 @@ Worlds:
   - world_the_end
   - OtherWorld
 
-# Distance from player required to keep spawner active
+# Distance from player required to keep spawner active (in blocks)
 Player-Activation-Range: default
 
-# If true, disables AI on spawned mobs (optional for haunted displays)
+# If true, disables AI on spawned mobs (not recommended for undead behavior)
 Disable-Mob-AI: default
+
+# If true, disables collisions on spawned mobs (optional)
+Disable-Collisions: default
+
+# Radius around the spawner to search for valid spawn positions (blocks)
+Spawn-Radius: default
 
 # Maximum number of this mob’s spawners allowed per chunk
 Allowed-Spawners-Per-Chunk: default
 
 # Override name/lore display in GUI (optional)
 OverrideDefaultDisplay: false
-DisplayName: "&f&l[&2Zombie Spawner&f&l] &7Level &8{level}"
+DisplayName: "<white><bold>[<dark_green>Zombie Spawner</dark_green><white>]</bold> <white><bold>Level {level}</bold>"
 DisplayLore:
-  - "&7Collect me with Silk Touch!"
-  - "&7Rises from the ground... again and again."
+  - "<gray>Collect me with Silk Touch!"
+  - "<gray>Undead menace with hunger for brains..."
 
 #########################################
 # 📏 Spawner Requirements
@@ -36,36 +42,34 @@ DisplayLore:
 #########################################
 
 SpawnerRequirements:
-  Air: true
-  Above-Sea-Level: false
-  Below-Sea-Level: false
-  Above-Y-Axis: false
-  Below-Y-Axis: false
-  Darkness: true
-  Total-Darkness: false
-  Light: false
-  Max-Entities-Nearby: false
+  Air: true                      # Requires open air above spawn position
+  Above-Sea-Level: false         # No sea level restriction
+  Below-Sea-Level: false         # No depth restriction
+  Above-Y-Axis: false            # No Y-min constraint
+  Below-Y-Axis: false            # No Y-max constraint
+  Darkness: true                 # Requires light level < 8
+  Total-Darkness: false          # Pitch-black not required
+  Light: false                   # Won’t spawn in light
 
   Fluid: false
 
   InBiome: false
-  # Classic overworld biomes
+  # Biomes where zombies often appear
   AllowedBiomes:
     - plains
     - forest
+    - desert
     - swamp
-    - taiga
-    - snowy_plains
 
   On-Ground: false
 
   On-Block: false
   AllowedBlocks:
-    - DIRT
     - GRASS_BLOCK
+    - DIRT
     - GRAVEL
     - STONE
-    - MOSS_BLOCK
+    - SAND
 
 #########################################
 # 🧱 Spawner Levels & Upgrade Paths
@@ -74,10 +78,9 @@ SpawnerRequirements:
 
 Spawner-Levels:
   '1':
-    CostToUpgrade: 0
-    SpawnerDelay: 200
-    MobCount: 2
-    XPDrop: 5
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
     VanillaDrops: false
     CustomDrops:
       '1':
@@ -87,11 +90,7 @@ Spawner-Levels:
         Custom-Data: {}
 
   '2':
-    CostToUpgrade: 1000
-    SpawnerDelay: 180
-    MobCount: 3
-    XPDrop: 10
-    VanillaDrops: false
+    CostToUpgrade: default
     CustomDrops:
       '1':
         Material: IRON_NUGGET
@@ -100,11 +99,7 @@ Spawner-Levels:
         Custom-Data: {}
 
   '3':
-    CostToUpgrade: 2500
-    SpawnerDelay: 160
-    MobCount: 4
-    XPDrop: 15
-    VanillaDrops: false
+    CostToUpgrade: default
     CustomDrops:
       '1':
         Material: POTATO
@@ -113,11 +108,7 @@ Spawner-Levels:
         Custom-Data: {}
 
   '4':
-    CostToUpgrade: 5000
-    SpawnerDelay: 140
-    MobCount: 5
-    XPDrop: 20
-    VanillaDrops: false
+    CostToUpgrade: default
     CustomDrops:
       '1':
         Material: IRON_INGOT
@@ -126,14 +117,10 @@ Spawner-Levels:
         Custom-Data: {}
 
   '5':
-    CostToUpgrade: 10000
-    SpawnerDelay: 100
-    MobCount: 6
-    XPDrop: 30
-    VanillaDrops: false
+    CostToUpgrade: default
     CustomDrops:
       '1':
-        Material: ZOMBIE_SPAWN_EGG
+        Material: ZOMBIE_HEAD
         Amount: 1
         Drop-Percent: 100.0
         Custom-Data: {}

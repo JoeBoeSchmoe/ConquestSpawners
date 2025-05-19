@@ -1,0 +1,146 @@
+#########################################
+# 🕷️ Spider Spawner Configuration
+# Overrides and custom values for Spider-type spawners
+#########################################
+
+# If false, Spider spawners won't work or be placeable
+Spawner-Enabled: true
+
+# If false, uses global whitelist from config.yml
+Custom-Whitelisted-Worlds: false
+Worlds:
+  - world
+  - world_nether
+  - world_the_end
+  - OtherWorld
+
+# Distance from player required to keep spawner active (in blocks)
+Player-Activation-Range: default
+
+# If true, disables AI on spawned mobs (not recommended for crawling mobs)
+Disable-Mob-AI: default
+
+# If true, disables collisions on spawned mobs (optional)
+Disable-Collisions: default
+
+# Radius around the spawner to search for valid spawn positions (blocks)
+Spawn-Radius: default
+
+# Maximum number of this mob’s spawners allowed per chunk
+Allowed-Spawners-Per-Chunk: default
+
+# Override name/lore display in GUI (optional)
+OverrideDefaultDisplay: false
+DisplayName: "<white><bold>[<dark_gray>Spider Spawner</dark_gray><white>]</bold> <white><bold>Level {level}</bold>"
+DisplayLore:
+  - "<gray>Collect me with Silk Touch!"
+  - "<gray>Eight legs of ambush and webs..."
+
+#########################################
+# 📏 Spawner Requirements
+# Conditions that must be met for the spawner to function
+#########################################
+
+SpawnerRequirements:
+  Air: true                      # Requires open air above spawn position
+  Above-Sea-Level: false         # No sea level restriction
+  Below-Sea-Level: false         # No depth restriction
+  Above-Y-Axis: false            # No Y-min constraint
+  Below-Y-Axis: false            # No Y-max constraint
+  Darkness: true                 # Requires light level < 8
+  Total-Darkness: false          # Doesn't require light level = 0
+  Light: false                   # Doesn't require high light level
+
+  Fluid: false                   # Cannot be placed in or near fluids
+
+  InBiome: false
+  # Spooky and forested regions preferred
+  AllowedBiomes:
+    - dark_forest
+    - taiga
+    - windswept_forest
+    - dripstone_caves
+
+  On-Ground: false              # Doesn't require being on ground
+
+  On-Block: false
+  AllowedBlocks:
+    - STONE
+    - COBWEB
+    - PODZOL
+    - GRAVEL
+    - MOSS_BLOCK
+
+#########################################
+# 🧱 Spawner Levels & Upgrade Paths
+# Define behavior and drops for each upgrade tier
+#########################################
+
+Spawner-Levels:
+  '1':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
+    CustomDrops:
+      '1':
+        Material: STRING
+        Amount: 1
+        Drop-Percent: 40.0
+        Custom-Data: {}
+
+  '2':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: FERMENTED_SPIDER_EYE
+        Amount: 1
+        Drop-Percent: 55.0
+        Custom-Data: {}
+
+  '3':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: SPIDER_EYE
+        Amount: 2
+        Drop-Percent: 70.0
+        Custom-Data: {}
+
+  '4':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: COBWEB
+        Amount: 1
+        Drop-Percent: 85.0
+        Custom-Data: {}
+
+  '5':
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
+    CostToUpgrade: default
+    CustomDrops:
+      '1':
+        Material: SPIDER_SPAWN_EGG
+        Amount: 1
+        Drop-Percent: 100.0
+        Custom-Data: {}
+
+#########################################
+# ✅ End of Spider.yml Configuration
+#########################################

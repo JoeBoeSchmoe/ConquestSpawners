@@ -56,9 +56,9 @@ SpawnerRequirements:
     - grove
     - frozen_peaks
 
-  On-Ground: true
+  On-Ground: false
 
-  On-Block: true
+  On-Block: false
   AllowedBlocks:
     - SNOW_BLOCK
     - ICE

@@ -52,6 +52,7 @@ public class MobDataModel {
         this.levels = levels;
     }
 
+    // === Raw Accessors ===
     public String getMobType() { return mobType; }
     public boolean isSpawnerEnabled() { return spawnerEnabled; }
     public boolean hasCustomWhitelistedWorlds() { return customWhitelistedWorlds; }
@@ -65,4 +66,26 @@ public class MobDataModel {
     public SpawnerRequirementsModel getRequirements() { return requirements; }
     public Map<Integer, SpawnerLevelModel> getLevels() { return levels; }
 
+    // === Resolved Accessors ===
+
+    /**
+     * Gets the player activation range, resolved through config.yml if 'default' is set.
+     */
+    public int getPlayerActivationRangeResolved() {
+        return ConfigResolver.getInt(playerActivationRange, "default-values.player-activation-range", 32);
+    }
+
+    /**
+     * Returns true if AI should be disabled for spawned mobs, resolved through config.yml.
+     */
+    public boolean isDisableMobAIResolved() {
+        return ConfigResolver.getBoolean(disableMobAI, "default-values.disable-mob-ai", true);
+    }
+
+    /**
+     * Gets the allowed spawners per chunk, resolved through config.yml if 'default' is set.
+     */
+    public int getAllowedSpawnersPerChunkResolved() {
+        return ConfigResolver.getInt(allowedSpawnersPerChunk, "default-values.allowed-spawners-per-chunk", 8);
+    }
 }

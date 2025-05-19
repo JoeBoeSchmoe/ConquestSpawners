@@ -55,7 +55,7 @@ SpawnerRequirements:
     - snowy_taiga
     - old_growth_pine_taiga
 
-  On-Ground: true
+  On-Ground: false
 
   On-Block: true
   AllowedBlocks:

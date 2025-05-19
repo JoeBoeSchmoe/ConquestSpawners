@@ -54,7 +54,7 @@ SpawnerRequirements:
     - bamboo_jungle
     - jungle
 
-  On-Ground: true
+  On-Ground: false
 
   On-Block: true
   AllowedBlocks:

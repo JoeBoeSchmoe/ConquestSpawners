@@ -53,9 +53,9 @@ SpawnerRequirements:
     - end_barrens
     - small_end_islands
 
-  On-Ground: true
+  On-Ground: false
 
-  On-Block: true
+  On-Block: false
   AllowedBlocks:
     - PURPUR_BLOCK
     - END_STONE

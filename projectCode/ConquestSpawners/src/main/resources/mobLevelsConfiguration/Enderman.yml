@@ -57,7 +57,7 @@ SpawnerRequirements:
     - desert
     - savanna
 
-  On-Ground: true
+  On-Ground: false
 
   On-Block: true
   AllowedBlocks:

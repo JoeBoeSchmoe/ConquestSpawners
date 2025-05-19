@@ -57,12 +57,6 @@ public class TitleResponseManager {
                     )
             ));
 
-            ConquestSpawners.getInstance().getLogger().info(
-                    "[Title] Sent to " + player.getName() +
-                            " | Title: " + rawTitle +
-                            " | Subtitle: " + rawSubtitle +
-                            " | Timings: fadeIn=" + fadeIn + ", stay=" + stay + ", fadeOut=" + fadeOut
-            );
         }
     }
 

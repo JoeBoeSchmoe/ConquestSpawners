@@ -53,7 +53,7 @@ SpawnerRequirements:
   AllowedBiomes:
     - mushroom_fields
 
-  On-Ground: true
+  On-Ground: false
 
   On-Block: true
   AllowedBlocks:

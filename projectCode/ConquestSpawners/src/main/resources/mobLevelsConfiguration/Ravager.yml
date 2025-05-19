@@ -50,9 +50,9 @@ SpawnerRequirements:
     - taiga
     - sunflower_plains
 
-  On-Ground: true
+  On-Ground: false
 
-  On-Block: true
+  On-Block: false
   AllowedBlocks:
     - GRASS_BLOCK
     - COARSE_DIRT

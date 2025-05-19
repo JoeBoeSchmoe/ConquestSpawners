@@ -53,9 +53,9 @@ SpawnerRequirements:
     - end_highlands
     - deep_dark
 
-  On-Ground: true
+  On-Ground: false
 
-  On-Block: true
+  On-Block: false
   AllowedBlocks:
     - SOUL_SAND
     - OBSIDIAN

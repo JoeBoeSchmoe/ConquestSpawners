@@ -55,7 +55,7 @@ SpawnerRequirements:
     - desert_hills
     - desert_lakes
 
-  On-Ground: true
+  On-Ground: false
 
   On-Block: true
   AllowedBlocks:

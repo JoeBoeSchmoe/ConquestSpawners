@@ -50,7 +50,7 @@ SpawnerRequirements:
   AllowedBiomes:
     - crimson_forest
 
-  On-Ground: true
+  On-Ground: false
 
   On-Block: true
   AllowedBlocks:

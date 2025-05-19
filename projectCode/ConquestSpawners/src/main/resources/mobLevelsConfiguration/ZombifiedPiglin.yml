@@ -52,9 +52,9 @@ SpawnerRequirements:
     - crimson_forest
     - basalt_deltas
 
-  On-Ground: true
+  On-Ground: false
 
-  On-Block: true
+  On-Block: false
   AllowedBlocks:
     - NETHERRACK
     - NETHER_BRICKS

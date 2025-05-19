@@ -56,7 +56,7 @@ SpawnerRequirements:
     - stony_peaks
     - wooded_badlands
 
-  On-Ground: true
+  On-Ground: false
 
   On-Block: true
   AllowedBlocks:

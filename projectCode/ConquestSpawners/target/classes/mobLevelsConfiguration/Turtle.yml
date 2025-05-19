@@ -57,9 +57,9 @@ SpawnerRequirements:
     - warm_ocean
     - lukewarm_ocean
 
-  On-Ground: true
+  On-Ground: false
 
-  On-Block: true
+  On-Block: false
   AllowedBlocks:
     - SAND
     - DIRT

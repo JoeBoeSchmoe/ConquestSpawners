@@ -56,7 +56,7 @@ SpawnerRequirements:
     - taiga
     - snowy_plains
 
-  On-Ground: true
+  On-Ground: false
 
   On-Block: true
   AllowedBlocks:

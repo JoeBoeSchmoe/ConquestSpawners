@@ -4,8 +4,10 @@ import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.conquest.conquestSpawners.commandHandler.CommandManager;
 import org.conquest.conquestSpawners.configurationHandler.ConfigurationManager;
-import org.conquest.conquestSpawners.mobSpawningHandler.SpawnerListener;
 import org.conquest.conquestSpawners.mobSpawningHandler.SpawnerPlaceListener;
+import org.conquest.conquestSpawners.mobSpawningHandler.spawningHandler.MobSpawnQueue;
+import org.conquest.conquestSpawners.mobSpawningHandler.spawningHandler.SpawnerScanTask;
+import org.conquest.conquestSpawners.mobSpawningHandler.spawningHandler.SpawningListener;
 
 import java.util.List;
 
@@ -17,6 +19,7 @@ public final class ConquestSpawners extends JavaPlugin {
 
     private static ConquestSpawners instance;
     private ConfigurationManager configurationManager;
+    private final MobSpawnQueue spawnQueue = new MobSpawnQueue();
 
     @Override
     public void onEnable() {
@@ -30,7 +33,7 @@ public final class ConquestSpawners extends JavaPlugin {
         // 📜 Register commands
         setupCommands();
 
-        // 🎧 Register events
+        // 🎧 Register listeners and periodic tasks
         registerListeners();
 
         getLogger().info("✅  ConquestSpawners enabled successfully.");
@@ -56,7 +59,6 @@ public final class ConquestSpawners extends JavaPlugin {
     private void setupCommands() {
         CommandManager commandManager = new CommandManager();
 
-        // Main command must match plugin.yml
         PluginCommand baseCommand = getCommand("conquestspawners");
         if (baseCommand == null) {
             getLogger().severe("❌  Command 'conquestspawners' not registered in plugin.yml.");
@@ -66,7 +68,6 @@ public final class ConquestSpawners extends JavaPlugin {
         baseCommand.setExecutor(commandManager);
         baseCommand.setTabCompleter(commandManager);
 
-        // Log aliases defined in config (not dynamically registered but good for debugging)
         List<String> aliases = getConfig().getStringList("command-aliases");
         if (!aliases.isEmpty()) {
             getLogger().info("🔗  Registered aliases from config: " + String.join(", ", aliases));
@@ -74,18 +75,19 @@ public final class ConquestSpawners extends JavaPlugin {
     }
 
     /**
-     * Registers all Bukkit event listeners.
+     * Registers all Bukkit event listeners and background tasks.
      */
     private void registerListeners() {
         // 📦 Handles placement restrictions (biome, y-axis, etc.)
         new SpawnerPlaceListener(configurationManager.getMobManager());
 
-        // ⚙️ Handles spawning logic and runtime checks (air, light, etc.)
-        new SpawnerListener(configurationManager.getMobManager());
+        // 🕒 Start mob queue processing task
+        new SpawningListener(spawnQueue).runTaskTimer(this, 20L, 20L); // every 1 second
+        new SpawnerScanTask(configurationManager.getMobManager(), spawnQueue)
+                .runTaskTimer(this, 20L, 20L); // every 1 second
 
-        getLogger().info("🎧  Event listeners registered.");
+        getLogger().info("🎧  Listeners and spawning task registered.");
     }
-
 
     public static ConquestSpawners getInstance() {
         return instance;
@@ -93,5 +95,9 @@ public final class ConquestSpawners extends JavaPlugin {
 
     public ConfigurationManager getConfigurationManager() {
         return configurationManager;
+    }
+
+    public MobSpawnQueue getSpawnQueue() {
+        return spawnQueue;
     }
 }

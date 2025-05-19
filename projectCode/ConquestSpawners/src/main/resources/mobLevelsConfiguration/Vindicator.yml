@@ -55,9 +55,9 @@ SpawnerRequirements:
     - old_growth_pine_taiga
     - windswept_hills
 
-  On-Ground: true
+  On-Ground: false
 
-  On-Block: true
+  On-Block: false
   AllowedBlocks:
     - COBBLESTONE
     - SPRUCE_PLANKS

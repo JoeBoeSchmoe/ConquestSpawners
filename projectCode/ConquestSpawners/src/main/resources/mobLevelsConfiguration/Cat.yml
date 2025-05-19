@@ -58,7 +58,7 @@ SpawnerRequirements:
     - swamp
     - taiga
 
-  On-Ground: true               # Requires solid block below spawn location
+  On-Ground: false               # Requires solid block below spawn location
 
   # Specific block check: requires the spawner to be placed on a block in this list
   On-Block: true

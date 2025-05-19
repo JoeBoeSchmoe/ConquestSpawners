@@ -53,9 +53,9 @@ SpawnerRequirements:
     - basalt_deltas
     - nether_wastes
 
-  On-Ground: true
+  On-Ground: false
 
-  On-Block: true
+  On-Block: false
   AllowedBlocks:
     - NETHERRACK
     - CRIMSON_NYLIUM

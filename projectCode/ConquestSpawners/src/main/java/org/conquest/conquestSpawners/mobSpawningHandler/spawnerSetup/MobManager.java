@@ -10,6 +10,9 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.logging.Logger;
 
+/**
+ * Loads and manages all custom mob data from YAML configs.
+ */
 public class MobManager {
 
     private final JavaPlugin plugin;
@@ -23,126 +26,55 @@ public class MobManager {
         mobData.clear();
         Logger log = plugin.getLogger();
 
-        File folder = new File(plugin.getDataFolder(), "mobLevelsConfiguration");
-        if (!folder.exists() && !folder.mkdirs()) {
-            log.warning("Could not create mobLevelsConfiguration/ directory.");
+        File configFolder = new File(plugin.getDataFolder(), "mobLevelsConfiguration");
+        if (!configFolder.exists() && !configFolder.mkdirs()) {
+            log.warning("⚠️ Failed to create mobLevelsConfiguration/ directory.");
             return;
         }
 
-        // 🔁 Dynamically copy missing .yml files from inside the JAR
         extractDefaultsFromJar();
 
-        File[] files = folder.listFiles((dir, name) -> name.toLowerCase().endsWith(".yml"));
+        File[] files = configFolder.listFiles((dir, name) -> name.toLowerCase().endsWith(".yml"));
         if (files == null || files.length == 0) {
-            log.warning("No mob files found in mobLevelsConfiguration/");
+            log.warning("⚠️ No mob config files found in mobLevelsConfiguration/");
             return;
         }
 
         for (File file : files) {
-            String mobKey = file.getName().replace(".yml", "");
-            try {
-                YamlConfiguration yaml = YamlConfiguration.loadConfiguration(file);
-
-                boolean enabled = yaml.getBoolean("Spawner-Enabled", false);
-                boolean customWorlds = yaml.getBoolean("Custom-Whitelisted-Worlds", false);
-                List<String> worlds = yaml.getStringList("Worlds");
-
-                Object activationRange = yaml.get("Player-Activation-Range");
-                Object disableAI = yaml.get("Disable-Mob-AI");
-                Object spawnersPerChunk = yaml.get("Allowed-Spawners-Per-Chunk");
-
-                boolean overrideDisplay = yaml.getBoolean("OverrideDefaultDisplay", false);
-                String displayName = yaml.getString("DisplayName");
-                List<String> displayLore = yaml.getStringList("DisplayLore");
-
-                // 🧱 Requirements
-                SpawnerRequirementsModel req = new SpawnerRequirementsModel();
-                ConfigurationSection reqSection = yaml.getConfigurationSection("SpawnerRequirements");
-                if (reqSection != null) {
-                    req.air = reqSection.getBoolean("Air", false);
-                    req.aboveSeaLevel = reqSection.getBoolean("Above-Sea-Level", false);
-                    req.belowSeaLevel = reqSection.getBoolean("Below-Sea-Level", false);
-                    req.aboveYAxis = reqSection.getBoolean("Above-Y-Axis", false);
-                    req.belowYAxis = reqSection.getBoolean("Below-Y-Axis", false);
-                    req.darkness = reqSection.getBoolean("Darkness", false);
-                    req.totalDarkness = reqSection.getBoolean("Total-Darkness", false);
-                    req.light = reqSection.getBoolean("Light", false);
-                    req.maxEntitiesNearby = reqSection.getBoolean("Max-Entities-Nearby", false);
-                    req.fluid = reqSection.getBoolean("Fluid", false);
-                    req.inBiome = reqSection.getBoolean("InBiome", false);
-                    req.allowedBiomes = reqSection.getStringList("AllowedBiomes");
-                    req.onGround = reqSection.getBoolean("On-Ground", false);
-                    req.onBlock = reqSection.getBoolean("On-Block", false);
-                    req.allowedBlocks = reqSection.getStringList("AllowedBlocks");
-                }
-
-                // 🔁 Levels
-                Map<Integer, SpawnerLevelModel> levels = new LinkedHashMap<>();
-                ConfigurationSection levelsSection = yaml.getConfigurationSection("Spawner-Levels");
-                if (levelsSection != null) {
-                    for (String levelKey : levelsSection.getKeys(false)) {
-                        ConfigurationSection levelSec = levelsSection.getConfigurationSection(levelKey);
-                        if (levelSec == null) continue;
-
-                        SpawnerLevelModel level = new SpawnerLevelModel();
-                        level.spawnerDelay = levelSec.get("SpawnerDelay");
-                        level.mobCount = levelSec.get("MobCount");
-                        level.xpDrop = levelSec.get("XPDrop");
-                        level.vanillaDrops = levelSec.getBoolean("VanillaDrops", false);
-                        level.costToUpgrade = levelSec.get("CostToUpgrade");
-
-                        List<CustomDropModel> drops = new ArrayList<>();
-                        ConfigurationSection dropSec = levelSec.getConfigurationSection("CustomDrops");
-                        if (dropSec != null) {
-                            for (String dropKey : dropSec.getKeys(false)) {
-                                ConfigurationSection d = dropSec.getConfigurationSection(dropKey);
-                                if (d == null) continue;
-
-                                CustomDropModel drop = new CustomDropModel();
-                                drop.material = d.getString("Material");
-                                drop.amount = d.getInt("Amount", 1);
-                                drop.dropPercent = d.getDouble("Drop-Percent", 0.0);
-
-                                ConfigurationSection customDataSec = d.getConfigurationSection("Custom-Data");
-                                drop.customData = (customDataSec != null) ? customDataSec.getValues(false) : new HashMap<>();
-
-                                drops.add(drop);
-                            }
-                        }
-
-                        level.customDrops = drops;
-                        levels.put(Integer.parseInt(levelKey), level);
-                    }
-                }
-
-                MobDataModel model = new MobDataModel(
-                        mobKey,
-                        enabled,
-                        customWorlds,
-                        worlds,
-                        activationRange,
-                        disableAI,
-                        spawnersPerChunk,
-                        overrideDisplay,
-                        displayName,
-                        displayLore,
-                        req,
-                        levels
-                );
-
-                mobData.put(mobKey.toLowerCase(), model);
-                log.info("✅ Loaded mob config: " + mobKey);
-
-            } catch (Exception e) {
-                log.warning("❌ Failed to load mob file: " + file.getName() + " - " + e.getMessage());
-                e.printStackTrace();
-            }
+            loadMobFile(file);
         }
     }
 
-    /**
-     * Copies all .yml files from mobLevelsConfiguration/ in the JAR if they don't already exist on disk.
-     */
+    private void loadMobFile(File file) {
+        String mobKey = file.getName().replace(".yml", "");
+        Logger log = plugin.getLogger();
+
+        try {
+            YamlConfiguration yaml = YamlConfiguration.loadConfiguration(file);
+
+            MobDataModel model = new MobDataModel(
+                    mobKey,
+                    yaml.getBoolean("Spawner-Enabled", false),
+                    yaml.getBoolean("Custom-Whitelisted-Worlds", false),
+                    yaml.getStringList("Worlds"),
+                    yaml.get("Player-Activation-Range"),
+                    yaml.get("Disable-Mob-AI"),
+                    yaml.get("Allowed-Spawners-Per-Chunk"),
+                    yaml.getBoolean("OverrideDefaultDisplay", false),
+                    yaml.getString("DisplayName"),
+                    yaml.getStringList("DisplayLore"),
+                    parseRequirements(yaml.getConfigurationSection("SpawnerRequirements")),
+                    parseLevels(yaml.getConfigurationSection("Spawner-Levels"))
+            );
+
+            mobData.put(mobKey.toLowerCase(), model);
+            log.info("✅ Loaded mob config: " + mobKey);
+
+        } catch (Exception e) {
+            log.warning("❌ Failed to load mob file: " + file.getName() + " - " + e.getMessage());
+        }
+    }
+
     private void extractDefaultsFromJar() {
         try {
             File jarFile = new File(plugin.getClass().getProtectionDomain().getCodeSource().getLocation().toURI());
@@ -153,9 +85,7 @@ public class MobManager {
                     String name = entry.getName();
 
                     if (name.startsWith("mobLevelsConfiguration/") && name.endsWith(".yml")) {
-                        String fileName = name.substring("mobLevelsConfiguration/".length());
-                        File target = new File(plugin.getDataFolder(), "mobLevelsConfiguration/" + fileName);
-
+                        File target = new File(plugin.getDataFolder(), name);
                         if (!target.exists()) {
                             plugin.saveResource(name, false);
                         }
@@ -165,6 +95,81 @@ public class MobManager {
         } catch (Exception e) {
             plugin.getLogger().warning("⚠️ Failed to extract default mob config files: " + e.getMessage());
         }
+    }
+
+    private SpawnerRequirementsModel parseRequirements(ConfigurationSection section) {
+        if (section == null) return new SpawnerRequirementsModel();
+
+        SpawnerRequirementsModel req = new SpawnerRequirementsModel();
+        req.air = section.getBoolean("Air", false);
+        req.aboveSeaLevel = section.getBoolean("Above-Sea-Level", false);
+        req.belowSeaLevel = section.getBoolean("Below-Sea-Level", false);
+        req.aboveYAxis = section.getBoolean("Above-Y-Axis", false);
+        req.belowYAxis = section.getBoolean("Below-Y-Axis", false);
+        req.darkness = section.getBoolean("Darkness", false);
+        req.totalDarkness = section.getBoolean("Total-Darkness", false);
+        req.light = section.getBoolean("Light", false);
+        req.maxEntitiesNearby = section.getBoolean("Max-Entities-Nearby", false);
+        req.fluid = section.getBoolean("Fluid", false);
+        req.inBiome = section.getBoolean("InBiome", false);
+        req.allowedBiomes = section.getStringList("AllowedBiomes");
+        req.onGround = section.getBoolean("On-Ground", false);
+        req.onBlock = section.getBoolean("On-Block", false);
+        req.allowedBlocks = section.getStringList("AllowedBlocks");
+
+        return req;
+    }
+
+    private Map<Integer, SpawnerLevelModel> parseLevels(ConfigurationSection section) {
+        Map<Integer, SpawnerLevelModel> levels = new LinkedHashMap<>();
+        if (section == null) return levels;
+
+        for (String levelKey : section.getKeys(false)) {
+            try {
+                ConfigurationSection levelSec = section.getConfigurationSection(levelKey);
+                if (levelSec == null) continue;
+
+                SpawnerLevelModel level = new SpawnerLevelModel();
+                level.setSpawnerDelay(levelSec.get("SpawnerDelay"));
+                level.setMobCount(levelSec.get("MobCount"));
+                level.setXpDrop(levelSec.get("XPDrop"));
+                level.setVanillaDrops(levelSec.getBoolean("VanillaDrops", false));
+                level.setCostToUpgrade(levelSec.get("CostToUpgrade"));
+                level.setCustomDrops(parseCustomDrops(levelSec.getConfigurationSection("CustomDrops")));
+
+                levels.put(Integer.parseInt(levelKey), level);
+            } catch (Exception e) {
+                plugin.getLogger().warning("❌ Error loading spawner level " + levelKey + ": " + e.getMessage());
+            }
+        }
+
+        return levels;
+    }
+
+    private List<CustomDropModel> parseCustomDrops(ConfigurationSection section) {
+        List<CustomDropModel> drops = new ArrayList<>();
+        if (section == null) return drops;
+
+        for (String dropKey : section.getKeys(false)) {
+            try {
+                ConfigurationSection d = section.getConfigurationSection(dropKey);
+                if (d == null) continue;
+
+                String material = d.getString("Material");
+                int amount = d.getInt("Amount", 1);
+                double dropPercent = d.getDouble("Drop-Percent", 0.0);
+
+                Map<String, Object> customData = Optional.ofNullable(d.getConfigurationSection("Custom-Data"))
+                        .map(sec -> sec.getValues(false))
+                        .orElse(new HashMap<>());
+
+                drops.add(new CustomDropModel(material, amount, dropPercent, customData));
+            } catch (Exception e) {
+                plugin.getLogger().warning("⚠️ Failed to parse drop: " + dropKey + " - " + e.getMessage());
+            }
+        }
+
+        return drops;
     }
 
     public MobDataModel getMob(String id) {

@@ -55,7 +55,7 @@ SpawnerRequirements:
     - dripstone_caves
     - deep_dark
 
-  On-Ground: true
+  On-Ground: false
 
   On-Block: true
   AllowedBlocks:

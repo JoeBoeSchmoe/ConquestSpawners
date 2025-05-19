@@ -56,9 +56,9 @@ SpawnerRequirements:
     - forest
     - birch_forest
 
-  On-Ground: true
+  On-Ground: false
 
-  On-Block: true
+  On-Block: false
   AllowedBlocks:
     - GRASS_BLOCK
     - DIRT

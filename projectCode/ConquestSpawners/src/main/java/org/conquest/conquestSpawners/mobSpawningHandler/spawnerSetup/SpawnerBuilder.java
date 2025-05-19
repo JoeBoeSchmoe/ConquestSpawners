@@ -13,33 +13,34 @@ import org.conquest.conquestSpawners.ConquestSpawners;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Builds the temporary visual spawner item using a placeholder material.
+ * Plugin-controlled spawning — no vanilla logic.
+ */
 public class SpawnerBuilder {
 
     private static final MiniMessage mini = MiniMessage.miniMessage();
-    private static final String NAMESPACE = "conquestspawners";
 
-    /**
-     * Builds a perfectly clean spawner item — no vanilla lore or tooltips.
-     */
     public static ItemStack buildSpawner(MobDataModel mob, int level) {
-        ItemStack item = new ItemStack(Material.SPAWNER);
+        // 🧱 Placeholder block instead of SPANNER
+        ItemStack item = new ItemStack(Material.SPAWNER); // <-- swapped from Material.SPAWNER
         ItemMeta meta = item.getItemMeta();
         if (meta == null) return item;
 
-        // 🏷 Custom name
+        // 🏷 Name
         String rawName = mob.isOverrideDefaultDisplay()
                 ? mob.getDisplayName()
                 : ConquestSpawners.getInstance().getConfigurationManager().getConfig()
                 .getString("default-values.default-display.display-name");
 
         if (rawName != null) {
-            Component display = MiniMessage.miniMessage().deserialize(
+            Component display = mini.deserialize(
                     rawName.replace("{Spawner}", mob.getMobType()).replace("{level}", String.valueOf(level))
             );
             meta.displayName(display);
         }
 
-        // ❌ Custom lore or none
+        // 📜 Lore
         List<String> loreLines = mob.isOverrideDefaultDisplay()
                 ? mob.getDisplayLore()
                 : ConquestSpawners.getInstance().getConfigurationManager().getConfig()
@@ -47,22 +48,23 @@ public class SpawnerBuilder {
 
         if (loreLines != null && !loreLines.isEmpty()) {
             List<Component> lore = loreLines.stream()
-                    .map(line -> MiniMessage.miniMessage().deserialize(
+                    .map(line -> mini.deserialize(
                             line.replace("{Spawner}", mob.getMobType())
                                     .replace("{level}", String.valueOf(level))
-                    )).toList();
+                    ))
+                    .toList();
             meta.lore(lore);
         } else {
             meta.lore(null);
         }
 
-        // 🧬 Tags
+        // 🧬 Metadata
         PersistentDataContainer data = meta.getPersistentDataContainer();
-        data.set(ItemUtility.key("conquestspawners", "mob"), PersistentDataType.STRING, mob.getMobType().toLowerCase());
-        data.set(ItemUtility.key("conquestspawners", "level"), PersistentDataType.INTEGER, level);
-        data.set(ItemUtility.key("conquestspawners", "id"), PersistentDataType.STRING, UUID.randomUUID().toString());
+        data.set(ItemUtility.key("mob"), PersistentDataType.STRING, mob.getMobType().toLowerCase());
+        data.set(ItemUtility.key("level"), PersistentDataType.INTEGER, level);
+        data.set(ItemUtility.key("id"), PersistentDataType.STRING, UUID.randomUUID().toString());
 
-        // 🧼 Hide all tooltip junk
+        // 🧼 Hide everything vanilla
         meta.addItemFlags(
                 ItemFlag.HIDE_ITEM_SPECIFICS,
                 ItemFlag.HIDE_ATTRIBUTES,

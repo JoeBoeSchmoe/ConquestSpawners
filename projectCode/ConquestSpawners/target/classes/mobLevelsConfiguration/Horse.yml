@@ -56,7 +56,7 @@ SpawnerRequirements:
     - sunflower_plains
     - meadow
 
-  On-Ground: true
+  On-Ground: false
 
   On-Block: true
   AllowedBlocks:

@@ -29,8 +29,9 @@ SpawnerRequirements:
   InBiome: false
   AllowedBiomes:
     - bastion_remnant
-  On-Ground: true
-  On-Block: true
+  On-Ground: false
+
+  On-Block: false
   AllowedBlocks:
     - POLISHED_BLACKSTONE
     - GILDED_BLACKSTONE

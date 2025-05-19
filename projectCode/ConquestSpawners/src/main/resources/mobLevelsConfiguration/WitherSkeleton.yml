@@ -52,9 +52,9 @@ SpawnerRequirements:
     - nether_wastes
     - basalt_deltas
 
-  On-Ground: true
+  On-Ground: false
 
-  On-Block: true
+  On-Block: false
   AllowedBlocks:
     - NETHER_BRICKS
     - SOUL_SAND

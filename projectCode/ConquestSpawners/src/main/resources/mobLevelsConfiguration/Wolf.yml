@@ -56,9 +56,9 @@ SpawnerRequirements:
     - snowy_taiga
     - forest
 
-  On-Ground: true
+  On-Ground: false
 
-  On-Block: true
+  On-Block: false
   AllowedBlocks:
     - GRASS_BLOCK
     - PODZOL

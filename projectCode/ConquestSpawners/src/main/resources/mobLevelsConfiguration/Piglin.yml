@@ -30,7 +30,7 @@ SpawnerRequirements:
   AllowedBiomes:
     - nether_wastes
     - crimson_forest
-  On-Ground: true
+  On-Ground: false
   On-Block: true
   AllowedBlocks:
     - NETHERRACK

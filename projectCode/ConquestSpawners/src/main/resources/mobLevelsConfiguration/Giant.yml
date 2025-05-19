@@ -56,7 +56,7 @@ SpawnerRequirements:
     - dark_forest
     - mountain_meadow
 
-  On-Ground: true
+  On-Ground: false
 
   On-Block: true
   AllowedBlocks:

@@ -110,7 +110,7 @@ default-values:
   # Used if a specific mob config does not override it.
   # ===================================================
   default-display:
-    display-name: "<white><bold>[<aqua>{Spawner} Spawner</aqua><white>]</bold> <gray><bold>Level</bold> <white><bold>{level}</white>"
+    display-name: "<white><bold>[<aqua>{Spawner} Spawner</aqua><white>]</bold> <white><bold>Level {level}</bold>"
     display-lore:
       - "<gray>Collect me with Silk Touch!"
 

@@ -52,9 +52,9 @@ SpawnerRequirements:
   AllowedBiomes:
     - deep_dark
 
-  On-Ground: true
+  On-Ground: false
 
-  On-Block: true
+  On-Block: false
   AllowedBlocks:
     - SCULK
     - SCULK_VEIN

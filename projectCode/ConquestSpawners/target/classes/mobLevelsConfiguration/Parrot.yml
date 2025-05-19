@@ -55,9 +55,9 @@ SpawnerRequirements:
     - sparse_jungle
     - bamboo_jungle
 
-  On-Ground: true
+  On-Ground: false
 
-  On-Block: true
+  On-Block: false
   AllowedBlocks:
     - JUNGLE_LEAVES
     - GRASS_BLOCK

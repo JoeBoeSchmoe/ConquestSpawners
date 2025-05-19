@@ -55,9 +55,9 @@ SpawnerRequirements:
     - dripstone_caves
     - windswept_hills
 
-  On-Ground: true
+  On-Ground: false
 
-  On-Block: true
+  On-Block: false
   AllowedBlocks:
     - STONE
     - INFESTED_STONE

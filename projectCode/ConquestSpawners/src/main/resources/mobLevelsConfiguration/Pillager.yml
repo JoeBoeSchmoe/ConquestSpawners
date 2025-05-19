@@ -32,8 +32,9 @@ SpawnerRequirements:
     - savanna
     - snowy_plains
     - taiga
-  On-Ground: true
-  On-Block: true
+  On-Ground: false
+
+  On-Block: false
   AllowedBlocks:
     - GRASS_BLOCK
     - STONE

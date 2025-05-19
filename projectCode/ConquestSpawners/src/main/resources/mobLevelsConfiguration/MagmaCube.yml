@@ -53,7 +53,7 @@ SpawnerRequirements:
     - basalt_deltas
     - nether_wastes
 
-  On-Ground: true
+  On-Ground: false
 
   On-Block: true
   AllowedBlocks:

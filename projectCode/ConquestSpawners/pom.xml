@@ -16,7 +16,7 @@
     <maven.compiler.target>${java.version}</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <paper.version>1.21.4-R0.1-SNAPSHOT</paper.version>
-    <decentholograms.version>2.8.3</decentholograms.version>
+    <decentholograms.version>2.8.3</decentholograms.version> <!-- ✅ Update as needed -->
   </properties>
 
   <repositories>
@@ -38,7 +38,7 @@
       <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
     </repository>
 
-    <!-- JitPack for DecentHolograms -->
+    <!-- ✅ DecentHolograms via JitPack -->
     <repository>
       <id>jitpack.io</id>
       <url>https://jitpack.io</url>
@@ -46,7 +46,7 @@
   </repositories>
 
   <dependencies>
-    <!-- Paper API (recommended for general plugin dev) -->
+    <!-- Paper API -->
     <dependency>
       <groupId>io.papermc.paper</groupId>
       <artifactId>paper-api</artifactId>
@@ -54,15 +54,7 @@
       <scope>provided</scope>
     </dependency>
 
-    <!-- Paper dev bundle (enables access to CraftBukkit + NMS) -->
-    <dependency>
-      <groupId>io.papermc.paper</groupId>
-      <artifactId>dev-bundle</artifactId>
-      <version>${paper.version}</version>
-      <scope>provided</scope>
-    </dependency>
-
-    <!-- Vault -->
+    <!-- Vault API -->
     <dependency>
       <groupId>net.milkbowl.vault</groupId>
       <artifactId>VaultAPI</artifactId>
@@ -78,7 +70,7 @@
       <scope>provided</scope>
     </dependency>
 
-    <!-- DecentHolograms -->
+    <!-- ✅ DecentHolograms -->
     <dependency>
       <groupId>com.github.DecentSoftware-eu</groupId>
       <artifactId>DecentHolograms</artifactId>
@@ -90,6 +82,7 @@
   <build>
     <finalName>ConquestSpawners-1.0</finalName>
     <plugins>
+      <!-- Compiler Plugin -->
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.11.0</version>
@@ -98,6 +91,7 @@
         </configuration>
       </plugin>
 
+      <!-- Shade Plugin -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-shade-plugin</artifactId>

@@ -119,9 +119,10 @@ public class MobDataModel {
         return requirements;
     }
 
-    public Map<Integer, SpawnerLevelModel> getLevels() {
+    public Map<Integer, SpawnerLevelModel> getSpawnerLevels() {
         return levels;
     }
+
 
     // === Resolved accessors with config fallback ===
 

@@ -87,7 +87,7 @@ public class CustomMob {
      * @return SpawnerLevelModel or null if invalid level
      */
     public SpawnerLevelModel getSpawnerLevelModel() {
-        return mobDataModel.getLevels().get(spawnerLevel);
+        return mobDataModel.getSpawnerLevels().get(spawnerLevel);
     }
 
     @Override

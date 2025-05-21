@@ -55,7 +55,7 @@ public class SpawnerScanTask extends BukkitRunnable {
                     MobDataModel mob = mobManager.getMob(mobKey.toLowerCase(Locale.ROOT));
                     if (mob == null || !mob.isSpawnerEnabled()) continue;
 
-                    SpawnerLevelModel levelData = mob.getLevels().get(level);
+                    SpawnerLevelModel levelData = mob.getSpawnerLevels().get(level);
                     if (levelData == null) continue;
 
                     long last = lastSpawnTimes.getOrDefault(spawnerId, 0L);

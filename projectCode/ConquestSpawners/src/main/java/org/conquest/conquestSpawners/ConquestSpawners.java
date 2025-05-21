@@ -5,10 +5,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.conquest.conquestSpawners.commandHandler.CommandManager;
 import org.conquest.conquestSpawners.configurationHandler.ConfigurationManager;
 import org.conquest.conquestSpawners.mobSpawningHandler.SpawnerPlaceListener;
-import org.conquest.conquestSpawners.mobSpawningHandler.spawningHandler.MobBehaviorSuppressorListener;
-import org.conquest.conquestSpawners.mobSpawningHandler.spawningHandler.MobSpawnQueue;
-import org.conquest.conquestSpawners.mobSpawningHandler.spawningHandler.SpawnerScanTask;
-import org.conquest.conquestSpawners.mobSpawningHandler.spawningHandler.SpawningListener;
+import org.conquest.conquestSpawners.mobSpawningHandler.spawningHandler.*;
 
 import java.util.List;
 
@@ -85,13 +82,25 @@ public final class ConquestSpawners extends JavaPlugin {
         // 🎧 Suppresses targeting, pathfinding, and attack AI while preserving gravity
         getServer().getPluginManager().registerEvents(new MobBehaviorSuppressorListener(), this);
 
+        // 💀 Handles death drops and particle suppression for custom mobs
+        getServer().getPluginManager().registerEvents(
+                new MobDeathListener(this, configurationManager.getMobManager()), this
+        );
+
         // 🕒 Start mob queue processing task
         new SpawningListener(spawnQueue).runTaskTimer(this, 20L, 20L); // every 1 second
+
+        // 🔍 Scans for nearby eligible spawners and queues spawnable mobs
         new SpawnerScanTask(configurationManager.getMobManager(), spawnQueue)
                 .runTaskTimer(this, 20L, 20L); // every 1 second
 
-        getLogger().info("🎧  Listeners and spawning task registered.");
+        // 💥 Cram detection for custom mobs
+        new EntityCramDamageTask().runTaskTimer(this, 100L, 10L); // every 5 seconds
+
+        getLogger().info("🎧  Listeners and spawning tasks registered.");
     }
+
+
 
 
     public static ConquestSpawners getInstance() {

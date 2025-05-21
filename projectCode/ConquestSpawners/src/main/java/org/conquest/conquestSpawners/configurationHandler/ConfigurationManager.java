@@ -29,6 +29,7 @@ public class ConfigurationManager {
     public ConfigurationManager() {
         this.mobManager = new MobManager(plugin); // ✅ Instantiate ONCE here
     }
+
     public void initialize() {
         try {
             log.info("📦  Loading configuration...");
@@ -72,6 +73,9 @@ public class ConfigurationManager {
         check("cooldowns.interaction-cooldown-ms");
 
         check("gui-settings.timeout-seconds");
+
+        // 🧱 Cram config validation
+        check("entity-cram-limit");
     }
 
     private void check(String path) {
@@ -96,6 +100,14 @@ public class ConfigurationManager {
 
     public FileConfiguration getConfig() {
         return config;
+    }
+
+    /**
+     * 🌋 Gets the global cram limit for custom mobs from config.yml
+     * Applies to all mobs tagged with conquest-spawner-drop.
+     */
+    public int getEntityCramLimit() {
+        return getConfig().getInt("entity-cram-limit", 3);
     }
 
     public MobManager getMobManager() {

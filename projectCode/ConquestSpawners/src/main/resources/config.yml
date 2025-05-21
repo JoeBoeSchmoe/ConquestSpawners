@@ -76,6 +76,13 @@ gui-settings:
   timeout-seconds: 60     # Auto-close after inactivity (0 = disabled)
 
 # ===================================================
+# 💥 Entity Cramming
+# Limits how many custom mobs can exist in a tight space before taking damage.
+# Applies to all mobs spawned by this plugin.
+# ===================================================
+entity-cram-limit: 3
+
+# ===================================================
 # ⚙️ Default Spawner Settings
 # Controls base behaviors for all spawners unless overridden.
 # ===================================================

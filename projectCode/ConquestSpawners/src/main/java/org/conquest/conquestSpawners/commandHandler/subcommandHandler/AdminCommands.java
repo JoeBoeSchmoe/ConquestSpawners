@@ -92,7 +92,7 @@ public class AdminCommands {
             return true;
         }
 
-        if (!mob.getLevels().containsKey(level)) {
+        if (!mob.getSpawnerLevels().containsKey(level)) {
             MessageResponseManager.send(player, AdminMessageModels.SPAWNER_GIVE_FAILED,
                     Map.of("reason", "Level not defined for this mob."));
             return true;

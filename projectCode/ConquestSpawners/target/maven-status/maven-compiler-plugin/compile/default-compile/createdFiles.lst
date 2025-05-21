@@ -14,6 +14,7 @@ org\conquest\conquestSpawners\responseHandler\effectHandler\ActionBarResponseMan
 org\conquest\conquestSpawners\configurationHandler\integrationFiles\VaultManager.class
 org\conquest\conquestSpawners\mobSpawningHandler\spawnerSetup\ConfigResolver.class
 org\conquest\conquestSpawners\responseHandler\ComponentSerializerManager.class
+org\conquest\conquestSpawners\mobSpawningHandler\spawningHandler\EntityCramDamageTask.class
 org\conquest\conquestSpawners\configurationHandler\ConfigurationManager.class
 org\conquest\conquestSpawners\cooldownHandler\GUICooldownManager.class
 org\conquest\conquestSpawners\mobSpawningHandler\spawnerSetup\ItemUtility.class
@@ -34,7 +35,9 @@ org\conquest\conquestSpawners\cooldownHandler\InteractionCooldownManager.class
 org\conquest\conquestSpawners\configurationHandler\configurationFiles\ConfigFile.class
 org\conquest\conquestSpawners\configurationHandler\integrationFiles\PlaceHolderAPIManager$1.class
 org\conquest\conquestSpawners\commandHandler\permissionHandler\PermissionModels.class
+org\conquest\conquestSpawners\mobSpawningHandler\spawningHandler\SpawnLocationResolver$Size.class
 org\conquest\conquestSpawners\cooldownHandler\CommandCooldownManager.class
+org\conquest\conquestSpawners\mobSpawningHandler\spawningHandler\MobDeathListener.class
 org\conquest\conquestSpawners\responseHandler\effectHandler\EffectResponseManager.class
 org\conquest\conquestSpawners\mobSpawningHandler\spawnerSetup\CustomDropModel.class
 org\conquest\conquestSpawners\responseHandler\effectHandler\BossBarResponseManager$BossBarEntry.class

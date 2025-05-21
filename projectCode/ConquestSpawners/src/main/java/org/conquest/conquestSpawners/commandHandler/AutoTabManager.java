@@ -87,7 +87,7 @@ public class AutoTabManager {
     }
 
     private static List<String> getLevelStrings(MobDataModel mob) {
-        return mob.getLevels().keySet().stream()
+        return mob.getSpawnerLevels().keySet().stream()
                 .map(String::valueOf)
                 .sorted()
                 .toList();

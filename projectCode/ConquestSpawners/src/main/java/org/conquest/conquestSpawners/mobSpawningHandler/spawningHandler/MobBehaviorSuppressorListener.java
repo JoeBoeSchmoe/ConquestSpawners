@@ -1,6 +1,8 @@
 package org.conquest.conquestSpawners.mobSpawningHandler.spawningHandler;
 
 import io.papermc.paper.event.entity.EntityMoveEvent;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -9,13 +11,10 @@ import org.bukkit.util.Vector;
 
 /**
  * Suppresses all AI/pathfinding/movement/rotation for mobs tagged with disable-ai-logic.
- * Allows falling and taking damage, but cancels targeting, attacking, moving, rotating.
+ * Allows falling, head tracking, and liquid movement — but cancels hostile behaviors and grounded walking.
  */
 public class MobBehaviorSuppressorListener implements Listener {
 
-    /**
-     * Blocks all targeting logic for AI-disabled mobs.
-     */
     @EventHandler
     public void onEntityTarget(EntityTargetEvent event) {
         if (hasAIDisabled(event.getEntity())) {
@@ -23,9 +22,6 @@ public class MobBehaviorSuppressorListener implements Listener {
         }
     }
 
-    /**
-     * Blocks targeting players or entities.
-     */
     @EventHandler
     public void onEntityTargetLiving(EntityTargetLivingEntityEvent event) {
         if (hasAIDisabled(event.getEntity())) {
@@ -33,9 +29,6 @@ public class MobBehaviorSuppressorListener implements Listener {
         }
     }
 
-    /**
-     * Prevents AI-disabled mobs from attacking other entities.
-     */
     @EventHandler
     public void onEntityDamage(EntityDamageByEntityEvent event) {
         if (hasAIDisabled(event.getDamager())) {
@@ -43,9 +36,6 @@ public class MobBehaviorSuppressorListener implements Listener {
         }
     }
 
-    /**
-     * Prevent mobs from griefing blocks (e.g., Endermen, Wither).
-     */
     @EventHandler
     public void onEntityChangeBlock(EntityChangeBlockEvent event) {
         if (hasAIDisabled(event.getEntity())) {
@@ -53,9 +43,6 @@ public class MobBehaviorSuppressorListener implements Listener {
         }
     }
 
-    /**
-     * Prevents AI-disabled mobs from combusting in daylight.
-     */
     @EventHandler
     public void onEntityCombust(EntityCombustEvent event) {
         if (hasAIDisabled(event.getEntity())) {
@@ -63,9 +50,6 @@ public class MobBehaviorSuppressorListener implements Listener {
         }
     }
 
-    /**
-     * Prevents AI-disabled mobs from igniting others.
-     */
     @EventHandler
     public void onEntityCombustByEntity(EntityCombustByEntityEvent event) {
         if (hasAIDisabled(event.getCombuster())) {
@@ -74,31 +58,38 @@ public class MobBehaviorSuppressorListener implements Listener {
     }
 
     /**
-     * Cancels movement in X/Z while allowing natural Y-axis falling.
+     * Cancels movement in X/Z while allowing natural Y-axis falling,
+     * head rotation, and movement inside liquids (e.g., water/lava).
      */
     @EventHandler
     public void onEntityMove(EntityMoveEvent event) {
         Entity entity = event.getEntity();
         if (!hasAIDisabled(entity)) return;
 
+        // Allow movement if the entity is currently in or moving into liquid
+        Block toBlock = event.getTo().getBlock();
+        if (isLiquid(toBlock)) return;
+
         Vector from = event.getFrom().toVector();
         Vector to = event.getTo().toVector();
         Vector delta = to.clone().subtract(from);
 
-        // Allow only vertical motion (falling)
         if (Math.abs(delta.getX()) > 0.001 || Math.abs(delta.getZ()) > 0.001) {
-            event.setTo(event.getFrom()); // Snap back to original X/Z
+            event.setTo(event.getFrom()); // Snap back
         }
-
-        // Optionally freeze yaw/pitch (no head turns)
-        event.getTo().setYaw(event.getFrom().getYaw());
-        event.getTo().setPitch(event.getFrom().getPitch());
     }
 
-    /**
-     * Check if entity has AI disabled via metadata.
-     */
     private boolean hasAIDisabled(Entity entity) {
         return entity.hasMetadata("disable-ai-logic");
+    }
+
+    private boolean isLiquid(Block block) {
+        Material type = block.getType();
+        return type == Material.WATER || type == Material.LAVA
+                || type == Material.BUBBLE_COLUMN
+                || type == Material.KELP
+                || type == Material.KELP_PLANT
+                || type == Material.SEAGRASS
+                || type == Material.TALL_SEAGRASS;
     }
 }

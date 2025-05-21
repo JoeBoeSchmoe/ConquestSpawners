@@ -41,5 +41,6 @@ org\conquest\conquestSpawners\responseHandler\effectHandler\BossBarResponseManag
 org\conquest\conquestSpawners\commandHandler\subcommandHandler\AdminCommands.class
 org\conquest\conquestSpawners\commandHandler\subcommandHandler\UserCommands.class
 org\conquest\conquestSpawners\ConquestSpawners.class
+org\conquest\conquestSpawners\mobSpawningHandler\spawningHandler\MobBehaviorSuppressorListener.class
 org\conquest\conquestSpawners\mobSpawningHandler\spawnerSetup\SpawnerLevelModel.class
 org\conquest\conquestSpawners\mobSpawningHandler\SpawnerPlaceListener.class

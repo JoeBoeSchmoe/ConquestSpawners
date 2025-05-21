@@ -5,6 +5,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.conquest.conquestSpawners.commandHandler.CommandManager;
 import org.conquest.conquestSpawners.configurationHandler.ConfigurationManager;
 import org.conquest.conquestSpawners.mobSpawningHandler.SpawnerPlaceListener;
+import org.conquest.conquestSpawners.mobSpawningHandler.spawningHandler.MobBehaviorSuppressorListener;
 import org.conquest.conquestSpawners.mobSpawningHandler.spawningHandler.MobSpawnQueue;
 import org.conquest.conquestSpawners.mobSpawningHandler.spawningHandler.SpawnerScanTask;
 import org.conquest.conquestSpawners.mobSpawningHandler.spawningHandler.SpawningListener;
@@ -81,6 +82,9 @@ public final class ConquestSpawners extends JavaPlugin {
         // 📦 Handles placement restrictions (biome, y-axis, etc.)
         new SpawnerPlaceListener(configurationManager.getMobManager());
 
+        // 🎧 Suppresses targeting, pathfinding, and attack AI while preserving gravity
+        getServer().getPluginManager().registerEvents(new MobBehaviorSuppressorListener(), this);
+
         // 🕒 Start mob queue processing task
         new SpawningListener(spawnQueue).runTaskTimer(this, 20L, 20L); // every 1 second
         new SpawnerScanTask(configurationManager.getMobManager(), spawnQueue)
@@ -88,6 +92,7 @@ public final class ConquestSpawners extends JavaPlugin {
 
         getLogger().info("🎧  Listeners and spawning task registered.");
     }
+
 
     public static ConquestSpawners getInstance() {
         return instance;

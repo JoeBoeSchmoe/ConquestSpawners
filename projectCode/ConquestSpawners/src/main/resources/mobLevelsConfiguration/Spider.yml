@@ -94,7 +94,7 @@ Spawner-Levels:
     MobCount: default
     XPDrop: default
     VanillaDrops: false
-    CostToUpgrade: default
+    CostToUpgrade: 100
     CustomDrops:
       '1':
         Material: FERMENTED_SPIDER_EYE
@@ -107,7 +107,7 @@ Spawner-Levels:
     MobCount: default
     XPDrop: default
     VanillaDrops: false
-    CostToUpgrade: default
+    CostToUpgrade: 500
     CustomDrops:
       '1':
         Material: SPIDER_EYE
@@ -120,7 +120,7 @@ Spawner-Levels:
     MobCount: default
     XPDrop: default
     VanillaDrops: false
-    CostToUpgrade: default
+    CostToUpgrade: 1000
     CustomDrops:
       '1':
         Material: COBWEB
@@ -133,7 +133,7 @@ Spawner-Levels:
     MobCount: default
     XPDrop: default
     VanillaDrops: false
-    CostToUpgrade: default
+    CostToUpgrade: 2000
     CustomDrops:
       '1':
         Material: SPIDER_SPAWN_EGG

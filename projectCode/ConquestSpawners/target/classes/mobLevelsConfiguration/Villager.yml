@@ -121,7 +121,8 @@ Spawner-Levels:
               lvl: 1
 
   '5':
-    CostToUpgrade: default
+    CostToUpgrade: 2000
+
     CustomDrops:
       '1':
         Material: VILLAGER_SPAWN_EGG

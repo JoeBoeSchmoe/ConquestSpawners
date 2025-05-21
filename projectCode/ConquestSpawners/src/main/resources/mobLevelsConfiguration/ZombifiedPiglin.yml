@@ -87,6 +87,10 @@ Spawner-Levels:
 
   '2':
     CostToUpgrade: default
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
     CustomDrops:
       '1':
         Material: GOLD_INGOT
@@ -96,6 +100,10 @@ Spawner-Levels:
 
   '3':
     CostToUpgrade: default
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
     CustomDrops:
       '1':
         Material: GOLDEN_SWORD
@@ -105,6 +113,10 @@ Spawner-Levels:
 
   '4':
     CostToUpgrade: default
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
     CustomDrops:
       '1':
         Material: GILDED_BLACKSTONE
@@ -114,6 +126,10 @@ Spawner-Levels:
 
   '5':
     CostToUpgrade: default
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
     CustomDrops:
       '1':
         Material: ZOMBIFIED_PIGLIN_SPAWN_EGG

@@ -56,6 +56,11 @@ public class MobManager {
         try {
             YamlConfiguration yaml = YamlConfiguration.loadConfiguration(file);
 
+            if (!yaml.contains("Spawner-Levels")) {
+                log.warning("⚠️  Missing 'Spawner-Levels' section in: " + mobKey);
+                return;
+            }
+
             MobDataModel model = new MobDataModel(
                     mobKey,
                     yaml.getBoolean("Spawner-Enabled", false),
@@ -73,7 +78,7 @@ public class MobManager {
                     parseLevels(yaml.getConfigurationSection("Spawner-Levels"))
             );
 
-            mobData.put(mobKey.toLowerCase(), model);
+            mobData.put(normalizeKey(mobKey), model);
             log.info("✅  Loaded mob config: " + mobKey);
 
         } catch (Exception e) {
@@ -135,6 +140,7 @@ public class MobManager {
 
         for (String levelKey : section.getKeys(false)) {
             try {
+                int levelNum = Integer.parseInt(levelKey);
                 ConfigurationSection levelSec = section.getConfigurationSection(levelKey);
                 if (levelSec == null) continue;
 
@@ -146,7 +152,9 @@ public class MobManager {
                 level.setCostToUpgrade(levelSec.get("CostToUpgrade"));
                 level.setCustomDrops(parseCustomDrops(levelSec.getConfigurationSection("CustomDrops")));
 
-                levels.put(Integer.parseInt(levelKey), level);
+                levels.put(levelNum, level);
+            } catch (NumberFormatException e) {
+                plugin.getLogger().warning("⚠️ Invalid level key (not an integer): " + levelKey);
             } catch (Exception e) {
                 plugin.getLogger().warning("❌  Error loading spawner level " + levelKey + ": " + e.getMessage());
             }
@@ -165,6 +173,11 @@ public class MobManager {
                 if (d == null) continue;
 
                 String material = d.getString("Material");
+                if (material == null || material.isBlank()) {
+                    plugin.getLogger().warning("⚠️  Skipped drop with missing material at: " + dropKey);
+                    continue;
+                }
+
                 int amount = d.getInt("Amount", 1);
                 double dropPercent = d.getDouble("Drop-Percent", 0.0);
 
@@ -181,8 +194,12 @@ public class MobManager {
         return drops;
     }
 
+    private String normalizeKey(String raw) {
+        return raw == null ? "" : raw.trim().toLowerCase(Locale.ROOT);
+    }
+
     public MobDataModel getMob(String id) {
-        return mobData.get(id.toLowerCase());
+        return mobData.get(normalizeKey(id));
     }
 
     public Collection<MobDataModel> getAllMobs() {

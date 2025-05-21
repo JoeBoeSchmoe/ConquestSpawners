@@ -91,6 +91,10 @@ Spawner-Levels:
 
   '2':
     CostToUpgrade: 5000
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
     CustomDrops:
       '1':
         Material: SOUL_SAND
@@ -100,6 +104,10 @@ Spawner-Levels:
 
   '3':
     CostToUpgrade: 8000
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
     CustomDrops:
       '1':
         Material: WITHER_ROSE
@@ -109,6 +117,10 @@ Spawner-Levels:
 
   '4':
     CostToUpgrade: 10000
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
     CustomDrops:
       '1':
         Material: NETHER_STAR
@@ -118,6 +130,10 @@ Spawner-Levels:
 
   '5':
     CostToUpgrade: 15000
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
     CustomDrops:
       '1':
         Material: BEACON

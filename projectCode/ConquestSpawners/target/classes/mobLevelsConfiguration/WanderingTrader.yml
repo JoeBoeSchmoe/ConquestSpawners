@@ -90,7 +90,11 @@ Spawner-Levels:
         Custom-Data: {}
 
   '2':
-    CostToUpgrade: default
+    CostToUpgrade: 500
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
     CustomDrops:
       '1':
         Material: LEAD
@@ -99,7 +103,11 @@ Spawner-Levels:
         Custom-Data: {}
 
   '3':
-    CostToUpgrade: default
+    CostToUpgrade: 1000
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
     CustomDrops:
       '1':
         Material: WANDERING_TRADER_SPAWN_EGG
@@ -108,7 +116,11 @@ Spawner-Levels:
         Custom-Data: {}
 
   '4':
-    CostToUpgrade: default
+    CostToUpgrade: 10000
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
     CustomDrops:
       '1':
         Material: EMERALD
@@ -117,7 +129,11 @@ Spawner-Levels:
         Custom-Data: {}
 
   '5':
-    CostToUpgrade: default
+    CostToUpgrade: 2000
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
     CustomDrops:
       '1':
         Material: NAME_TAG

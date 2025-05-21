@@ -88,7 +88,11 @@ Spawner-Levels:
         Custom-Data: {}
 
   '2':
-    CostToUpgrade: default
+    CostToUpgrade: 100
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
     CustomDrops:
       '1':
         Material: SCUTE
@@ -97,7 +101,7 @@ Spawner-Levels:
         Custom-Data: {}
 
   '3':
-    CostToUpgrade: default
+    CostToUpgrade: 500
     CustomDrops:
       '1':
         Material: SEAGRASS
@@ -106,7 +110,11 @@ Spawner-Levels:
         Custom-Data: {}
 
   '4':
-    CostToUpgrade: default
+    CostToUpgrade: 1000
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
     CustomDrops:
       '1':
         Material: SCUTE
@@ -115,7 +123,11 @@ Spawner-Levels:
         Custom-Data: {}
 
   '5':
-    CostToUpgrade: default
+    CostToUpgrade: 2000
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
     CustomDrops:
       '1':
         Material: TURTLE_HELMET

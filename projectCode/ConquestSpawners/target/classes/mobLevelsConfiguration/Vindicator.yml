@@ -90,7 +90,11 @@ Spawner-Levels:
         Custom-Data: {}
 
   '2':
-    CostToUpgrade: default
+    CostToUpgrade: 100
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
     CustomDrops:
       '1':
         Material: EMERALD
@@ -99,7 +103,11 @@ Spawner-Levels:
         Custom-Data: {}
 
   '3':
-    CostToUpgrade: default
+    CostToUpgrade: 500
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
     CustomDrops:
       '1':
         Material: IRON_AXE
@@ -111,7 +119,11 @@ Spawner-Levels:
               lvl: 1
 
   '4':
-    CostToUpgrade: default
+    CostToUpgrade: 1000
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
     CustomDrops:
       '1':
         Material: EMERALD
@@ -120,7 +132,11 @@ Spawner-Levels:
         Custom-Data: {}
 
   '5':
-    CostToUpgrade: default
+    CostToUpgrade: 2000
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
     CustomDrops:
       '1':
         Material: VINDICATOR_SPAWN_EGG

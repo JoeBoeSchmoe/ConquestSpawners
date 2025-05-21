@@ -92,7 +92,7 @@ Spawner-Levels:
     MobCount: default
     XPDrop: default
     VanillaDrops: false
-    CostToUpgrade: default
+    CostToUpgrade: 100
     CustomDrops:
       '1':
         Material: INK_SAC
@@ -105,7 +105,7 @@ Spawner-Levels:
     MobCount: default
     XPDrop: default
     VanillaDrops: false
-    CostToUpgrade: default
+    CostToUpgrade: 500
     CustomDrops:
       '1':
         Material: GLOW_INK_SAC
@@ -118,7 +118,7 @@ Spawner-Levels:
     MobCount: default
     XPDrop: default
     VanillaDrops: false
-    CostToUpgrade: default
+    CostToUpgrade: 1000
     CustomDrops:
       '1':
         Material: BOOK
@@ -133,7 +133,7 @@ Spawner-Levels:
     MobCount: default
     XPDrop: default
     VanillaDrops: false
-    CostToUpgrade: default
+    CostToUpgrade: 2000
     CustomDrops:
       '1':
         Material: SQUID_SPAWN_EGG

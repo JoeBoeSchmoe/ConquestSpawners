@@ -95,7 +95,7 @@ Spawner-Levels:
     MobCount: default
     XPDrop: default
     VanillaDrops: false
-    CostToUpgrade: default
+    CostToUpgrade: 100
     CustomDrops:
       '1':
         Material: PITCHER_POD
@@ -108,7 +108,7 @@ Spawner-Levels:
     MobCount: default
     XPDrop: default
     VanillaDrops: false
-    CostToUpgrade: default
+    CostToUpgrade: 500
     CustomDrops:
       '1':
         Material: TORCHFLOWER_SEEDS
@@ -121,7 +121,7 @@ Spawner-Levels:
     MobCount: default
     XPDrop: default
     VanillaDrops: false
-    CostToUpgrade: default
+    CostToUpgrade: 1000
     CustomDrops:
       '1':
         Material: MOSS_BLOCK
@@ -134,7 +134,7 @@ Spawner-Levels:
     MobCount: default
     XPDrop: default
     VanillaDrops: false
-    CostToUpgrade: default
+    CostToUpgrade: 2000
     CustomDrops:
       '1':
         Material: SNIFFER_SPAWN_EGG

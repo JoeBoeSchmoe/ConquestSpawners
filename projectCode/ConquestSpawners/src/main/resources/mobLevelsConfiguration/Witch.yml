@@ -90,7 +90,11 @@ Spawner-Levels:
         Custom-Data: {}
 
   '2':
-    CostToUpgrade: default
+    CostToUpgrade: 500
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
     CustomDrops:
       '1':
         Material: GLOWSTONE_DUST
@@ -99,7 +103,11 @@ Spawner-Levels:
         Custom-Data: {}
 
   '3':
-    CostToUpgrade: default
+    CostToUpgrade: 500
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
     CustomDrops:
       '1':
         Material: POTION
@@ -109,7 +117,11 @@ Spawner-Levels:
           Potion: healing
 
   '4':
-    CostToUpgrade: default
+    CostToUpgrade: 500
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
     CustomDrops:
       '1':
         Material: SPIDER_EYE
@@ -118,7 +130,11 @@ Spawner-Levels:
         Custom-Data: {}
 
   '5':
-    CostToUpgrade: default
+    CostToUpgrade: 500
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
     CustomDrops:
       '1':
         Material: WITCH_SPAWN_EGG

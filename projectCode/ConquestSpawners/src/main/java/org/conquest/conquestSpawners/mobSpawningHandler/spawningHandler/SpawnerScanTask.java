@@ -1,6 +1,7 @@
 package org.conquest.conquestSpawners.mobSpawningHandler.spawningHandler;
 
 import org.bukkit.*;
+import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.TileState;
 import org.bukkit.entity.EntityType;
@@ -21,8 +22,6 @@ public class SpawnerScanTask extends BukkitRunnable {
     private final MobSpawnQueue spawnQueue;
     private final Map<UUID, Long> lastSpawnTimes = new HashMap<>();
 
-    private static final long TICK_DURATION_MS = 50L;
-
     public SpawnerScanTask(MobManager mobManager, MobSpawnQueue spawnQueue) {
         this.mobManager = mobManager;
         this.spawnQueue = spawnQueue;
@@ -33,17 +32,10 @@ public class SpawnerScanTask extends BukkitRunnable {
         long now = System.currentTimeMillis();
 
         for (World world : Bukkit.getWorlds()) {
-            // ✅ Skip unloaded or inactive worlds
             if (world.getPlayers().isEmpty()) continue;
 
-            Chunk[] chunks = world.getLoadedChunks();
-            if (chunks.length == 0) continue;
-
-            for (Chunk chunk : chunks) {
-                BlockState[] tileEntities = chunk.getTileEntities();
-                if (tileEntities.length == 0) continue;
-
-                for (BlockState state : tileEntities) {
+            for (Chunk chunk : world.getLoadedChunks()) {
+                for (BlockState state : chunk.getTileEntities()) {
                     if (!(state instanceof TileState tile)) continue;
 
                     PersistentDataContainer data = tile.getPersistentDataContainer();
@@ -61,16 +53,29 @@ public class SpawnerScanTask extends BukkitRunnable {
                     }
 
                     MobDataModel mob = mobManager.getMob(mobKey.toLowerCase(Locale.ROOT));
-                    if (mob == null) continue;
+                    if (mob == null || !mob.isSpawnerEnabled()) continue;
 
                     SpawnerLevelModel levelData = mob.getLevels().get(level);
                     if (levelData == null) continue;
 
                     long last = lastSpawnTimes.getOrDefault(spawnerId, 0L);
-                    int delayTicks = levelData.getSpawnerDelayResolved();
-                    if (now - last < delayTicks * TICK_DURATION_MS) continue;
+                    int delaySeconds = levelData.getSpawnerDelayResolved();
+                    int delayMillis = delaySeconds * 1000;
+                    if (now - last < delayMillis) continue;
 
-                    Location spawnLoc = tile.getLocation().add(0.5, 1, 0.5);
+                    Location spawnLoc = tile.getLocation().add(0.5, 0, 0.5);
+
+                    // Adjust Y if above air
+                    Block below = spawnLoc.getBlock().getRelative(0, -1, 0);
+                    if (!below.getType().isSolid()) {
+                        for (int y = -1; y >= -3; y--) {
+                            Block candidate = spawnLoc.getBlock().getRelative(0, y, 0);
+                            if (candidate.getType().isSolid()) {
+                                spawnLoc.add(0, y, 0);
+                                break;
+                            }
+                        }
+                    }
 
                     int activationRange = ConfigResolver.getInt(
                             mob.getPlayerActivationRange(),
@@ -78,7 +83,6 @@ public class SpawnerScanTask extends BukkitRunnable {
                             32
                     );
 
-                    // ✅ Only consider spawners with a player nearby
                     if (world.getNearbyPlayers(spawnLoc, activationRange).isEmpty()) continue;
 
                     EntityType type;
@@ -92,17 +96,18 @@ public class SpawnerScanTask extends BukkitRunnable {
                     int xpDrop = levelData.getXpDropResolved();
 
                     for (int i = 0; i < mobCount; i++) {
-                        spawnQueue.add(new CustomMob(
+                        boolean added = spawnQueue.add(new CustomMob(
                                 spawnerId,
                                 type,
                                 spawnLoc,
                                 xpDrop,
                                 levelData.getCustomDrops(),
-                                mob.getRequirements()
+                                mob,
+                                level
                         ));
+                        if (!added) break;
                     }
 
-                    // ✅ Cache spawn time for delay handling
                     lastSpawnTimes.put(spawnerId, now);
                 }
             }

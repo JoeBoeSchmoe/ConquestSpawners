@@ -91,6 +91,10 @@ Spawner-Levels:
 
   '2':
     CostToUpgrade: default
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
     CustomDrops:
       '1':
         Material: LEATHER
@@ -109,6 +113,10 @@ Spawner-Levels:
 
   '4':
     CostToUpgrade: default
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
     CustomDrops:
       '1':
         Material: LEAD
@@ -118,6 +126,10 @@ Spawner-Levels:
 
   '5':
     CostToUpgrade: default
+    SpawnerDelay: default
+    MobCount: default
+    XPDrop: default
+    VanillaDrops: false
     CustomDrops:
       '1':
         Material: WOLF_SPAWN_EGG

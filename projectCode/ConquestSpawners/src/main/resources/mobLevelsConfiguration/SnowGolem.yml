@@ -94,7 +94,7 @@ Spawner-Levels:
     MobCount: default
     XPDrop: default
     VanillaDrops: false
-    CostToUpgrade: default
+    CostToUpgrade: 100
     CustomDrops:
       '1':
         Material: SNOW_BLOCK
@@ -107,7 +107,7 @@ Spawner-Levels:
     MobCount: default
     XPDrop: default
     VanillaDrops: false
-    CostToUpgrade: default
+    CostToUpgrade: 500
     CustomDrops:
       '1':
         Material: PUMPKIN
@@ -120,7 +120,7 @@ Spawner-Levels:
     MobCount: default
     XPDrop: default
     VanillaDrops: false
-    CostToUpgrade: default
+    CostToUpgrade: 1000
     CustomDrops:
       '1':
         Material: SNOWBALL
@@ -133,7 +133,7 @@ Spawner-Levels:
     MobCount: default
     XPDrop: default
     VanillaDrops: false
-    CostToUpgrade: default
+    CostToUpgrade: 2000
     CustomDrops:
       '1':
         Material: SNOW_GOLEM_SPAWN_EGG

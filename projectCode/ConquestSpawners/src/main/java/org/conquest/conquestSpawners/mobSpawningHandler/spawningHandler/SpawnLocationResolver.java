@@ -4,6 +4,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.entity.EntityType;
 import org.conquest.conquestSpawners.mobSpawningHandler.spawnerSetup.SpawnerRequirementsModel;
 
 import java.util.ArrayList;
@@ -11,65 +12,70 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
- * Finds dense, sub-block resolution spawn locations that meet requirement conditions.
+ * Resolves valid spawn locations within a defined radius around a spawner.
+ * Takes into account entity size, spawner requirements, and vertical space.
  */
 public class SpawnLocationResolver {
 
-    public static List<Location> findValidSpawnLocations(Location center, SpawnerRequirementsModel req) {
+    /**
+     * Attempts to find all valid spawn locations near a spawner.
+     *
+     * @param center     Spawner origin (usually center of the block)
+     * @param req        Requirement rules for that mob
+     * @param radius     Horizontal radius to check
+     * @param entityType EntityType to check dimensions for
+     * @return List of viable spawn locations
+     */
+    public static List<Location> findValidSpawnLocations(Location center, SpawnerRequirementsModel req, int radius, EntityType entityType) {
         List<Location> valid = new ArrayList<>();
         World world = center.getWorld();
         if (world == null) return valid;
 
-        int samples = 150; // Adjust based on density/performance
-        double radius = 4.0;
+        int attempts = 150;
 
-        for (int i = 0; i < samples; i++) {
-            double xOffset = randomOffset(radius);
-            double yOffset = randomOffset(radius);
-            double zOffset = randomOffset(radius);
+        for (int i = 0; i < attempts; i++) {
+            double x = center.getX() + ThreadLocalRandom.current().nextDouble(-radius, radius);
+            double y = center.getY() - ThreadLocalRandom.current().nextInt(0, 4); // up to 3 blocks below
+            double z = center.getZ() + ThreadLocalRandom.current().nextDouble(-radius, radius);
+            Location testLoc = new Location(world, x, y, z);
 
-            Location testLoc = center.clone().add(xOffset, yOffset, zOffset);
+            Block base = testLoc.getBlock();
+            Block above = base.getRelative(0, 1, 0);
+            Block below = base.getRelative(0, -1, 0);
 
-            if (testLoc.distanceSquared(center) < 1.25 * 1.25) continue;
+            // ✅ Check basic clearance
+            if (!base.isPassable() || !above.isPassable()) continue;
 
-            Block ground = testLoc.getBlock();
-            Block below = ground.getRelative(0, -1, 0);
-            Block above = ground.getRelative(0, 1, 0);
+            // ✅ Ground required unless Air is allowed
+            if (!req.air && !below.getType().isSolid()) continue;
 
-            // ✅ Base clearance
-            if (!ground.isPassable()) continue;
-            if (!above.isPassable()) continue;
+            // ✅ Air-only spawns
+            if (req.air && !base.getType().isAir()) continue;
 
-            // ✅ Air-only?
-            if (req.air && !ground.getType().isAir()) continue;
-
-            // ✅ Ground surface
+            // ✅ On-ground flag
             if (req.onGround && !below.getType().isSolid()) continue;
 
-            // ✅ Specific allowed blocks
+            // ✅ Specific block types
             if (req.onBlock && (req.allowedBlocks == null ||
                     !req.allowedBlocks.contains(below.getType().name()))) continue;
 
-            // ✅ Light check
-            int light = ground.getLightLevel();
+            // ✅ Light level checks
+            int light = base.getLightLevel();
             if (req.darkness && light > 7) continue;
             if (req.totalDarkness && light > 0) continue;
             if (req.light && light < 8) continue;
 
             // ✅ Fluid check
-            if (req.fluid && !ground.isLiquid()) continue;
+            if (req.fluid && !base.isLiquid()) continue;
 
-            // ✅ Biome
+            // ✅ Biome restriction
             if (req.inBiome && (req.allowedBiomes == null ||
-                    !req.allowedBiomes.contains(ground.getBiome().getKey().getKey().toLowerCase()))) continue;
+                    !req.allowedBiomes.contains(base.getBiome().getKey().getKey().toLowerCase()))) continue;
 
-            valid.add(testLoc);
+            // ✅ Add to list
+            valid.add(testLoc.clone().add(0.5, 0, 0.5));
         }
 
         return valid;
-    }
-
-    private static double randomOffset(double radius) {
-        return ThreadLocalRandom.current().nextDouble(-radius, radius);
     }
 }

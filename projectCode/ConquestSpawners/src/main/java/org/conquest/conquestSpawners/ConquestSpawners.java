@@ -17,7 +17,6 @@ public final class ConquestSpawners extends JavaPlugin {
 
     private static ConquestSpawners instance;
     private ConfigurationManager configurationManager;
-    private final MobSpawnQueue spawnQueue = new MobSpawnQueue();
 
     @Override
     public void onEnable() {
@@ -88,14 +87,15 @@ public final class ConquestSpawners extends JavaPlugin {
         );
 
         // 🕒 Start mob queue processing task
-        new SpawningListener(spawnQueue).runTaskTimer(this, 20L, 20L); // every 1 second
+       // new SpawningListener(spawnQueue).runTaskTimer(this, 20L, 20L); // every 1 second
 
         // 🔍 Scans for nearby eligible spawners and queues spawnable mobs
-        new SpawnerScanTask(configurationManager.getMobManager(), spawnQueue)
+        new SpawnerScanTask(configurationManager.getMobManager())
                 .runTaskTimer(this, 20L, 20L); // every 1 second
 
         // 💥 Cram detection for custom mobs
-        new EntityCramDamageTask().runTaskTimer(this, 100L, 10L); // every 5 seconds
+        new EntityCramDamageTask().runTaskTimer(this, 100L, 5L);
+        new MobDespawnTask(this).runTaskTimer(this, 20L * 5, 20L * 5); // Runs every 5s
 
         getLogger().info("🎧  Listeners and spawning tasks registered.");
     }
@@ -109,9 +109,5 @@ public final class ConquestSpawners extends JavaPlugin {
 
     public ConfigurationManager getConfigurationManager() {
         return configurationManager;
-    }
-
-    public MobSpawnQueue getSpawnQueue() {
-        return spawnQueue;
     }
 }

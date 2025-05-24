@@ -14,7 +14,10 @@ public enum UserMessageModels {
     USAGE_HINT("usage-hint"),
 
     // ⏱️ Cooldowns
-    COMMAND_ON_COOLDOWN("command-on-cooldown");
+    COMMAND_ON_COOLDOWN("command-on-cooldown"),
+
+    // 🧱 Spawner placement failures
+    SPAWNER_PLACE_FAILED("spawner-place-failed");
 
     private final String path;
 

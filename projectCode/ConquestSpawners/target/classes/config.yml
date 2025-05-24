@@ -80,7 +80,14 @@ gui-settings:
 # Limits how many custom mobs can exist in a tight space before taking damage.
 # Applies to all mobs spawned by this plugin.
 # ===================================================
-entity-cram-limit: 3
+entity-cram-limit: 8
+
+# ===================================================
+# 🧱 Chunk Spawner Limits
+# Restricts how many total spawners (all types) can exist in a single chunk.
+# Use -1 for unlimited. Applies alongside per-mob-type chunk limits.
+# ===================================================
+max-total-spawners-per-chunk: 16
 
 # ===================================================
 # ⚙️ Default Spawner Settings
@@ -110,7 +117,7 @@ default-values:
   spawn-delay: 8
 
   # Default XP dropped per spawn.
-  xp-drop: 100
+  xp-drop: 5
 
   # Whether to allow default vanilla item drops. If false, drops dirt unless configured.
   vanilla-drop: true
@@ -126,5 +133,6 @@ default-values:
     display-name: "<white><bold>[<aqua>{Spawner} Spawner</aqua><white>]</bold> <white><bold>Level {level}</bold>"
     display-lore:
       - "<gray>Collect me with Silk Touch!"
+    is-enchanted: true
 
 # End of config.yml

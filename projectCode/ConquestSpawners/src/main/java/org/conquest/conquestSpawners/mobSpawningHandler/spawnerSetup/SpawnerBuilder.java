@@ -3,6 +3,7 @@ package org.conquest.conquestSpawners.mobSpawningHandler.spawnerSetup;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -62,7 +63,16 @@ public class SpawnerBuilder {
         PersistentDataContainer data = meta.getPersistentDataContainer();
         data.set(ItemUtility.key("mob"), PersistentDataType.STRING, mob.getMobType().toLowerCase());
         data.set(ItemUtility.key("level"), PersistentDataType.INTEGER, level);
-        data.set(ItemUtility.key("id"), PersistentDataType.STRING, UUID.randomUUID().toString());
+
+
+        // ✨ Enchantment glint (if enabled in config)
+        boolean glint = ConquestSpawners.getInstance().getConfigurationManager().getConfig()
+                .getBoolean("default-values.default-display.is-enchanted", false);
+
+        if (glint) {
+            meta.addEnchant(Enchantment.INFINITY, 1, true);
+            meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        }
 
         // 🧼 Hide everything vanilla
         meta.addItemFlags(

@@ -1,7 +1,6 @@
 package org.conquest.conquestSpawners.mobSpawningHandler.spawningHandler;
 
-import org.bukkit.Location;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.EntityType;
 import org.conquest.conquestSpawners.mobSpawningHandler.spawnerSetup.SpawnerRequirementsModel;
@@ -9,18 +8,31 @@ import org.conquest.conquestSpawners.mobSpawningHandler.spawnerSetup.SpawnerRequ
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
-/**
- * Resolves valid spawn locations within a defined radius around a spawner.
- * Uses bounding box math and wall-aware centering to avoid clipping mobs into blocks.
- */
 public class SpawnLocationResolver {
 
     private static final class Size {
         final double width, height;
-
         Size(double width, double height) {
             this.width = width;
             this.height = height;
+        }
+    }
+
+    private static final class BlockPosXZ {
+        final int x, z;
+        BlockPosXZ(int x, int z) {
+            this.x = x;
+            this.z = z;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            return o instanceof BlockPosXZ other && x == other.x && z == other.z;
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(x, z);
         }
     }
 
@@ -31,95 +43,80 @@ public class SpawnLocationResolver {
             Map.entry(EntityType.CREEPER, new Size(0.6, 1.7)),
             Map.entry(EntityType.SPIDER, new Size(1.4, 0.9)),
             Map.entry(EntityType.SLIME, new Size(0.6, 0.6))
-            // Extend as needed
     );
 
-    public static List<Location> findValidSpawnLocations(Location center, SpawnerRequirementsModel req, int radius, EntityType entityType) {
+    public static List<Location> findValidSpawnLocations(Location center, SpawnerRequirementsModel req, int configRadius, EntityType entityType) {
         List<Location> valid = new ArrayList<>();
         World world = center.getWorld();
         if (world == null) return valid;
 
-        int maxAttempts = 150;
+        if (req.inBiome && (req.allowedBiomes == null ||
+                !req.allowedBiomes.contains(center.getBlock().getBiome().getKey().getKey().toLowerCase()))) {
+            return valid;
+        }
 
-        int xNeg = getClearDistance(world, center, -1, 0, radius);
-        int xPos = getClearDistance(world, center, 1, 0, radius);
-        int zNeg = getClearDistance(world, center, 0, -1, radius);
-        int zPos = getClearDistance(world, center, 0, 1, radius);
+        int cx = center.getBlockX();
+        int cy = center.getBlockY();
+        int cz = center.getBlockZ();
 
-        int yRange = 3;
+        int northRadius = scanRadius(world, cx, cy, cz, 0, -1, configRadius);
+        int southRadius = scanRadius(world, cx, cy, cz, 0, 1, configRadius);
+        int westRadius  = scanRadius(world, cx, cy, cz, -1, 0, configRadius);
+        int eastRadius  = scanRadius(world, cx, cy, cz, 1, 0, configRadius);
 
-        for (int i = 0; i < maxAttempts; i++) {
-            double xOffset = ThreadLocalRandom.current().nextDouble(-xNeg, xPos);
-            double zOffset = ThreadLocalRandom.current().nextDouble(-zNeg, zPos);
+        Map<BlockPosXZ, Boolean> solidBelowCache = new HashMap<>();
+        ThreadLocalRandom rand = ThreadLocalRandom.current();
 
-            double x = center.getX() + xOffset;
-            double y = Math.floor(center.getY() - ThreadLocalRandom.current().nextInt(0, yRange)) + 0.01;
-            double z = center.getZ() + zOffset;
+        for (int dx = -westRadius; dx <= eastRadius; dx++) {
+            for (int dz = -northRadius; dz <= southRadius; dz++) {
+                int x = cx + dx;
+                int z = cz + dz;
 
-            Location candidate = new Location(world, x, y, z);
-            Location adjusted = snapBackIfNearWall(candidate, center);
-
-            Block base = adjusted.getBlock();
-            Block below = base.getRelative(0, -1, 0);
-
-            if (req.air && !isBoundingBoxSpaceClear(world, adjusted, entityType)) continue;
-            if (!req.air && !below.getType().isSolid()) continue;
-            if (req.onGround && !below.getType().isSolid()) continue;
-            if (req.onBlock && (req.allowedBlocks == null || !req.allowedBlocks.contains(below.getType().name()))) continue;
-
-            int light = base.getLightLevel();
-            if (req.darkness && light > 7) continue;
-            if (req.totalDarkness && light > 0) continue;
-            if (req.light && light < 8) continue;
-            if (req.fluid && !base.isLiquid()) continue;
-            if (req.inBiome && (req.allowedBiomes == null ||
-                    !req.allowedBiomes.contains(base.getBiome().getKey().getKey().toLowerCase()))) continue;
-
-            valid.add(adjusted.add(0.5, 0, 0.5));
+                for (int dy = 0; dy >= -2; dy--) {
+                    double fx = x + rand.nextDouble(0.2, 0.8);
+                    double fz = z + rand.nextDouble(0.2, 0.8);
+                    Location loc = new Location(world, fx, cy + dy, fz);
+                    if (tryAddValid(valid, loc, req, entityType, solidBelowCache)) break;
+                }
+            }
         }
 
         return valid;
     }
 
-    private static Location snapBackIfNearWall(Location spawn, Location center) {
-        World world = spawn.getWorld();
-        if (world == null) return spawn;
-
-        double dx = spawn.getX() - center.getX();
-        double dz = spawn.getZ() - center.getZ();
-
-        Location adjusted = spawn.clone();
-
-        // Check if block directly in front of direction is solid
-        if (dx > 0) {
-            if (world.getBlockAt(spawn.clone().add(1, 0, 0)).getType().isSolid()) {
-                adjusted.setX(center.getX());
-            }
-        } else if (dx < 0) {
-            if (world.getBlockAt(spawn.clone().add(-1, 0, 0)).getType().isSolid()) {
-                adjusted.setX(center.getX());
+    private static int scanRadius(World world, int cx, int cy, int cz, int dx, int dz, int maxRadius) {
+        for (int r = 1; r <= maxRadius; r++) {
+            Block block = world.getBlockAt(cx + r * dx, cy, cz + r * dz);
+            if (block.getType() != Material.AIR && block.getType() != Material.SPAWNER) {
+                return r - 1;
             }
         }
-
-        if (dz > 0) {
-            if (world.getBlockAt(spawn.clone().add(0, 0, 1)).getType().isSolid()) {
-                adjusted.setZ(center.getZ());
-            }
-        } else if (dz < 0) {
-            if (world.getBlockAt(spawn.clone().add(0, 0, -1)).getType().isSolid()) {
-                adjusted.setZ(center.getZ());
-            }
-        }
-
-        return adjusted;
+        return maxRadius;
     }
 
-    private static int getClearDistance(World world, Location center, int dx, int dz, int max) {
-        for (int i = 1; i <= max; i++) {
-            Location check = center.clone().add(i * dx, 0, i * dz);
-            if (!check.getBlock().isPassable()) return i - 1;
-        }
-        return max;
+    private static boolean tryAddValid(List<Location> valid, Location loc, SpawnerRequirementsModel req, EntityType entityType, Map<BlockPosXZ, Boolean> cache) {
+        World world = loc.getWorld();
+        if (world == null) return false;
+
+        Block base = loc.getBlock();
+        Block below = base.getRelative(0, -1, 0);
+        int light = base.getLightLevel();
+
+        BlockPosXZ key = new BlockPosXZ(loc.getBlockX(), loc.getBlockZ());
+        boolean belowSolid = cache.computeIfAbsent(key, k -> below.getType().isSolid());
+
+        if (req.air && !isBoundingBoxSpaceClear(world, loc, entityType)) return false;
+        if (!req.air && !belowSolid) return false;
+        if (req.onGround && !belowSolid) return false;
+        if (req.onBlock && (req.allowedBlocks == null || !req.allowedBlocks.contains(below.getType().name())))
+            return false;
+        if (req.darkness && light > 7) return false;
+        if (req.totalDarkness && light > 0) return false;
+        if (req.light && light < 8) return false;
+        if (req.fluid && !base.isLiquid()) return false;
+
+        valid.add(loc);
+        return true;
     }
 
     public static boolean isBoundingBoxSpaceClear(World world, Location center, EntityType type) {

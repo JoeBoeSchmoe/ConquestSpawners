@@ -1,20 +1,18 @@
 package org.conquest.conquestSpawners.mobSpawningHandler.spawningHandler;
 
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
+import org.bukkit.*;
+import org.bukkit.entity.ExperienceOrb;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 import org.conquest.conquestSpawners.ConquestSpawners;
-import org.conquest.conquestSpawners.mobSpawningHandler.spawnerSetup.CustomDropModel;
-import org.conquest.conquestSpawners.mobSpawningHandler.spawnerSetup.MobDataModel;
-import org.conquest.conquestSpawners.mobSpawningHandler.spawnerSetup.MobManager;
-import org.conquest.conquestSpawners.mobSpawningHandler.spawnerSetup.SpawnerLevelModel;
+import org.conquest.conquestSpawners.mobSpawningHandler.spawnerSetup.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,7 +20,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.Logger;
 
 /**
- * 💀 Handles death drops and death particle suppression for custom-spawned mobs.
+ * 💀 Handles death logic, XP, and drops for custom-spawned mobs.
  */
 public class MobDeathListener implements Listener {
 
@@ -36,82 +34,90 @@ public class MobDeathListener implements Listener {
         this.log = plugin.getLogger();
     }
 
-    /**
-     * Handles custom drop logic after a mob dies.
-     */
-    @EventHandler(priority = EventPriority.MONITOR)
-    public void onCustomMobDeath(EntityDeathEvent event) {
-        LivingEntity entity = event.getEntity();
-
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    public void onCustomMobPreDeath(EntityDamageEvent event) {
+        if (!(event.getEntity() instanceof LivingEntity entity)) return;
         if (!entity.hasMetadata("custom-spawner")) return;
 
-        Optional<Integer> levelOpt = getSpawnerLevelFromMetadata(entity);
+        double finalHealth = entity.getHealth() - event.getFinalDamage();
+        if (finalHealth <= 0) {
+            entity.setSilent(true);
+            entity.setMetadata("suppress-death-particles", new FixedMetadataValue(plugin, true));
+        }
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onCustomMobDeath(EntityDeathEvent event) {
+        LivingEntity entity = event.getEntity();
+        if (!entity.hasMetadata("custom-spawner")) return;
+
+        event.setDroppedExp(0); // Always suppress vanilla XP
+
+        // Read level metadata
+        Optional<Integer> levelOpt = entity.getMetadata("spawner-level").stream()
+                .filter(meta -> meta.getOwningPlugin() == plugin)
+                .map(MetadataValue::asInt)
+                .findFirst();
         if (levelOpt.isEmpty()) {
-            log.warning("Spawner level metadata missing for entity: " + entity.getType());
+            log.warning("Missing spawner level for entity: " + entity.getType());
             return;
         }
 
         String mobKey = entity.getType().name().toLowerCase();
         MobDataModel mobData = mobManager.getMob(mobKey);
         if (mobData == null) {
-            log.warning("Mob type not found in config: " + mobKey);
+            log.warning("Mob config not found: " + mobKey);
             return;
         }
 
         SpawnerLevelModel levelModel = mobData.getSpawnerLevels().get(levelOpt.get());
         if (levelModel == null) {
-            log.warning("Level " + levelOpt.get() + " not found for mob " + mobKey);
+            log.warning("Missing level " + levelOpt.get() + " for mob " + mobKey);
             return;
         }
 
-        log.info("⚰️ Handling custom drops for " + mobKey + " at level " + levelOpt.get());
-
+        // Custom drop logic
         if (!levelModel.isVanillaDrops()) {
             event.getDrops().clear();
         }
 
         List<CustomDropModel> customDrops = levelModel.getCustomDrops();
-        if (customDrops != null) {
+        if (customDrops != null && !customDrops.isEmpty()) {
+            Location dropLoc = entity.getLocation();
+            World world = entity.getWorld();
+
             for (CustomDropModel drop : customDrops) {
-                double roll = ThreadLocalRandom.current().nextDouble(0, 100);
-                if (roll <= drop.getDropPercent()) {
+                if (ThreadLocalRandom.current().nextDouble(100) <= drop.getDropPercent()) {
                     Material material = Material.matchMaterial(drop.getMaterial().toUpperCase());
                     if (material == null) {
                         log.warning("❌ Invalid drop material: " + drop.getMaterial());
                         continue;
                     }
-
                     ItemStack item = new ItemStack(material, drop.getAmount());
-                    // TODO: Use drop.getCustomData() to apply lore or tags
-                    entity.getWorld().dropItemNaturally(entity.getLocation(), item);
+                    world.dropItemNaturally(dropLoc, item);
                 }
             }
         }
 
-        // Sound-only suppression happens here; real particle suppression is in damage hook
-        entity.setSilent(true);
-    }
+        // ✅ Spawn a single custom XP orb — only if killed by a player
+        if (entity.getKiller() != null && entity.hasMetadata("custom-xp")) {
+            int xp = entity.getMetadata("custom-xp").stream()
+                    .filter(meta -> meta.getOwningPlugin() == plugin)
+                    .map(MetadataValue::asInt)
+                    .findFirst().orElse(0);
 
-    /**
-     * Pre-death hook: intercept damage and remove entity before it triggers death animation.
-     */
-    @EventHandler(priority = EventPriority.HIGHEST)
-    public void onCustomMobPreDeath(EntityDamageEvent event) {
-        if (!(event.getEntity() instanceof LivingEntity entity)) return;
+            if (xp > 0) {
+                World world = entity.getWorld();
+                Location loc = entity.getLocation().add(0, 0.25, 0);
+                ExperienceOrb orb = world.spawn(loc, ExperienceOrb.class);
+                orb.setExperience(xp);
+                orb.setTicksLived(200); // 💡 Faster pickup
+            }
+        }
 
-        if (!entity.hasMetadata("custom-spawner")) return;
-
-        double finalHealth = entity.getHealth() - event.getFinalDamage();
-        if (finalHealth <= 0) {
-            log.info("🫥 Suppressing death animation for: " + entity.getType());
+        // Despawn particle-suppressed mobs
+        if (entity.hasMetadata("suppress-death-particles")) {
             Bukkit.getScheduler().runTask(plugin, entity::remove);
         }
-    }
-
-    private Optional<Integer> getSpawnerLevelFromMetadata(LivingEntity entity) {
-        return entity.getMetadata("spawner-level").stream()
-                .filter(meta -> meta.getOwningPlugin() == plugin)
-                .map(MetadataValue::asInt)
-                .findFirst();
     }
 }

@@ -83,4 +83,21 @@ messages:
       subtitle: "<gray>Try /spawners admin help to get started."
       timings: { fadeIn: 10, stay: 40, fadeOut: 20 }
 
+  # 🧱 SPAWNER PLACE FAILED
+  spawner-place-failed:
+    text: [ "<red>⚠ {reason}" ]
+    hover: "<gray>Spawner placement was blocked due to configuration or limits.</gray>"
+    click: ""
+    clickType: "NONE"
+    components: [ ]
+    prefix: true
+    sound: { type: BLOCK_ANVIL_LAND, volume: 1.0, pitch: 1.0 }
+    particles: [ { type: CRIT, count: 6, offset: [ 0.2, 0.5, 0.2 ], speed: 0.05 } ]
+    bossbar: { text: "<red>Spawner Blocked", color: "RED", overlay: "PROGRESS", time: 60, progress: 1.0 }
+    actionbar: { text: "<gray>Spawner placement blocked.", duration: 60 }
+    title:
+      text: "<red><bold>Placement Denied</bold></red>"
+      subtitle: "<gray>{reason}"
+      timings: { fadeIn: 10, stay: 40, fadeOut: 20 }
+
 # End Of Config :D

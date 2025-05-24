@@ -7,16 +7,12 @@ import org.conquest.conquestSpawners.mobSpawningHandler.spawnerSetup.MobDataMode
 import org.conquest.conquestSpawners.mobSpawningHandler.spawnerSetup.SpawnerLevelModel;
 
 import java.util.List;
-import java.util.UUID;
 
 /**
  * Represents a mob queued for plugin-controlled spawning.
- * Includes references to the spawner ID, type, location, level, and custom data.
+ * Includes type, location, level, and custom drop/data configuration.
  */
 public class CustomMob {
-
-    /** UUID of the spawner that triggered this mob */
-    private final UUID spawnerId;
 
     /** Bukkit entity type (e.g. ZOMBIE, ALLAY, etc.) */
     private final EntityType type;
@@ -36,14 +32,12 @@ public class CustomMob {
     /** Spawner level index (e.g. 1–5) */
     private final int spawnerLevel;
 
-    public CustomMob(UUID spawnerId,
-                     EntityType type,
+    public CustomMob(EntityType type,
                      Location spawnLocation,
                      int xpDrop,
                      List<CustomDropModel> customDrops,
                      MobDataModel mobDataModel,
                      int spawnerLevel) {
-        this.spawnerId = spawnerId;
         this.type = type;
         this.spawnLocation = spawnLocation;
         this.xpDrop = xpDrop;
@@ -53,10 +47,6 @@ public class CustomMob {
     }
 
     // === Getters ===
-
-    public UUID getSpawnerId() {
-        return spawnerId;
-    }
 
     public EntityType getType() {
         return type;
@@ -96,7 +86,6 @@ public class CustomMob {
                 "type=" + type +
                 ", level=" + spawnerLevel +
                 ", spawnLocation=" + spawnLocation +
-                ", spawnerId=" + spawnerId +
                 '}';
     }
 }

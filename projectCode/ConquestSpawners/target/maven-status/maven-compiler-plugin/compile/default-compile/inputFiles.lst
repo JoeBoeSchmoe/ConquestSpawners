@@ -1,6 +1,5 @@
 C:\Users\josep\OneDrive\Desktop\ConquestSpawners\ConquestSpawners\projectCode\ConquestSpawners\src\main\java\org\conquest\conquestSpawners\configurationHandler\configurationFiles\AdminMessagesFile.java
 C:\Users\josep\OneDrive\Desktop\ConquestSpawners\ConquestSpawners\projectCode\ConquestSpawners\src\main\java\org\conquest\conquestSpawners\mobSpawningHandler\spawnerSetup\SpawnerLevelModel.java
-C:\Users\josep\OneDrive\Desktop\ConquestSpawners\ConquestSpawners\projectCode\ConquestSpawners\src\main\java\org\conquest\conquestSpawners\mobSpawningHandler\spawningHandler\MobSpawnQueue.java
 C:\Users\josep\OneDrive\Desktop\ConquestSpawners\ConquestSpawners\projectCode\ConquestSpawners\src\main\java\org\conquest\conquestSpawners\cooldownHandler\GUICooldownManager.java
 C:\Users\josep\OneDrive\Desktop\ConquestSpawners\ConquestSpawners\projectCode\ConquestSpawners\src\main\java\org\conquest\conquestSpawners\commandHandler\permissionHandler\PermissionManager.java
 C:\Users\josep\OneDrive\Desktop\ConquestSpawners\ConquestSpawners\projectCode\ConquestSpawners\src\main\java\org\conquest\conquestSpawners\commandHandler\subcommandHandler\AdminCommands.java
@@ -8,7 +7,6 @@ C:\Users\josep\OneDrive\Desktop\ConquestSpawners\ConquestSpawners\projectCode\Co
 C:\Users\josep\OneDrive\Desktop\ConquestSpawners\ConquestSpawners\projectCode\ConquestSpawners\src\main\java\org\conquest\conquestSpawners\mobSpawningHandler\spawningHandler\SpawnLocationResolver.java
 C:\Users\josep\OneDrive\Desktop\ConquestSpawners\ConquestSpawners\projectCode\ConquestSpawners\src\main\java\org\conquest\conquestSpawners\commandHandler\CommandManager.java
 C:\Users\josep\OneDrive\Desktop\ConquestSpawners\ConquestSpawners\projectCode\ConquestSpawners\src\main\java\org\conquest\conquestSpawners\mobSpawningHandler\SpawnerPlaceListener.java
-C:\Users\josep\OneDrive\Desktop\ConquestSpawners\ConquestSpawners\projectCode\ConquestSpawners\src\main\java\org\conquest\conquestSpawners\mobSpawningHandler\spawningHandler\SpawningListener.java
 C:\Users\josep\OneDrive\Desktop\ConquestSpawners\ConquestSpawners\projectCode\ConquestSpawners\src\main\java\org\conquest\conquestSpawners\mobSpawningHandler\spawnerSetup\ConfigResolver.java
 C:\Users\josep\OneDrive\Desktop\ConquestSpawners\ConquestSpawners\projectCode\ConquestSpawners\src\main\java\org\conquest\conquestSpawners\mobSpawningHandler\spawningHandler\MobBehaviorSuppressorListener.java
 C:\Users\josep\OneDrive\Desktop\ConquestSpawners\ConquestSpawners\projectCode\ConquestSpawners\src\main\java\org\conquest\conquestSpawners\mobSpawningHandler\spawningHandler\SpawnerScanTask.java
@@ -39,6 +37,7 @@ C:\Users\josep\OneDrive\Desktop\ConquestSpawners\ConquestSpawners\projectCode\Co
 C:\Users\josep\OneDrive\Desktop\ConquestSpawners\ConquestSpawners\projectCode\ConquestSpawners\src\main\java\org\conquest\conquestSpawners\mobSpawningHandler\spawningHandler\CustomMob.java
 C:\Users\josep\OneDrive\Desktop\ConquestSpawners\ConquestSpawners\projectCode\ConquestSpawners\src\main\java\org\conquest\conquestSpawners\mobSpawningHandler\spawningHandler\EntityCramDamageTask.java
 C:\Users\josep\OneDrive\Desktop\ConquestSpawners\ConquestSpawners\projectCode\ConquestSpawners\src\main\java\org\conquest\conquestSpawners\mobSpawningHandler\spawningHandler\MobDeathListener.java
+C:\Users\josep\OneDrive\Desktop\ConquestSpawners\ConquestSpawners\projectCode\ConquestSpawners\src\main\java\org\conquest\conquestSpawners\mobSpawningHandler\spawningHandler\MobDespawnTask.java
 C:\Users\josep\OneDrive\Desktop\ConquestSpawners\ConquestSpawners\projectCode\ConquestSpawners\src\main\java\org\conquest\conquestSpawners\responseHandler\effectHandler\SoundResponseManager.java
 C:\Users\josep\OneDrive\Desktop\ConquestSpawners\ConquestSpawners\projectCode\ConquestSpawners\src\main\java\org\conquest\conquestSpawners\configurationHandler\configurationFiles\ConfigFile.java
 C:\Users\josep\OneDrive\Desktop\ConquestSpawners\ConquestSpawners\projectCode\ConquestSpawners\src\main\java\org\conquest\conquestSpawners\responseHandler\effectHandler\ParticleResponseManager.java

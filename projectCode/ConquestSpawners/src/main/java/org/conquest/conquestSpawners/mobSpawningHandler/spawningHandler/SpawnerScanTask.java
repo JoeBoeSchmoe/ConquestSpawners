@@ -95,13 +95,14 @@ public class SpawnerScanTask extends BukkitRunnable {
                         type = EntityType.PIG;
                     }
 
+                    int mobCount = levelData.getMobCountResolved();
+                    int xpDrop = levelData.getXpDropResolved();
+
                     List<Location> validSpawns = SpawnLocationResolver.findValidSpawnLocations(
-                            spawnBase, mob.getRequirements(), mob.getSpawnRadiusResolved(), type
+                            spawnBase, mob.getRequirements(), mob.getSpawnRadiusResolved(), type, mobCount
                     );
                     if (validSpawns.isEmpty()) continue;
 
-                    int mobCount = levelData.getMobCountResolved();
-                    int xpDrop = levelData.getXpDropResolved();
 
                     for (int i = 0; i < mobCount; i++) {
                         Location spawnLoc = validSpawns.get(ThreadLocalRandom.current().nextInt(validSpawns.size()));

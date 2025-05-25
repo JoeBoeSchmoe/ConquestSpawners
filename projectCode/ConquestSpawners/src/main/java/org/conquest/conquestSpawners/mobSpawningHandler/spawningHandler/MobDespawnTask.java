@@ -58,7 +58,7 @@ public class MobDespawnTask extends BukkitRunnable {
         }
     }
 
-    private boolean isCustomSpawnerMob(LivingEntity entity) {
+    boolean isCustomSpawnerMob(LivingEntity entity) {
         if (!entity.hasMetadata("custom-spawner")) return false;
         for (MetadataValue value : entity.getMetadata("custom-spawner")) {
             if (value.getOwningPlugin() == plugin && value.asBoolean()) {
@@ -102,4 +102,27 @@ public class MobDespawnTask extends BukkitRunnable {
 
         return defaultActivationRange;
     }
+
+    public void runDirectEntityScan() {
+        for (World world : Bukkit.getWorlds()) {
+            // 🔄 No longer skipping empty worlds — we'll still scan their entities
+            world.getEntities().stream()
+                    .filter(e -> e instanceof LivingEntity)
+                    .map(e -> (LivingEntity) e)
+                    .filter(this::isCustomSpawnerMob)
+                    .forEach(living -> {
+                        int activationRange = getMobActivationRange(living);
+                        boolean hasNearby = world.getNearbyPlayers(living.getLocation(), activationRange).stream()
+                                .anyMatch(p -> {
+                                    GameMode mode = p.getGameMode();
+                                    return mode != GameMode.SPECTATOR;
+                                });
+                        if (!hasNearby) {
+                            living.remove();
+                        }
+                    });
+        }
+    }
+
+
 }

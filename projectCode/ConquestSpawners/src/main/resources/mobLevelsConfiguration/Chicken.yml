@@ -142,8 +142,8 @@ Spawner-Levels:
     CostToUpgrade: default
     CustomDrops:
       '1':
-        Material: GOLDEN_EGG
-        Amount: 1
+        Material: COOKED_CHICKEN
+        Amount: 3
         Drop-Percent: 100.0
         Custom-Data: {}
 

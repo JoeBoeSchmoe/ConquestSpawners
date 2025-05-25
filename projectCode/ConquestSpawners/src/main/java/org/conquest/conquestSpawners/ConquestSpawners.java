@@ -86,21 +86,21 @@ public final class ConquestSpawners extends JavaPlugin {
                 new MobDeathListener(this, configurationManager.getMobManager()), this
         );
 
-        // 🕒 Start mob queue processing task
-       // new SpawningListener(spawnQueue).runTaskTimer(this, 20L, 20L); // every 1 second
-
         // 🔍 Scans for nearby eligible spawners and queues spawnable mobs
         new SpawnerScanTask(configurationManager.getMobManager())
                 .runTaskTimer(this, 20L, 20L); // every 1 second
 
         // 💥 Cram detection for custom mobs
-        new EntityCramDamageTask().runTaskTimer(this, 100L, 5L);
-        new MobDespawnTask(this).runTaskTimer(this, 20L * 5, 20L * 5); // Runs every 5s
+        new EntityCramDamageTask().runTaskTimer(this, 100L, 5L); // every 5 ticks (0.25s)
+
+        // 🧹 Despawn handler (both scheduled and event-driven)
+        MobDespawnTask despawnTask = new MobDespawnTask(this);
+        despawnTask.runTaskTimer(this, 20L * 300, 20L * 60); // every minute
+
+        new MobDespawnListener(this, despawnTask);
 
         getLogger().info("🎧  Listeners and spawning tasks registered.");
     }
-
-
 
 
     public static ConquestSpawners getInstance() {

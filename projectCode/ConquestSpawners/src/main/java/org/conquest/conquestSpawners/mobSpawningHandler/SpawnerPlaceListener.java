@@ -111,17 +111,22 @@ public class SpawnerPlaceListener implements Listener {
             return;
         }
 
-        // Purely cosmetic display mob inside the spawner block
+        // 🎯 Set cosmetic spinning mob inside spawner (visual only)
         try {
             EntityType type = EntityType.valueOf(mob.getMobType().toUpperCase(Locale.ROOT));
             spawner.setSpawnedType(type);
         } catch (IllegalArgumentException e) {
-            spawner.setSpawnedType(EntityType.PIG); // fallback visual
+            spawner.setSpawnedType(EntityType.PIG); // fallback for visual only
         }
 
+        // 🛑 Delay the natural spawn tick to prevent actual mob from spawning
+        spawner.setDelay(999999); // this does NOT block the spin animation
+
+        // 📦 Save persistent spawner data
         PersistentDataContainer placedData = spawner.getPersistentDataContainer();
         placedData.set(ItemUtility.key("mob"), PersistentDataType.STRING, mobKey);
         placedData.set(ItemUtility.key("level"), PersistentDataType.INTEGER, level);
+
         spawner.update(true);
     }
 

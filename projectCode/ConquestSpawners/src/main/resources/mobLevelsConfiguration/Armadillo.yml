@@ -35,6 +35,7 @@ DisplayName: "<white><bold>[<gold>Armadillo Spawner</gold><white>]</bold> <white
 DisplayLore:
   - "<gray>Collect me with Silk Touch!"
   - "<gray>Drops shell fragments!"
+IsEnchanted: true
 
 #########################################
 # 📏 Spawner Requirements
@@ -42,14 +43,14 @@ DisplayLore:
 #########################################
 
 SpawnerRequirements:
-  Air: true                    # Requires air blocks above spawn position
+  Air: true                     # Requires air blocks above spawn position
   Above-Sea-Level: false        # Must be above Y=63
   Below-Sea-Level: false        # Must be below Y=63
   Above-Y-Axis: false           # Requires being above a specific Y value
   Below-Y-Axis: false           # Requires being below a specific Y value
   Darkness: false               # Requires light level < 8
   Total-Darkness: false         # Requires light level = 0
-  Light: false                  # Requires light level > 8
+  Light: true                   # Requires light level > 8
 
   # Fluid check: if true, must be within one of the following fluids
   Fluid: false
@@ -98,7 +99,7 @@ Spawner-Levels:
     MobCount: default
     XPDrop: default
     VanillaDrops: default
-    CostToUpgrade: default
+    CostToUpgrade: 1000
     CustomDrops:
       '1':
         Material: RABBIT_HIDE
@@ -111,7 +112,7 @@ Spawner-Levels:
     MobCount: default
     XPDrop: default
     VanillaDrops: default
-    CostToUpgrade: default
+    CostToUpgrade: 2000
     CustomDrops:
       '1':
         Material: RABBIT_HIDE
@@ -124,7 +125,7 @@ Spawner-Levels:
     MobCount: default
     XPDrop: default
     VanillaDrops: default
-    CostToUpgrade: default
+    CostToUpgrade: 3000
     CustomDrops:
       '1':
         Material: RABBIT_HIDE
@@ -137,7 +138,7 @@ Spawner-Levels:
     MobCount: default
     XPDrop: default
     VanillaDrops: default
-    CostToUpgrade: default
+    CostToUpgrade: 5000
     CustomDrops:
       '1':
         Material: RABBIT_HIDE

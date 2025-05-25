@@ -37,15 +37,68 @@ public class SpawnLocationResolver {
     }
 
     private static final Map<EntityType, Size> ENTITY_SIZES = Map.ofEntries(
-            Map.entry(EntityType.ZOMBIE, new Size(0.6, 1.95)),
+            // Passive Mobs
+            Map.entry(EntityType.ALLAY, new Size(0.35, 0.6)),
+            Map.entry(EntityType.ARMADILLO, new Size(0.8, 0.6)),
+            Map.entry(EntityType.AXOLOTL, new Size(0.75, 0.42)),
+            Map.entry(EntityType.BAT, new Size(0.5, 0.9)),
             Map.entry(EntityType.CHICKEN, new Size(0.4, 0.7)),
-            Map.entry(EntityType.SKELETON, new Size(0.6, 1.99)),
+            Map.entry(EntityType.COW, new Size(0.9, 1.4)),
+            Map.entry(EntityType.MOOSHROOM, new Size(0.9, 1.4)),
+            Map.entry(EntityType.FROG, new Size(0.5, 0.5)),
+            Map.entry(EntityType.PARROT, new Size(0.5, 0.9)),
+            Map.entry(EntityType.RABBIT, new Size(0.4, 0.5)),
+            Map.entry(EntityType.SHEEP, new Size(0.9, 1.3)),
+            Map.entry(EntityType.SNIFFER, new Size(1.9, 1.75)),
+            Map.entry(EntityType.TURTLE, new Size(1.2, 0.4)),
+            Map.entry(EntityType.VILLAGER, new Size(0.6, 1.95)),
+            Map.entry(EntityType.WANDERING_TRADER, new Size(0.6, 1.95)),
+
+            // Hostile Mobs
+            Map.entry(EntityType.BLAZE, new Size(0.6, 1.8)),
             Map.entry(EntityType.CREEPER, new Size(0.6, 1.7)),
+            Map.entry(EntityType.DROWNED, new Size(0.6, 1.95)),
+            Map.entry(EntityType.ENDERMAN, new Size(0.6, 2.9)),
+            Map.entry(EntityType.HUSK, new Size(0.6, 2.0)),
+            Map.entry(EntityType.SKELETON, new Size(0.6, 1.99)),
+            Map.entry(EntityType.BOGGED, new Size(0.6, 1.99)),
             Map.entry(EntityType.SPIDER, new Size(1.4, 0.9)),
-            Map.entry(EntityType.SLIME, new Size(0.6, 0.6))
+            Map.entry(EntityType.CAVE_SPIDER, new Size(0.7, 0.5)),
+            Map.entry(EntityType.SLIME, new Size(0.6, 0.6)), // base slime (size 1)
+            Map.entry(EntityType.MAGMA_CUBE, new Size(0.6, 0.6)), // similar to slime
+            Map.entry(EntityType.VEX, new Size(0.4, 0.8)),
+            Map.entry(EntityType.WITCH, new Size(0.6, 1.95)),
+            Map.entry(EntityType.ZOMBIE, new Size(0.6, 1.95)),
+            Map.entry(EntityType.ZOMBIE_VILLAGER, new Size(0.6, 1.95)),
+            Map.entry(EntityType.ZOMBIFIED_PIGLIN, new Size(0.6, 1.95)),
+            Map.entry(EntityType.WITHER_SKELETON, new Size(0.7, 2.4)),
+
+            // Utility & Misc
+            Map.entry(EntityType.IRON_GOLEM, new Size(1.4, 2.7)),
+            Map.entry(EntityType.SNOW_GOLEM, new Size(0.7, 1.9)),
+            Map.entry(EntityType.PHANTOM, new Size(0.9, 0.5)),
+            Map.entry(EntityType.SHULKER, new Size(1.0, 1.0)),
+            Map.entry(EntityType.GHAST, new Size(4.0, 4.0)),
+            Map.entry(EntityType.WARDEN, new Size(0.9, 2.9)),
+
+            // Experimental/Future (use fallback proxies if needed)
+            Map.entry(EntityType.STRAY, new Size(0.6, 1.99)),
+            Map.entry(EntityType.EVOKER, new Size(0.6, 1.95)),
+            Map.entry(EntityType.ILLUSIONER, new Size(0.6, 1.95)),
+            Map.entry(EntityType.PILLAGER, new Size(0.6, 1.95)),
+            Map.entry(EntityType.RAVAGER, new Size(1.95, 2.2)),
+
+            // Water Creatures
+            Map.entry(EntityType.DOLPHIN, new Size(0.9, 0.6)),
+            Map.entry(EntityType.GLOW_SQUID, new Size(0.8, 0.8)),
+            Map.entry(EntityType.SQUID, new Size(0.8, 0.8)),
+            Map.entry(EntityType.SALMON, new Size(0.7, 0.4)),
+            Map.entry(EntityType.COD, new Size(0.5, 0.3)),
+            Map.entry(EntityType.TROPICAL_FISH, new Size(0.5, 0.4)),
+            Map.entry(EntityType.PUFFERFISH, new Size(0.7, 0.7))
     );
 
-    public static List<Location> findValidSpawnLocations(Location center, SpawnerRequirementsModel req, int configRadius, EntityType entityType) {
+    public static List<Location> findValidSpawnLocations(Location center, SpawnerRequirementsModel req, int configRadius, EntityType entityType, int requiredAmount) {
         List<Location> valid = new ArrayList<>();
         World world = center.getWorld();
         if (world == null) return valid;
@@ -78,6 +131,16 @@ public class SpawnLocationResolver {
                     Location loc = new Location(world, fx, cy + dy, fz);
                     if (tryAddValid(valid, loc, req, entityType, solidBelowCache)) break;
                 }
+            }
+        }
+
+        // ✅ Duplicate locations if only 1 or a few were found
+        if (valid.size() < requiredAmount) {
+            Location base = valid.isEmpty() ? center.clone() : valid.getFirst().clone();
+            while (valid.size() < requiredAmount) {
+                double offsetX = rand.nextDouble(-0.3, 0.3);
+                double offsetZ = rand.nextDouble(-0.3, 0.3);
+                valid.add(base.clone().add(offsetX, 0, offsetZ));
             }
         }
 

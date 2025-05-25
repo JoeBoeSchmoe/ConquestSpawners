@@ -31,6 +31,7 @@ org\conquest\conquestSpawners\commandHandler\AutoTabManager.class
 org\conquest\conquestSpawners\mobSpawningHandler\spawnerSetup\SpawnerRequirementsModel.class
 org\conquest\conquestSpawners\mobSpawningHandler\spawningHandler\EntityCramDamageTask$TrackedMob.class
 org\conquest\conquestSpawners\responseHandler\effectHandler\BossBarResponseManager.class
+org\conquest\conquestSpawners\mobSpawningHandler\spawningHandler\MobDespawnListener.class
 org\conquest\conquestSpawners\commandHandler\permissionHandler\PermissionManager.class
 org\conquest\conquestSpawners\mobSpawningHandler\spawnerSetup\MobManager.class
 org\conquest\conquestSpawners\responseHandler\effectHandler\TitleResponseManager.class

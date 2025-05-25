@@ -35,6 +35,7 @@ DisplayName: "<white><bold>[<gold>Bogged Spawner</gold><white>]</bold> <white><b
 DisplayLore:
   - "<gray>Collect me with Silk Touch!"
   - "<gray>Rains down rot and poison..."
+IsEnchanted: true
 
 #########################################
 # 📏 Spawner Requirements

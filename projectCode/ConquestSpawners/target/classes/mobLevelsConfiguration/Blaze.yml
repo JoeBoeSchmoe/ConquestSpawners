@@ -32,6 +32,7 @@ DisplayName: "<white><bold>[<gold>Blaze Spawner</gold><white>]</bold> <white><bo
 DisplayLore:
   - "<gray>Collect me with Silk Touch!"
   - "<gray>Handle with fire resistance..."
+IsEnchanted: true
 
 #########################################
 # 📏 Spawner Requirements

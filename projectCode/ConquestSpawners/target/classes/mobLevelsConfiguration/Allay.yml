@@ -35,6 +35,7 @@ DisplayName: "<white><bold>[<gold>Allay Spawner</gold><white>]</bold> <white><bo
 DisplayLore:
   - "<gray>Collect me with Silk Touch!"
   - "<gray>Drops shell fragments!"
+IsEnchanted: true
 
 #########################################
 # 📏 Spawner Requirements
@@ -42,7 +43,7 @@ DisplayLore:
 #########################################
 
 SpawnerRequirements:
-  Air: true                    # Requires air blocks above spawn position
+  Air: true                     # Requires air blocks above spawn position
   Above-Sea-Level: false        # Must be above Y=63
   Below-Sea-Level: false        # Must be below Y=63
   Above-Y-Axis: false           # Requires being above a specific Y value
@@ -97,7 +98,7 @@ Spawner-Levels:
     MobCount: default
     XPDrop: default
     VanillaDrops: default
-    CostToUpgrade: default
+    CostToUpgrade: 1000
     CustomDrops:
       '1':
         Material: AMETHYST_SHARD
@@ -110,7 +111,7 @@ Spawner-Levels:
     MobCount: default
     XPDrop: default
     VanillaDrops: default
-    CostToUpgrade: default
+    CostToUpgrade: 2000
     CustomDrops:
       '1':
         Material: AMETHYST_SHARD
@@ -123,7 +124,7 @@ Spawner-Levels:
     MobCount: default
     XPDrop: default
     VanillaDrops: default
-    CostToUpgrade: default
+    CostToUpgrade: 3000
     CustomDrops:
       '1':
         Material: AMETHYST_SHARD
@@ -136,7 +137,7 @@ Spawner-Levels:
     MobCount: default
     XPDrop: default
     VanillaDrops: default
-    CostToUpgrade: default
+    CostToUpgrade: 5000
     CustomDrops:
       '1':
         Material: AMETHYST_SHARD

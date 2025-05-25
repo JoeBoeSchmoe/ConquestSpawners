@@ -15,7 +15,7 @@ Worlds:
   - OtherWorld
 
 # Distance from player required to keep spawner active (in blocks)
-Player-Activation-Range: 48     # Keeps it active at guard post range
+Player-Activation-Range: default     # Keeps it active at guard post range
 
 # If true, disables AI on spawned mobs (not recommended for utility mobs)
 Disable-Mob-AI: false
@@ -27,7 +27,7 @@ Disable-Collisions: default
 Spawn-Radius: default
 
 # Maximum number of this mob’s spawners allowed per chunk
-Allowed-Spawners-Per-Chunk: 2
+Allowed-Spawners-Per-Chunk: default
 
 # Override name/lore display in GUI (optional)
 OverrideDefaultDisplay: false

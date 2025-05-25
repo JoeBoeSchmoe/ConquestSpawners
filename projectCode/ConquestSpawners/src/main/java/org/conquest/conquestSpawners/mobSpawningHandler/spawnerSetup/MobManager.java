@@ -172,27 +172,32 @@ public class MobManager {
                 ConfigurationSection d = section.getConfigurationSection(dropKey);
                 if (d == null) continue;
 
+                // Required: Material field
                 String material = d.getString("Material");
                 if (material == null || material.isBlank()) {
-                    plugin.getLogger().warning("⚠️  Skipped drop with missing material at: " + dropKey);
+                    plugin.getLogger().warning("⚠️  Skipped drop '" + dropKey + "' due to missing or blank material.");
                     continue;
                 }
 
+                // Optional fields with defaults
                 int amount = d.getInt("Amount", 1);
                 double dropPercent = d.getDouble("Drop-Percent", 0.0);
 
+                // Optional nested custom data
                 Map<String, Object> customData = Optional.ofNullable(d.getConfigurationSection("Custom-Data"))
                         .map(sec -> sec.getValues(false))
-                        .orElse(new HashMap<>());
+                        .orElseGet(HashMap::new);
 
                 drops.add(new CustomDropModel(material, amount, dropPercent, customData));
+
             } catch (Exception e) {
-                plugin.getLogger().warning("⚠️  Failed to parse drop: " + dropKey + " - " + e.getMessage());
+                plugin.getLogger().warning("⚠️  Failed to parse drop '" + dropKey + "' in config: " + e.getMessage());
             }
         }
 
         return drops;
     }
+
 
     private String normalizeKey(String raw) {
         return raw == null ? "" : raw.trim().toLowerCase(Locale.ROOT);

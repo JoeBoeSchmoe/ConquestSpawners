@@ -90,6 +90,34 @@ entity-cram-limit: 8
 max-total-spawners-per-chunk: 16
 
 # ===================================================
+# 🛠 Spawner Pickup Requirements
+# Controls which tools can collect a spawner and whether Silk Touch is required.
+# ===================================================
+pickup-requirements:
+  require-silk-touch: true        # If true, player must use Silk Touch to pick up spawners
+  allowed-tools:                  # List of tools allowed to break and pick up spawners
+    - DIAMOND_PICKAXE
+    - NETHERITE_PICKAXE
+    - IRON_PICKAXE
+    - STONE_PICKAXE
+    - GOLDEN_PICKAXE
+    - WOODEN_PICKAXE
+
+# ===================================================
+# 💣 Spawner Explosion Behavior
+# Controls whether spawners drop when broken by explosions (e.g. TNT, Creepers).
+# ===================================================
+explosion-handling:
+  drop-from-explosions: true     # If true, spawners will drop as items when destroyed by explosions
+
+# ===================================================
+# 🔄 Vanilla Spawner Conversion
+# Determines if vanilla (non-Conquest) spawners convert on pickup.
+# ===================================================
+vanilla-spawner-conversion:
+  enabled: true         # If true, vanilla spawners will convert into level 1 custom spawners
+
+# ===================================================
 # ⚙️ Default Spawner Settings
 # Controls base behaviors for all spawners unless overridden.
 # ===================================================

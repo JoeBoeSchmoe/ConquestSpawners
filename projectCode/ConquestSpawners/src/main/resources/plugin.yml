@@ -58,3 +58,28 @@ permissions:
       conquestspawners.admin.basecommand: true
       conquestspawners.admin.give: true
       conquestspawners.admin.reload: true
+      conquestspawners.user.basecommand: true
+      conquestspawners.use.pickup.bypass: true
+
+  # ===================================================
+  # 👤 User Permissions
+  # For normal players and quality-of-life toggles
+  # ===================================================
+  conquestspawners.user.basecommand:
+    description: Allows players to run the basic /spawners command
+    default: false
+
+  conquestspawners.user.pickup:
+    description: Allows players to break and pick up spawners with restrictions
+    default: false
+
+  conquestspawners.user.pickup.bypass:
+    description: Allows players to break and pick up spawners without restrictions
+    default: false
+
+  conquestspawners.user.*:
+    description: Grants full access to ConquestSpawners user commands
+    default: true
+    children:
+      conquestspawners.user.basecommand: true
+      conquestspawners.user.pickup: true

@@ -7,13 +7,15 @@ package org.conquest.conquestSpawners.commandHandler.permissionHandler;
 public enum PermissionModels {
 
     // 🎮 User Permissions
-    USER_BASE("conquestspawners.user.base"),
+    USER_BASE("conquestspawners.user.basecommand"),
     USER_HELP("conquestspawners.user.help"),
     USER_GIVE("conquestspawners.user.give"),
     USER_INFO("conquestspawners.user.info"),
+    USER_PICKUP("conquestspawners.user.pickup"),
+    USER_PICKUP_BYPASS("conquestspawners.user.pickup.bypass"),
 
     // 🛠 Admin Permissions
-    ADMIN_BASE("conquestspawners.admin"),
+    ADMIN_BASE("conquestspawners.admin.basecommand"),
     ADMIN_RELOAD("conquestspawners.admin.reload"),
     ADMIN_GIVE("conquestspawners.admin.give"),
     ADMIN_ALL("conquestspawners.admin.*");

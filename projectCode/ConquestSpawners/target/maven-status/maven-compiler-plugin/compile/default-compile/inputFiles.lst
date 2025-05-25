@@ -11,6 +11,7 @@ C:\Users\josep\OneDrive\Desktop\ConquestSpawners\ConquestSpawners\projectCode\Co
 C:\Users\josep\OneDrive\Desktop\ConquestSpawners\ConquestSpawners\projectCode\ConquestSpawners\src\main\java\org\conquest\conquestSpawners\mobSpawningHandler\spawnerSetup\ConfigResolver.java
 C:\Users\josep\OneDrive\Desktop\ConquestSpawners\ConquestSpawners\projectCode\ConquestSpawners\src\main\java\org\conquest\conquestSpawners\mobSpawningHandler\spawningHandler\MobBehaviorSuppressorListener.java
 C:\Users\josep\OneDrive\Desktop\ConquestSpawners\ConquestSpawners\projectCode\ConquestSpawners\src\main\java\org\conquest\conquestSpawners\mobSpawningHandler\spawningHandler\SpawnerScanTask.java
+C:\Users\josep\OneDrive\Desktop\ConquestSpawners\ConquestSpawners\projectCode\ConquestSpawners\src\main\java\org\conquest\conquestSpawners\mobSpawningHandler\spawningHandler\SpawnerPickupListener.java
 C:\Users\josep\OneDrive\Desktop\ConquestSpawners\ConquestSpawners\projectCode\ConquestSpawners\src\main\java\org\conquest\conquestSpawners\responseHandler\ComponentSerializerManager.java
 C:\Users\josep\OneDrive\Desktop\ConquestSpawners\ConquestSpawners\projectCode\ConquestSpawners\src\main\java\org\conquest\conquestSpawners\mobSpawningHandler\spawnerSetup\MobManager.java
 C:\Users\josep\OneDrive\Desktop\ConquestSpawners\ConquestSpawners\projectCode\ConquestSpawners\src\main\java\org\conquest\conquestSpawners\responseHandler\messageModels\AdminMessageModels.java
@@ -31,6 +32,7 @@ C:\Users\josep\OneDrive\Desktop\ConquestSpawners\ConquestSpawners\projectCode\Co
 C:\Users\josep\OneDrive\Desktop\ConquestSpawners\ConquestSpawners\projectCode\ConquestSpawners\src\main\java\org\conquest\conquestSpawners\responseHandler\messageModels\UserMessageModels.java
 C:\Users\josep\OneDrive\Desktop\ConquestSpawners\ConquestSpawners\projectCode\ConquestSpawners\src\main\java\org\conquest\conquestSpawners\mobSpawningHandler\spawnerSetup\MobDataModel.java
 C:\Users\josep\OneDrive\Desktop\ConquestSpawners\ConquestSpawners\projectCode\ConquestSpawners\src\main\java\org\conquest\conquestSpawners\commandHandler\permissionHandler\PermissionModels.java
+C:\Users\josep\OneDrive\Desktop\ConquestSpawners\ConquestSpawners\projectCode\ConquestSpawners\src\main\java\org\conquest\conquestSpawners\mobSpawningHandler\spawningHandler\SpawnerProtectionListener.java
 C:\Users\josep\OneDrive\Desktop\ConquestSpawners\ConquestSpawners\projectCode\ConquestSpawners\src\main\java\org\conquest\conquestSpawners\responseHandler\effectHandler\TitleResponseManager.java
 C:\Users\josep\OneDrive\Desktop\ConquestSpawners\ConquestSpawners\projectCode\ConquestSpawners\src\main\java\org\conquest\conquestSpawners\cooldownHandler\InteractionCooldownManager.java
 C:\Users\josep\OneDrive\Desktop\ConquestSpawners\ConquestSpawners\projectCode\ConquestSpawners\src\main\java\org\conquest\conquestSpawners\configurationHandler\configurationFiles\UserMessagesFile.java

@@ -99,9 +99,10 @@ public final class ConquestSpawners extends JavaPlugin {
 
         new MobDespawnListener(this, despawnTask);
 
+        new SpawnerPickupListener(this);
+        new SpawnerProtectionListener(this);
         getLogger().info("🎧  Listeners and spawning tasks registered.");
     }
-
 
     public static ConquestSpawners getInstance() {
         return instance;

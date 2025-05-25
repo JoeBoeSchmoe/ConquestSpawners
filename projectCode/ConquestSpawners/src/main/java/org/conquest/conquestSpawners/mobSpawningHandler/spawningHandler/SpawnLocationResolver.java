@@ -103,6 +103,7 @@ public class SpawnLocationResolver {
         World world = center.getWorld();
         if (world == null) return valid;
 
+        // ✅ Biome restriction check
         if (req.inBiome && (req.allowedBiomes == null ||
                 !req.allowedBiomes.contains(center.getBlock().getBiome().getKey().getKey().toLowerCase()))) {
             return valid;
@@ -134,9 +135,9 @@ public class SpawnLocationResolver {
             }
         }
 
-        // ✅ Duplicate locations if only 1 or a few were found
-        if (valid.size() < requiredAmount) {
-            Location base = valid.isEmpty() ? center.clone() : valid.getFirst().clone();
+        // ✅ Only duplicate if at least one valid location exists
+        if (!valid.isEmpty() && valid.size() < requiredAmount) {
+            Location base = valid.getFirst().clone();
             while (valid.size() < requiredAmount) {
                 double offsetX = rand.nextDouble(-0.3, 0.3);
                 double offsetZ = rand.nextDouble(-0.3, 0.3);
@@ -181,6 +182,7 @@ public class SpawnLocationResolver {
         valid.add(loc);
         return true;
     }
+
 
     public static boolean isBoundingBoxSpaceClear(World world, Location center, EntityType type) {
         Size size = ENTITY_SIZES.get(type);

@@ -100,4 +100,52 @@ messages:
       subtitle: "<gray>{reason}"
       timings: { fadeIn: 10, stay: 40, fadeOut: 20 }
 
+  # ✅ SPAWNER PLACE SUCCESS
+  spawner-place-success:
+    text: [ "<green>✅ Spawner placed successfully!" ]
+    hover: "<gray>This spawner is now active.</gray>"
+    click: ""
+    clickType: "NONE"
+    components: [ ]
+    prefix: true
+    sound: { type: BLOCK_BEACON_ACTIVATE, volume: 1.0, pitch: 1.2 }
+    particles: [ { type: VILLAGER_HAPPY, count: 5, offset: [ 0.3, 0.5, 0.3 ], speed: 0.1 } ]
+    actionbar: { text: "<gray>Spawner activated.", duration: 40 }
+    title:
+      text: "<green><bold>Spawner Placed</bold></green>"
+      subtitle: "<gray>Your spawner is now active."
+      timings: { fadeIn: 10, stay: 40, fadeOut: 20 }
+
+  # ✅ SPAWNER PICKUP SUCCESS
+  spawner-pickup-success:
+    text: [ "<green>🎁 Spawner successfully dropped!" ]
+    hover: "<gray>Use it again to place the same mob at any location.</gray>"
+    click: ""
+    clickType: "NONE"
+    components: [ ]
+    prefix: true
+    sound: { type: ENTITY_ITEM_PICKUP, volume: 1.0, pitch: 1.4 }
+    particles: [ { type: ENCHANTMENT_TABLE, count: 6, offset: [ 0.2, 0.4, 0.2 ], speed: 0.1 } ]
+    actionbar: { text: "<gray>Spawner dropped successfully.", duration: 40 }
+    title:
+      text: "<green><bold>Spawner Collected</bold></green>"
+      subtitle: "<gray>Successfully dropped spawner."
+      timings: { fadeIn: 10, stay: 40, fadeOut: 20 }
+
+  # ❌ SPAWNER PICKUP FAILED
+  spawner-pickup-failed:
+    text: [ "<red>❌ {reason}" ]
+    hover: "<gray>You couldn't collect the spawner.</gray>"
+    click: ""
+    clickType: "NONE"
+    components: [ ]
+    prefix: true
+    sound: { type: BLOCK_NOTE_BLOCK_BASS, volume: 1.0, pitch: 0.9 }
+    particles: [ { type: SMOKE_NORMAL, count: 5, offset: [ 0.2, 0.4, 0.2 ], speed: 0.02 } ]
+    actionbar: { text: "<gray>Spawner pickup blocked.", duration: 50 }
+    title:
+      text: "<red><bold>Pickup Denied</bold></red>"
+      subtitle: "<gray>{reason}"
+      timings: { fadeIn: 10, stay: 40, fadeOut: 20 }
+
 # End Of Config :D

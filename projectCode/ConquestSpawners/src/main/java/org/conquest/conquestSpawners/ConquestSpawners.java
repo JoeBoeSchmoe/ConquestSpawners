@@ -1,11 +1,18 @@
 package org.conquest.conquestSpawners;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
+import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.conquest.conquestSpawners.commandHandler.CommandManager;
 import org.conquest.conquestSpawners.configurationHandler.ConfigurationManager;
+import org.conquest.conquestSpawners.configurationHandler.integrationFiles.DecentHologramsManager;
+import org.conquest.conquestSpawners.mobSpawningHandler.SpawnerInteractionListener;
+import org.conquest.conquestSpawners.mobSpawningHandler.SpawnerPickupListener;
 import org.conquest.conquestSpawners.mobSpawningHandler.SpawnerPlaceListener;
+import org.conquest.conquestSpawners.mobSpawningHandler.SpawnerProtectionListener;
 import org.conquest.conquestSpawners.mobSpawningHandler.spawningHandler.*;
+import org.conquest.conquestSpawners.responseHandler.effectHandler.BossBarResponseManager;
 
 import java.util.List;
 
@@ -38,15 +45,61 @@ public final class ConquestSpawners extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        getLogger().info("📴  ConquestSpawners has been disabled.");
+        getLogger().info("📴 Shutting down ConquestSpawners...");
+
+        // 1. Cancel all scheduled tasks
+        Bukkit.getScheduler().cancelTasks(this);
+
+        // 2. Unregister all event listeners
+        HandlerList.unregisterAll(this);
+
+        // 3. Despawn all custom mobs spawned by this plugin
+        MobDespawnTask.forceDespawnAllCustomMobs();
+
+        // 4. Remove all remaining holograms if integration is enabled
+        if (DecentHologramsManager.isEnabled()) {
+            DecentHologramsManager.clearAllHolograms();
+            getLogger().info("🪧 Cleared remaining active holograms.");
+        }
+
+        // 5. Null static references if applicable
+        instance = null;
+
+        // 6. Log final memory footprint
+        System.gc(); // Optional: suggest GC run (safe here)
+        long usedMem = (Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1024 / 1024;
+        getLogger().info("🧹  Memory usage at shutdown: " + usedMem + " MB");
+
+        getLogger().info("✅  ConquestSpawners disabled successfully.");
     }
 
+
     /**
-     * Reloads configuration and supporting files.
+     * Reloads plugin configuration, despawns mobs, clears tasks/listeners, and re-registers everything.
      */
     public void reload() {
         getLogger().info("🔄  Reloading ConquestSpawners...");
+
+        // 1. Cancel all scheduled tasks and unregister listeners
+        Bukkit.getScheduler().cancelTasks(this);
+        HandlerList.unregisterAll(this);
+
+        // 2. Despawn all custom mobs
+        MobDespawnTask.forceDespawnAllCustomMobs();
+
+        // 3. Clear active holograms (if enabled)
+        if (DecentHologramsManager.isEnabled()) {
+            DecentHologramsManager.clearAllHolograms();
+            getLogger().info("🧹  Cleared DecentHolograms temporary displays.");
+        }
+
+        // 4. Reload all configs and mob YAMLs
         configurationManager.initialize();
+
+        // 5. Re-register tasks, listeners, and command bindings
+        registerListeners();
+        BossBarResponseManager.clearAll();
+
         getLogger().info("✅  Reload complete.");
     }
 
@@ -69,6 +122,14 @@ public final class ConquestSpawners extends JavaPlugin {
         if (!aliases.isEmpty()) {
             getLogger().info("🔗  Registered aliases from config: " + String.join(", ", aliases));
         }
+    }
+
+    private void unregisterTasksAndListeners() {
+        // Cancel all tasks
+        Bukkit.getScheduler().cancelTasks(this);
+
+        // Unregister all listeners
+        HandlerList.unregisterAll(this);
     }
 
     /**
@@ -101,6 +162,8 @@ public final class ConquestSpawners extends JavaPlugin {
 
         new SpawnerPickupListener(this);
         new SpawnerProtectionListener(this);
+
+        new SpawnerInteractionListener(this);
         getLogger().info("🎧  Listeners and spawning tasks registered.");
     }
 

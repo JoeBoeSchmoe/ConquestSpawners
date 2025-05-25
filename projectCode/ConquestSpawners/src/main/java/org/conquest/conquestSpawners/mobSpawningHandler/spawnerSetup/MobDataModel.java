@@ -1,6 +1,7 @@
 package org.conquest.conquestSpawners.mobSpawningHandler.spawnerSetup;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -10,24 +11,31 @@ import java.util.Map;
 public class MobDataModel {
 
     // === Core identifiers ===
-    private final String mobType;                    // Internal Bukkit EntityType string (e.g., "ZOMBIE")
-    private final boolean spawnerEnabled;            // Whether the spawner is usable or disabled globally
+    private final String mobType;
+    private final boolean spawnerEnabled;
 
     // === World restrictions ===
-    private final boolean customWhitelistedWorlds;   // If true, uses per-mob world whitelist
-    private final List<String> allowedWorlds;        // Explicit world names (if enabled)
+    private final boolean customWhitelistedWorlds;
+    private final List<String> allowedWorlds;
 
     // === Mob behavior & control ===
-    private final Object playerActivationRange;      // Player proximity required to activate spawner
-    private final Object disableMobAI;               // AI toggle per mob
-    private final Object disableCollisions;          // Collision toggle per mob
-    private final Object allowedSpawnersPerChunk;    // Cap per chunk
-    private final Object spawnRadius;                // Spawn search radius in blocks
+    private final Object playerActivationRange;
+    private final Object disableMobAI;
+    private final Object disableCollisions;
+    private final Object allowedSpawnersPerChunk;
+    private final Object spawnRadius;
 
     // === Display information ===
-    private final boolean overrideDefaultDisplay;    // If true, uses per-mob name/lore
+    private final boolean overrideDefaultDisplay;
     private final String displayName;
     private final List<String> displayLore;
+
+    // === Hologram Display Override ===
+    private final boolean overrideDefaultHologramDisplay;
+    private final List<String> hologramDisplayLines;
+    private final Double hologramVerticalOffset;
+    private final Double hologramSpacing;
+    private final Integer hologramDisplayTime;
 
     // === Spawn conditions & leveling ===
     private final SpawnerRequirementsModel requirements;
@@ -46,6 +54,11 @@ public class MobDataModel {
             boolean overrideDefaultDisplay,
             String displayName,
             List<String> displayLore,
+            boolean overrideDefaultHologramDisplay,
+            List<String> hologramDisplayLines,
+            Double hologramVerticalOffset,
+            Double hologramSpacing,
+            Integer hologramDisplayTime,
             SpawnerRequirementsModel requirements,
             Map<Integer, SpawnerLevelModel> levels
     ) {
@@ -61,103 +74,73 @@ public class MobDataModel {
         this.overrideDefaultDisplay = overrideDefaultDisplay;
         this.displayName = displayName;
         this.displayLore = displayLore;
+        this.overrideDefaultHologramDisplay = overrideDefaultHologramDisplay;
+        this.hologramDisplayLines = hologramDisplayLines;
+        this.hologramVerticalOffset = hologramVerticalOffset;
+        this.hologramSpacing = hologramSpacing;
+        this.hologramDisplayTime = hologramDisplayTime;
         this.requirements = requirements;
         this.levels = levels;
     }
 
-    // === Raw accessors ===
-
-    public String getMobType() {
-        return mobType;
+    public String getMobType() { return mobType; }
+    public boolean isSpawnerEnabled() { return spawnerEnabled; }
+    public boolean hasCustomWhitelistedWorlds() { return customWhitelistedWorlds; }
+    public List<String> getAllowedWorlds() { return allowedWorlds; }
+    public Object getPlayerActivationRange() { return playerActivationRange; }
+    public Object getDisableMobAI() { return disableMobAI; }
+    public Object getDisableCollisions() { return disableCollisions; }
+    public Object getAllowedSpawnersPerChunk() { return allowedSpawnersPerChunk; }
+    public Object getSpawnRadius() { return spawnRadius; }
+    public boolean isOverrideDefaultDisplay() { return overrideDefaultDisplay; }
+    public String getDisplayName() { return displayName; }
+    public List<String> getDisplayLore() { return displayLore; }
+    public boolean isOverrideDefaultHologramDisplay() { return overrideDefaultHologramDisplay; }
+    public List<String> getHologramDisplayLines() { return hologramDisplayLines; }
+    public double getHologramVerticalOffsetResolved() {
+        return hologramVerticalOffset != null ? hologramVerticalOffset : 1.5;
     }
-
-    public boolean isSpawnerEnabled() {
-        return spawnerEnabled;
+    public double getHologramSpacingResolved() {
+        return hologramSpacing != null ? hologramSpacing : 0.25;
     }
-
-    public boolean hasCustomWhitelistedWorlds() {
-        return customWhitelistedWorlds;
+    public int getHologramDisplayTimeResolved() {
+        return hologramDisplayTime != null ? hologramDisplayTime : 80;
     }
+    public SpawnerRequirementsModel getRequirements() { return requirements; }
+    public Map<Integer, SpawnerLevelModel> getSpawnerLevels() { return levels; }
 
-    public List<String> getAllowedWorlds() {
-        return allowedWorlds;
-    }
-
-    public Object getPlayerActivationRange() {
-        return playerActivationRange;
-    }
-
-    public Object getDisableMobAI() {
-        return disableMobAI;
-    }
-
-    public Object getDisableCollisions() {
-        return disableCollisions;
-    }
-
-    public Object getAllowedSpawnersPerChunk() {
-        return allowedSpawnersPerChunk;
-    }
-
-    public Object getSpawnRadius() {
-        return spawnRadius;
-    }
-
-    public boolean isOverrideDefaultDisplay() {
-        return overrideDefaultDisplay;
-    }
-
-    public String getDisplayName() {
-        return displayName;
-    }
-
-    public List<String> getDisplayLore() {
-        return displayLore;
-    }
-
-    public SpawnerRequirementsModel getRequirements() {
-        return requirements;
-    }
-
-    public Map<Integer, SpawnerLevelModel> getSpawnerLevels() {
-        return levels;
-    }
-
-
-    // === Resolved accessors with config fallback ===
-
-    /**
-     * @return Player activation distance in blocks, resolved from config if set to "default".
-     */
     public int getPlayerActivationRangeResolved() {
         return ConfigResolver.getInt(playerActivationRange, "default-values.player-activation-range", 32);
     }
-
-    /**
-     * @return Whether spawned mobs should have AI disabled.
-     */
     public boolean isDisableMobAIResolved() {
         return ConfigResolver.getBoolean(disableMobAI, "default-values.disable-mob-ai", true);
     }
-
-    /**
-     * @return Whether spawned mobs should have collisions disabled.
-     */
     public boolean isDisableCollisionsResolved() {
         return ConfigResolver.getBoolean(disableCollisions, "default-values.disable-collisions", true);
     }
-
-    /**
-     * @return Maximum allowed spawners of this type per chunk.
-     */
     public int getAllowedSpawnersPerChunkResolved() {
         return ConfigResolver.getInt(allowedSpawnersPerChunk, "default-values.allowed-spawners-per-chunk", 8);
     }
-
-    /**
-     * @return Search radius around spawner for valid spawn points.
-     */
     public int getSpawnRadiusResolved() {
         return ConfigResolver.getInt(spawnRadius, "default-values.spawn-radius", 4);
+    }
+    public String getDisplayNameResolved() {
+        if (overrideDefaultDisplay && displayName != null && !displayName.isEmpty()) {
+            return displayName;
+        }
+        return capitalizeWords(mobType.replace("_", " ").toLowerCase(Locale.ROOT));
+    }
+
+    private String capitalizeWords(String input) {
+        String[] words = input.split(" ");
+        StringBuilder builder = new StringBuilder();
+        for (String word : words) {
+            if (!word.isEmpty()) {
+                builder.append(Character.toUpperCase(word.charAt(0)));
+                if (word.length() > 1) builder.append(word.substring(1));
+                builder.append(" ");
+            }
+        }
+        return builder.toString().trim();
     }
 }

@@ -1,4 +1,4 @@
-package org.conquest.conquestSpawners.mobSpawningHandler.spawningHandler;
+package org.conquest.conquestSpawners.mobSpawningHandler;
 
 import org.bukkit.Material;
 import org.bukkit.block.Block;

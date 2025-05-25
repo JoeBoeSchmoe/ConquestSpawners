@@ -7,7 +7,6 @@ org\conquest\conquestSpawners\mobSpawningHandler\spawningHandler\SpawnLocationRe
 org\conquest\conquestSpawners\configurationHandler\integrationFiles\DecentHologramsManager.class
 org\conquest\conquestSpawners\mobSpawningHandler\spawningHandler\MobBehaviorSuppressorListener$1.class
 org\conquest\conquestSpawners\configurationHandler\integrationFiles\PlaceHolderAPIManager$PlaceholderSet.class
-org\conquest\conquestSpawners\mobSpawningHandler\spawningHandler\SpawnerPickupListener.class
 org\conquest\conquestSpawners\mobSpawningHandler\spawnerSetup\MobDataModel.class
 org\conquest\conquestSpawners\mobSpawningHandler\spawningHandler\CustomMob.class
 org\conquest\conquestSpawners\configurationHandler\integrationFiles\PlaceHolderAPIManager.class
@@ -16,12 +15,13 @@ org\conquest\conquestSpawners\responseHandler\effectHandler\SoundCompatModel.cla
 org\conquest\conquestSpawners\responseHandler\effectHandler\ActionBarResponseManager.class
 org\conquest\conquestSpawners\configurationHandler\integrationFiles\VaultManager.class
 org\conquest\conquestSpawners\mobSpawningHandler\spawnerSetup\ConfigResolver.class
-org\conquest\conquestSpawners\mobSpawningHandler\spawningHandler\SpawnerProtectionListener.class
 org\conquest\conquestSpawners\responseHandler\ComponentSerializerManager.class
 org\conquest\conquestSpawners\mobSpawningHandler\spawningHandler\EntityCramDamageTask.class
+org\conquest\conquestSpawners\mobSpawningHandler\SpawnerInteractionListener$1.class
 org\conquest\conquestSpawners\configurationHandler\ConfigurationManager.class
 org\conquest\conquestSpawners\cooldownHandler\GUICooldownManager.class
 org\conquest\conquestSpawners\mobSpawningHandler\spawnerSetup\ItemUtility.class
+org\conquest\conquestSpawners\mobSpawningHandler\SpawnerInteractionListener$InteractionType.class
 org\conquest\conquestSpawners\responseHandler\MessageResponseManager.class
 org\conquest\conquestSpawners\responseHandler\messageModels\AdminMessageModels.class
 org\conquest\conquestSpawners\configurationHandler\configurationFiles\AdminMessagesFile.class
@@ -33,6 +33,7 @@ org\conquest\conquestSpawners\commandHandler\AutoTabManager.class
 org\conquest\conquestSpawners\mobSpawningHandler\spawnerSetup\SpawnerRequirementsModel.class
 org\conquest\conquestSpawners\mobSpawningHandler\spawningHandler\EntityCramDamageTask$TrackedMob.class
 org\conquest\conquestSpawners\responseHandler\effectHandler\BossBarResponseManager.class
+org\conquest\conquestSpawners\mobSpawningHandler\SpawnerPickupListener.class
 org\conquest\conquestSpawners\mobSpawningHandler\spawningHandler\MobDespawnListener.class
 org\conquest\conquestSpawners\commandHandler\permissionHandler\PermissionManager.class
 org\conquest\conquestSpawners\mobSpawningHandler\spawnerSetup\MobManager.class
@@ -41,6 +42,7 @@ org\conquest\conquestSpawners\cooldownHandler\InteractionCooldownManager.class
 org\conquest\conquestSpawners\configurationHandler\configurationFiles\ConfigFile.class
 org\conquest\conquestSpawners\configurationHandler\integrationFiles\PlaceHolderAPIManager$1.class
 org\conquest\conquestSpawners\commandHandler\permissionHandler\PermissionModels.class
+org\conquest\conquestSpawners\mobSpawningHandler\SpawnerProtectionListener.class
 org\conquest\conquestSpawners\mobSpawningHandler\spawningHandler\SpawnLocationResolver$Size.class
 org\conquest\conquestSpawners\cooldownHandler\CommandCooldownManager.class
 org\conquest\conquestSpawners\mobSpawningHandler\spawningHandler\MobDeathListener.class
@@ -53,3 +55,4 @@ org\conquest\conquestSpawners\ConquestSpawners.class
 org\conquest\conquestSpawners\mobSpawningHandler\spawningHandler\MobBehaviorSuppressorListener.class
 org\conquest\conquestSpawners\mobSpawningHandler\spawnerSetup\SpawnerLevelModel.class
 org\conquest\conquestSpawners\mobSpawningHandler\SpawnerPlaceListener.class
+org\conquest\conquestSpawners\mobSpawningHandler\SpawnerInteractionListener.class

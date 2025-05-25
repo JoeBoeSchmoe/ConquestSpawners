@@ -74,6 +74,11 @@ public class MobManager {
                     yaml.getBoolean("OverrideDefaultDisplay", false),
                     yaml.getString("DisplayName"),
                     yaml.getStringList("DisplayLore"),
+                    yaml.getBoolean("OverrideDefaultHologramDisplay", false),
+                    yaml.getStringList("HologramLines"),
+                    yaml.getDouble("HologramOffset"),
+                    yaml.getDouble("HologramSpacing"),
+                    yaml.getInt("HologramDisplayTime"),
                     parseRequirements(yaml.getConfigurationSection("SpawnerRequirements")),
                     parseLevels(yaml.getConfigurationSection("Spawner-Levels"))
             );
@@ -86,9 +91,6 @@ public class MobManager {
         }
     }
 
-    /**
-     * Extracts bundled default configs on first launch if missing.
-     */
     private void extractDefaultsFromJar() {
         try {
             File jarFile = new File(plugin.getClass().getProtectionDomain().getCodeSource().getLocation().toURI());
@@ -172,18 +174,15 @@ public class MobManager {
                 ConfigurationSection d = section.getConfigurationSection(dropKey);
                 if (d == null) continue;
 
-                // Required: Material field
                 String material = d.getString("Material");
                 if (material == null || material.isBlank()) {
                     plugin.getLogger().warning("⚠️  Skipped drop '" + dropKey + "' due to missing or blank material.");
                     continue;
                 }
 
-                // Optional fields with defaults
                 int amount = d.getInt("Amount", 1);
                 double dropPercent = d.getDouble("Drop-Percent", 0.0);
 
-                // Optional nested custom data
                 Map<String, Object> customData = Optional.ofNullable(d.getConfigurationSection("Custom-Data"))
                         .map(sec -> sec.getValues(false))
                         .orElseGet(HashMap::new);
@@ -197,7 +196,6 @@ public class MobManager {
 
         return drops;
     }
-
 
     private String normalizeKey(String raw) {
         return raw == null ? "" : raw.trim().toLowerCase(Locale.ROOT);

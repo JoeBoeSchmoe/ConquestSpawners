@@ -126,6 +126,7 @@ public class SpawnerScanTask extends BukkitRunnable {
 
                         if (mob.isDisableMobAIResolved()) {
                             MobBehaviorSuppressorListener.tagDisableAI(mobEntity, plugin);
+                            mobEntity.setSilent(true);
                         }
 
                         if (debug) {

@@ -124,5 +124,21 @@ public class MobDespawnTask extends BukkitRunnable {
         }
     }
 
+    /**
+     * Force-removes all mobs tagged with conquest-spawner-drop metadata.
+     * Used during reload or plugin shutdown.
+     */
+    public static void forceDespawnAllCustomMobs() {
+        ConquestSpawners plugin = ConquestSpawners.getInstance();
+
+        Bukkit.getWorlds().forEach(world ->
+                world.getEntities().stream()
+                        .filter(e -> e.hasMetadata("conquest-spawner-drop"))
+                        .forEach(e -> {
+                            e.remove();
+                            plugin.getLogger().finer("💀  Removed custom mob: " + e.getType() + " at " + e.getLocation());
+                        })
+        );
+    }
 
 }

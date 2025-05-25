@@ -1,4 +1,4 @@
-package org.conquest.conquestSpawners.mobSpawningHandler.spawningHandler;
+package org.conquest.conquestSpawners.mobSpawningHandler;
 
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -15,13 +15,18 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.conquest.conquestSpawners.ConquestSpawners;
 import org.conquest.conquestSpawners.commandHandler.permissionHandler.PermissionModels;
+import org.conquest.conquestSpawners.configurationHandler.integrationFiles.DecentHologramsManager;
 import org.conquest.conquestSpawners.mobSpawningHandler.spawnerSetup.ItemUtility;
 import org.conquest.conquestSpawners.mobSpawningHandler.spawnerSetup.MobDataModel;
 import org.conquest.conquestSpawners.mobSpawningHandler.spawnerSetup.SpawnerBuilder;
+import org.conquest.conquestSpawners.responseHandler.MessageResponseManager;
+import org.conquest.conquestSpawners.responseHandler.messageModels.UserMessageModels;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class SpawnerPickupListener implements Listener {
 
@@ -41,7 +46,8 @@ public class SpawnerPickupListener implements Listener {
 
         // 🛑 Require pickup permission
         if (!player.hasPermission(PermissionModels.USER_PICKUP.getNode())) {
-            player.sendMessage("§cYou are not allowed to pick up spawners.");
+            MessageResponseManager.send(player, UserMessageModels.SPAWNER_PICKUP_FAILED,
+                    Map.of("reason", "You are not allowed to pick up spawners."));
             event.setCancelled(true);
             return;
         }
@@ -59,7 +65,8 @@ public class SpawnerPickupListener implements Listener {
                     .anyMatch(mat -> mat == tool.getType());
 
             if (!validTool) {
-                player.sendMessage("§cYou can't break this spawner with that tool.");
+                MessageResponseManager.send(player, UserMessageModels.SPAWNER_PICKUP_FAILED,
+                        Map.of("reason", "You can't break this spawner with that tool."));
                 event.setCancelled(true);
                 return;
             }
@@ -69,7 +76,8 @@ public class SpawnerPickupListener implements Listener {
                     .getBoolean("pickup-requirements.require-silk-touch");
 
             if (requireSilk && !tool.containsEnchantment(Enchantment.SILK_TOUCH)) {
-                player.sendMessage("§cYou need Silk Touch to collect this spawner.");
+                MessageResponseManager.send(player, UserMessageModels.SPAWNER_PICKUP_FAILED,
+                        Map.of("reason", "You need Silk Touch to collect this spawner."));
                 event.setCancelled(true);
                 return;
             }
@@ -92,17 +100,22 @@ public class SpawnerPickupListener implements Listener {
             boolean allowConvert = plugin.getConfig().getBoolean("vanilla-spawner-conversion.enabled", false);
 
             if (!allowConvert) {
-                //player.sendMessage("§cThis spawner has no custom data and cannot be collected.");
+//                MessageResponseManager.send(player, UserMessageModels.SPAWNER_PICKUP_FAILED,
+//                        Map.of("reason", "This spawner has no custom data and cannot be collected."));
                 return;
             }
 
             EntityType vanillaType = spawner.getSpawnedType();
+            if(vanillaType == null) {
+                return;
+            }
             mobKey = vanillaType.name().toLowerCase(Locale.ROOT);
             level = 1;
 
             MobDataModel fallback = plugin.getConfigurationManager().getMobManager().getMob(mobKey);
             if (fallback == null) {
-                player.sendMessage("§cVanilla spawner type <red>" + mobKey + "</red> is not registered.");
+                MessageResponseManager.send(player, UserMessageModels.SPAWNER_PICKUP_FAILED,
+                        Map.of("reason", "Vanilla spawner type <red>" + mobKey + "</red> is not registered."));
                 return;
             }
 
@@ -123,7 +136,8 @@ public class SpawnerPickupListener implements Listener {
         // 🎁 Drop custom item with correct mob + level
         ItemStack drop = SpawnerBuilder.buildSpawner(mob, level);
         block.getWorld().dropItemNaturally(block.getLocation(), drop);
+        DecentHologramsManager.removeHologramIfExists(block.getLocation());
 
-        player.sendMessage("§aSpawner successfully collected!");
+        MessageResponseManager.send(player, UserMessageModels.SPAWNER_PICKUP_SUCCESS);
     }
 }

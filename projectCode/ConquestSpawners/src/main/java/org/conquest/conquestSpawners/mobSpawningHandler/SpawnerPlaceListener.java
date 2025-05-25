@@ -15,6 +15,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.conquest.conquestSpawners.ConquestSpawners;
+import org.conquest.conquestSpawners.configurationHandler.integrationFiles.DecentHologramsManager;
 import org.conquest.conquestSpawners.mobSpawningHandler.spawnerSetup.*;
 import org.conquest.conquestSpawners.responseHandler.MessageResponseManager;
 import org.conquest.conquestSpawners.responseHandler.messageModels.UserMessageModels;
@@ -128,6 +129,12 @@ public class SpawnerPlaceListener implements Listener {
         placedData.set(ItemUtility.key("level"), PersistentDataType.INTEGER, level);
 
         spawner.update(true);
+        if (org.conquest.conquestSpawners.configurationHandler.integrationFiles.DecentHologramsManager.isEnabled()) {
+            DecentHologramsManager.showTemporaryHologram(block.getLocation(), player);
+
+        };
+        MessageResponseManager.send(player, UserMessageModels.SPAWNER_PLACE_SUCCESS);
+
     }
 
     private void reject(Player player, BlockPlaceEvent event, String reason) {

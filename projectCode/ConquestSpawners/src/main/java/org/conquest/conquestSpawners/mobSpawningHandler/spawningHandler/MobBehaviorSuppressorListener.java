@@ -183,9 +183,7 @@ public class MobBehaviorSuppressorListener implements Listener {
     }
 
     private boolean hasAIDisabled(Entity entity) {
-        return entity.hasMetadata("disable-ai-logic") &&
-                entity.getMetadata("disable-ai-logic").stream()
-                        .anyMatch(meta -> meta.getOwningPlugin() == ConquestSpawners.getInstance());
+        return entity.hasMetadata("disable-ai-logic");
     }
 
     public static void tagDisableAI(Entity entity, Plugin plugin) {

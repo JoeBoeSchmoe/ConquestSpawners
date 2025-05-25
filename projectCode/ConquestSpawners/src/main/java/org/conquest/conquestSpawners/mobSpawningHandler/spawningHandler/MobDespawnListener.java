@@ -46,9 +46,4 @@ public class MobDespawnListener implements Listener {
             Bukkit.getScheduler().runTaskLater(plugin, despawnTask::runDirectEntityScan, 1L);
         }
     }
-
-    @EventHandler
-    public void onPlayerDeath(PlayerDeathEvent event) {
-        Bukkit.getScheduler().runTaskLater(plugin, despawnTask::runDirectEntityScan, 1L);
-    }
 }

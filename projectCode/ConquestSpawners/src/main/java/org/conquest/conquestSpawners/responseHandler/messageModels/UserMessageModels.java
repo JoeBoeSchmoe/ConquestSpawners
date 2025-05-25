@@ -16,8 +16,12 @@ public enum UserMessageModels {
     // ⏱️ Cooldowns
     COMMAND_ON_COOLDOWN("command-on-cooldown"),
 
-    // 🧱 Spawner placement failures
-    SPAWNER_PLACE_FAILED("spawner-place-failed");
+    // 🧱 Spawner messages
+    SPAWNER_PLACE_FAILED("spawner-place-failed"),
+    SPAWNER_PLACE_SUCCESS("spawner-place-success"),
+    SPAWNER_PICKUP_SUCCESS("spawner-pickup-success"),
+    SPAWNER_PICKUP_FAILED("spawner-pickup-failed");
+
 
     private final String path;
 

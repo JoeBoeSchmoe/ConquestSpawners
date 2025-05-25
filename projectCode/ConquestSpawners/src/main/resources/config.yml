@@ -118,6 +118,19 @@ vanilla-spawner-conversion:
   enabled: true         # If true, vanilla spawners will convert into level 1 custom spawners
 
 # ===================================================
+# 🖱 Spawner Interaction Types
+# Defines how players interact with spawners to trigger upgrades or view info.
+# Supported values:
+#   - LEFT_CLICK
+#   - RIGHT_CLICK
+#   - SHIFT_LEFT_CLICK
+#   - SHIFT_RIGHT_CLICK
+# ===================================================
+interactions:
+  upgrade-interaction: "RIGHT_CLICK"       # Future use: upgrade interaction
+  hologram-display-interaction: "SHIFT_LEFT_CLICK"   # Shows hologram when this input is triggered
+
+# ===================================================
 # ⚙️ Default Spawner Settings
 # Controls base behaviors for all spawners unless overridden.
 # ===================================================
@@ -162,5 +175,20 @@ default-values:
     display-lore:
       - "<gray>Collect me with Silk Touch!"
     is-enchanted: true
+
+  # ===================================================
+  # 🪧 Default Hologram Display (if DecentHolograms enabled)
+  # Used when a specific mob config does not override it.
+  # ===================================================
+  default-hologram-display:
+    lines:
+      - "<white><bold><aqua>{Spawner} Spawner</aqua> <white>Lv.{level}</bold>"
+      - "<gray>⏱ Spawn Delay: <yellow>{delay} seconds"
+      - "<gray>🧍 Mob Count: <yellow>{mob_count}"
+      - "<gray>🔸 XP per Spawn: <yellow>{xp}"
+    vertical-offset: 2.5   # Distance above the spawner block
+    spacing: 0.25          # Vertical space between lines
+    update-interval: 40    # In ticks (2s)
+    display-time: 80       # How long the hologram should be visible (in ticks)
 
 # End of config.yml

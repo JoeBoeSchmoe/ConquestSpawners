@@ -45,7 +45,7 @@ public final class ConquestSpawners extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        getLogger().info("📴 Shutting down ConquestSpawners...");
+        getLogger().info("📴  Shutting down ConquestSpawners...");
 
         // 1. Cancel all scheduled tasks
         Bukkit.getScheduler().cancelTasks(this);
@@ -59,7 +59,7 @@ public final class ConquestSpawners extends JavaPlugin {
         // 4. Remove all remaining holograms if integration is enabled
         if (DecentHologramsManager.isEnabled()) {
             DecentHologramsManager.clearAllHolograms();
-            getLogger().info("🪧 Cleared remaining active holograms.");
+            getLogger().info("🪧  Cleared remaining active holograms.");
         }
 
         // 5. Null static references if applicable

@@ -8,207 +8,153 @@ import org.conquest.conquestSpawners.mobSpawningHandler.spawnerSetup.SpawnerRequ
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
+/**
+ * Resolves valid spawn locations near a spawner block, based on obstruction-aware scanning.
+ */
 public class SpawnLocationResolver {
 
-    private static final class Size {
-        final double width, height;
-        Size(double width, double height) {
-            this.width = width;
-            this.height = height;
-        }
-    }
+    private record Size(double width, double height) {}
+    private record BlockXZ(int x, int z) {}
 
-    private static final class BlockPosXZ {
-        final int x, z;
-        BlockPosXZ(int x, int z) {
-            this.x = x;
-            this.z = z;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            return o instanceof BlockPosXZ other && x == other.x && z == other.z;
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(x, z);
-        }
-    }
-
-    private static final Map<EntityType, Size> ENTITY_SIZES = Map.ofEntries(
-            // Passive Mobs
-            Map.entry(EntityType.ALLAY, new Size(0.35, 0.6)),
-            Map.entry(EntityType.ARMADILLO, new Size(0.8, 0.6)),
-            Map.entry(EntityType.AXOLOTL, new Size(0.75, 0.42)),
-            Map.entry(EntityType.BAT, new Size(0.5, 0.9)),
-            Map.entry(EntityType.CHICKEN, new Size(0.4, 0.7)),
-            Map.entry(EntityType.COW, new Size(0.9, 1.4)),
-            Map.entry(EntityType.MOOSHROOM, new Size(0.9, 1.4)),
-            Map.entry(EntityType.FROG, new Size(0.5, 0.5)),
-            Map.entry(EntityType.PARROT, new Size(0.5, 0.9)),
-            Map.entry(EntityType.RABBIT, new Size(0.4, 0.5)),
-            Map.entry(EntityType.SHEEP, new Size(0.9, 1.3)),
-            Map.entry(EntityType.SNIFFER, new Size(1.9, 1.75)),
-            Map.entry(EntityType.TURTLE, new Size(1.2, 0.4)),
-            Map.entry(EntityType.VILLAGER, new Size(0.6, 1.95)),
-            Map.entry(EntityType.WANDERING_TRADER, new Size(0.6, 1.95)),
-
-            // Hostile Mobs
-            Map.entry(EntityType.BLAZE, new Size(0.6, 1.8)),
-            Map.entry(EntityType.CREEPER, new Size(0.6, 1.7)),
-            Map.entry(EntityType.DROWNED, new Size(0.6, 1.95)),
-            Map.entry(EntityType.ENDERMAN, new Size(0.6, 2.9)),
-            Map.entry(EntityType.HUSK, new Size(0.6, 2.0)),
-            Map.entry(EntityType.SKELETON, new Size(0.6, 1.99)),
-            Map.entry(EntityType.BOGGED, new Size(0.6, 1.99)),
-            Map.entry(EntityType.SPIDER, new Size(1.4, 0.9)),
-            Map.entry(EntityType.CAVE_SPIDER, new Size(0.7, 0.5)),
-            Map.entry(EntityType.SLIME, new Size(0.6, 0.6)), // base slime (size 1)
-            Map.entry(EntityType.MAGMA_CUBE, new Size(0.6, 0.6)), // similar to slime
-            Map.entry(EntityType.VEX, new Size(0.4, 0.8)),
-            Map.entry(EntityType.WITCH, new Size(0.6, 1.95)),
-            Map.entry(EntityType.ZOMBIE, new Size(0.6, 1.95)),
-            Map.entry(EntityType.ZOMBIE_VILLAGER, new Size(0.6, 1.95)),
-            Map.entry(EntityType.ZOMBIFIED_PIGLIN, new Size(0.6, 1.95)),
-            Map.entry(EntityType.WITHER_SKELETON, new Size(0.7, 2.4)),
-
-            // Utility & Misc
-            Map.entry(EntityType.IRON_GOLEM, new Size(1.4, 2.7)),
-            Map.entry(EntityType.SNOW_GOLEM, new Size(0.7, 1.9)),
-            Map.entry(EntityType.PHANTOM, new Size(0.9, 0.5)),
-            Map.entry(EntityType.SHULKER, new Size(1.0, 1.0)),
-            Map.entry(EntityType.GHAST, new Size(4.0, 4.0)),
-            Map.entry(EntityType.WARDEN, new Size(0.9, 2.9)),
-
-            // Experimental/Future (use fallback proxies if needed)
-            Map.entry(EntityType.STRAY, new Size(0.6, 1.99)),
-            Map.entry(EntityType.EVOKER, new Size(0.6, 1.95)),
-            Map.entry(EntityType.ILLUSIONER, new Size(0.6, 1.95)),
-            Map.entry(EntityType.PILLAGER, new Size(0.6, 1.95)),
-            Map.entry(EntityType.RAVAGER, new Size(1.95, 2.2)),
-
-            // Water Creatures
-            Map.entry(EntityType.DOLPHIN, new Size(0.9, 0.6)),
-            Map.entry(EntityType.GLOW_SQUID, new Size(0.8, 0.8)),
-            Map.entry(EntityType.SQUID, new Size(0.8, 0.8)),
-            Map.entry(EntityType.SALMON, new Size(0.7, 0.4)),
-            Map.entry(EntityType.COD, new Size(0.5, 0.3)),
-            Map.entry(EntityType.TROPICAL_FISH, new Size(0.5, 0.4)),
-            Map.entry(EntityType.PUFFERFISH, new Size(0.7, 0.7))
+    private static final Map<EntityType, Size> ENTITY_SIZES = Map.of(
+            EntityType.ALLAY, new Size(0.35, 0.6),
+            EntityType.ZOMBIE, new Size(0.6, 1.95),
+            EntityType.CREEPER, new Size(0.6, 1.7),
+            EntityType.SPIDER, new Size(1.4, 0.9)
+            // Add more as needed...
     );
 
-    public static List<Location> findValidSpawnLocations(Location center, SpawnerRequirementsModel req, int configRadius, EntityType entityType, int requiredAmount) {
-        List<Location> valid = new ArrayList<>();
-        World world = center.getWorld();
-        if (world == null) return valid;
+    public static List<Location> resolveValidSpawnLocations(
+            Location spawnerLoc,
+            int maxRadius,
+            EntityType entityType,
+            SpawnerRequirementsModel req,
+            int needed,
+            Set<Block> globallyClaimedBlocks,
+            int spawnerY // NEW param
+    ) {
+        List<Location> candidates = new ArrayList<>();
+        World world = spawnerLoc.getWorld();
+        if (world == null) return candidates;
 
-        // ✅ Biome restriction check
-        if (req.inBiome && (req.allowedBiomes == null ||
-                !req.allowedBiomes.contains(center.getBlock().getBiome().getKey().getKey().toLowerCase()))) {
-            return valid;
-        }
-
-        int cx = center.getBlockX();
-        int cy = center.getBlockY();
-        int cz = center.getBlockZ();
-
-        int northRadius = scanRadius(world, cx, cy, cz, 0, -1, configRadius);
-        int southRadius = scanRadius(world, cx, cy, cz, 0, 1, configRadius);
-        int westRadius  = scanRadius(world, cx, cy, cz, -1, 0, configRadius);
-        int eastRadius  = scanRadius(world, cx, cy, cz, 1, 0, configRadius);
-
-        Map<BlockPosXZ, Boolean> solidBelowCache = new HashMap<>();
+        Map<BlockXZ, Boolean> solidBelowCache = new HashMap<>();
         ThreadLocalRandom rand = ThreadLocalRandom.current();
 
-        for (int dx = -westRadius; dx <= eastRadius; dx++) {
-            for (int dz = -northRadius; dz <= southRadius; dz++) {
-                int x = cx + dx;
-                int z = cz + dz;
+        int baseX = spawnerLoc.getBlockX();
+        int baseY = spawnerLoc.getBlockY();
+        int baseZ = spawnerLoc.getBlockZ();
 
-                for (int dy = 0; dy >= -2; dy--) {
-                    double fx = x + rand.nextDouble(0.2, 0.8);
-                    double fz = z + rand.nextDouble(0.2, 0.8);
-                    Location loc = new Location(world, fx, cy + dy, fz);
-                    if (tryAddValid(valid, loc, req, entityType, solidBelowCache)) break;
-                }
-            }
-        }
+        for (int yOffset = 1; yOffset >= -1; yOffset--) {
+            int y = baseY + yOffset;
 
-        // ✅ Only duplicate if at least one valid location exists
-        if (!valid.isEmpty() && valid.size() < requiredAmount) {
-            Location base = valid.getFirst().clone();
-            while (valid.size() < requiredAmount) {
-                double offsetX = rand.nextDouble(-0.3, 0.3);
-                double offsetZ = rand.nextDouble(-0.3, 0.3);
-                valid.add(base.clone().add(offsetX, 0, offsetZ));
-            }
-        }
+            for (int dx = -maxRadius; dx <= maxRadius; dx++) {
+                for (int dz = -maxRadius; dz <= maxRadius; dz++) {
+                    int x = baseX + dx;
+                    int z = baseZ + dz;
 
-        return valid;
-    }
+                    if (!isPathOpen(world, baseX, baseY, baseZ, x, y, z)) continue;
 
-    private static int scanRadius(World world, int cx, int cy, int cz, int dx, int dz, int maxRadius) {
-        for (int r = 1; r <= maxRadius; r++) {
-            Block block = world.getBlockAt(cx + r * dx, cy, cz + r * dz);
-            if (block.getType() != Material.AIR && block.getType() != Material.SPAWNER) {
-                return r - 1;
-            }
-        }
-        return maxRadius;
-    }
+                    double fx = x + 0.5 + rand.nextDouble(-0.3, 0.3);
+                    double fz = z + 0.5 + rand.nextDouble(-0.3, 0.3);
+                    Location loc = new Location(world, fx, y, fz);
+                    Block candidateBlock = loc.getBlock();
 
-    private static boolean tryAddValid(List<Location> valid, Location loc, SpawnerRequirementsModel req, EntityType entityType, Map<BlockPosXZ, Boolean> cache) {
-        World world = loc.getWorld();
-        if (world == null) return false;
-
-        Block base = loc.getBlock();
-        Block below = base.getRelative(0, -1, 0);
-        int light = base.getLightLevel();
-
-        BlockPosXZ key = new BlockPosXZ(loc.getBlockX(), loc.getBlockZ());
-        boolean belowSolid = cache.computeIfAbsent(key, k -> below.getType().isSolid());
-
-        if (req.air && !isBoundingBoxSpaceClear(world, loc, entityType)) return false;
-        if (!req.air && !belowSolid) return false;
-        if (req.onGround && !belowSolid) return false;
-        if (req.onBlock && (req.allowedBlocks == null || !req.allowedBlocks.contains(below.getType().name())))
-            return false;
-        if (req.darkness && light > 7) return false;
-        if (req.totalDarkness && light > 0) return false;
-        if (req.light && light < 8) return false;
-        if (req.fluid && !base.isLiquid()) return false;
-
-        valid.add(loc);
-        return true;
-    }
-
-
-    public static boolean isBoundingBoxSpaceClear(World world, Location center, EntityType type) {
-        Size size = ENTITY_SIZES.get(type);
-        if (size == null) return false;
-
-        double halfWidth = size.width / 2.0;
-        double height = size.height;
-
-        double minX = center.getX() - halfWidth;
-        double maxX = center.getX() + halfWidth;
-        double minY = center.getY();
-        double maxY = center.getY() + height;
-        double minZ = center.getZ() - halfWidth;
-        double maxZ = center.getZ() + halfWidth;
-
-        for (int x = (int) Math.floor(minX); x <= Math.floor(maxX); x++) {
-            for (int y = (int) Math.floor(minY); y <= Math.floor(maxY); y++) {
-                for (int z = (int) Math.floor(minZ); z <= Math.floor(maxZ); z++) {
-                    Block block = world.getBlockAt(x, y, z);
-                    if (!block.isPassable() || block.getType().isSolid()) {
-                        return false;
+                    if (globallyClaimedBlocks != null && globallyClaimedBlocks.contains(candidateBlock)) continue;
+                    if (isValidSpawnLocation(loc, req, entityType, solidBelowCache)) {
+                        candidates.add(loc);
+                        if (globallyClaimedBlocks != null && y <= spawnerY) {
+                            globallyClaimedBlocks.add(candidateBlock);
+                        }
                     }
                 }
             }
         }
 
+        Collections.shuffle(candidates, rand);
+        List<Location> result = new ArrayList<>(needed);
+
+        for (int i = 0; i < needed; i++) {
+            if (i < candidates.size()) {
+                result.add(candidates.get(i));
+            } else if (!candidates.isEmpty()) {
+                Location base = candidates.get(rand.nextInt(candidates.size()));
+                result.add(base.clone().add(
+                        rand.nextDouble(-0.4, 0.4),
+                        0,
+                        rand.nextDouble(-0.4, 0.4)
+                ));
+            }
+        }
+
+        return result;
+    }
+
+    private static boolean isPathOpen(World world, int sx, int sy, int sz, int tx, int ty, int tz) {
+        int dy = Integer.compare(ty, sy);
+        int dx = Integer.compare(tx, sx);
+        int dz = Integer.compare(tz, sz);
+
+        int cx = sx;
+        int cy = sy;
+        int cz = sz;
+
+        while (cy != ty) {
+            cy += dy;
+            if (!world.getBlockAt(cx, cy, cz).isPassable()) return false;
+        }
+
+        while (cx != tx || cz != tz) {
+            if (cx != tx) cx += dx;
+            if (cz != tz) cz += dz;
+            if (!world.getBlockAt(cx, cy, cz).isPassable()) return false;
+        }
+
+        return true;
+    }
+
+    private static boolean isValidSpawnLocation(Location loc, SpawnerRequirementsModel req, EntityType entityType, Map<BlockXZ, Boolean> cache) {
+        World world = loc.getWorld();
+        if (world == null) return false;
+
+        Block base = loc.getBlock();
+        Block below = base.getRelative(0, -1, 0);
+        BlockXZ key = new BlockXZ(loc.getBlockX(), loc.getBlockZ());
+
+        int light = base.getLightLevel();
+        boolean solidBelow = cache.computeIfAbsent(key, k -> below.getType().isSolid());
+
+        if (req.air && !isBoundingBoxClear(world, loc, entityType)) return false;
+        if (req.onGround && !solidBelow) return false;
+        if (req.onBlock && (req.allowedBlocks == null || !req.allowedBlocks.contains(below.getType().name()))) return false;
+        if (req.darkness && light > 7) return false;
+        if (req.totalDarkness && light > 0) return false;
+        if (req.light && light < 8) return false;
+        if (req.fluid && !base.isLiquid()) return false;
+        if (req.inBiome && req.allowedBiomes != null && !req.allowedBiomes.contains(base.getBiome().getKey().getKey().toLowerCase())) return false;
+
+        return true;
+    }
+
+    private static boolean isBoundingBoxClear(World world, Location center, EntityType type) {
+        Size size = ENTITY_SIZES.get(type);
+        if (size == null) return false;
+
+        double halfW = size.width / 2.0;
+        double minX = center.getX() - halfW;
+        double maxX = center.getX() + halfW;
+        double minY = center.getY();
+        double maxY = center.getY() + size.height;
+        double minZ = center.getZ() - halfW;
+        double maxZ = center.getZ() + halfW;
+
+        for (int x = (int) Math.floor(minX); x <= Math.floor(maxX); x++) {
+            for (int y = (int) Math.floor(minY); y <= Math.floor(maxY); y++) {
+                for (int z = (int) Math.floor(minZ); z <= Math.floor(maxZ); z++) {
+                    Block block = world.getBlockAt(x, y, z);
+                    if (!block.isPassable() || block.getType().isSolid()) return false;
+                }
+            }
+        }
         return true;
     }
 }

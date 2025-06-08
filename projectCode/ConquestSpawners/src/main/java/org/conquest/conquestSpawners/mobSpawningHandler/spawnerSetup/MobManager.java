@@ -84,7 +84,7 @@ public class MobManager {
             );
 
             mobData.put(normalizeKey(mobKey), model);
-            log.info("✅  Loaded mob config: " + mobKey);
+            //log.info("✅  Loaded mob config: " + mobKey);
 
         } catch (Exception e) {
             log.warning("❌  Failed to load mob file: " + file.getName() + " - " + e.getMessage());

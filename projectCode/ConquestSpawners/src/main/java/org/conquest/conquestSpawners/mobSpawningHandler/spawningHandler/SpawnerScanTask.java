@@ -43,6 +43,8 @@ public class SpawnerScanTask extends BukkitRunnable {
 
             if (nearbyPlayers.isEmpty()) continue;
 
+            Set<Block> claimedBlocks = new HashSet<>();
+
             for (Chunk chunk : world.getLoadedChunks()) {
                 for (BlockState state : chunk.getTileEntities()) {
                     if (!(state instanceof TileState tile)) continue;
@@ -98,11 +100,18 @@ public class SpawnerScanTask extends BukkitRunnable {
                     int mobCount = levelData.getMobCountResolved();
                     int xpDrop = levelData.getXpDropResolved();
 
-                    List<Location> validSpawns = SpawnLocationResolver.findValidSpawnLocations(
-                            spawnBase, mob.getRequirements(), mob.getSpawnRadiusResolved(), type, mobCount
+                    List<Location> validSpawns = SpawnLocationResolver.resolveValidSpawnLocations(
+                            spawnBase,
+                            mob.getSpawnRadiusResolved(),
+                            type,
+                            mob.getRequirements(),
+                            mobCount,
+                            claimedBlocks,
+                            origin.getBlockY() // NEW: own Y for vertical separation
                     );
-                    if (validSpawns.isEmpty()) continue;
 
+
+                    if (validSpawns.isEmpty()) continue;
 
                     for (int i = 0; i < mobCount; i++) {
                         Location spawnLoc = validSpawns.get(ThreadLocalRandom.current().nextInt(validSpawns.size()));
@@ -141,12 +150,10 @@ public class SpawnerScanTask extends BukkitRunnable {
     }
 
     private void sanitizeEntity(LivingEntity entity) {
-        // Force adult
         if (entity instanceof Ageable ageable) {
             ageable.setAdult();
         }
 
-        // Remove ride relationships
         if (entity.getVehicle() != null) {
             entity.getVehicle().remove();
         }
@@ -157,7 +164,6 @@ public class SpawnerScanTask extends BukkitRunnable {
             entity.removePassenger(passenger);
         });
 
-        // Clear gear
         if (entity.getEquipment() != null) {
             entity.getEquipment().clear();
             entity.getEquipment().setHelmetDropChance(0f);
@@ -168,16 +174,13 @@ public class SpawnerScanTask extends BukkitRunnable {
             entity.getEquipment().setItemInOffHandDropChance(0f);
         }
 
-        // Special case for zombies
         if (entity instanceof Zombie zombie) {
             zombie.setBaby(false);
             zombie.getPassengers().forEach(Entity::remove);
         }
 
-        // Final pass: remove any passengers
         entity.getPassengers().forEach(Entity::remove);
     }
-
 
     private void setupNoCollisionTeam() {
         Team team = scoreboard.getTeam(NO_COLLISION_TEAM);

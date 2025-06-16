@@ -44,8 +44,8 @@ public class PlaceHolderAPIManager {
         }
 
         new PlaceholderExpansion() {
-            @Override public @NotNull String getIdentifier() { return "conquestduels"; }
-            @Override public @NotNull String getAuthor() { return "JosephSheets"; }
+            @Override public @NotNull String getIdentifier() { return "ConquestSpawners"; }
+            @Override public @NotNull String getAuthor() { return "ConquestCoder"; }
             @Override public @NotNull String getVersion() { return "1.0"; }
 
             @Override

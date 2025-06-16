@@ -1,0 +1,113 @@
+# ============================================================
+# 🧬 Spawner Upgrade GUI Configuration
+# Purpose: Lets players upgrade spawner attributes.
+# Reloadable via: /conquestspawners reload
+# ============================================================
+
+menu:
+  title: "<dark_purple>Spawner Upgrades"
+  filler: true
+  rows-per-page: 3
+
+  filler-item:
+    material: GRAY_STAINED_GLASS_PANE
+    name: "<gray>"
+    amount: 1
+    enchanted: false
+    lore: [ ]
+    customData:
+      CustomModelData: 1201
+
+    sound:
+      type: BLOCK_NOTE_BLOCK_HAT
+      volume: 1.0
+      pitch: 0.5
+
+    particles:
+      - type: SMOKE_NORMAL
+        count: 6
+        offsetX: 0.1
+        offsetY: 0.1
+        offsetZ: 0.1
+        speed: 0.01
+
+  sounds:
+    open:
+      type: ENTITY_EXPERIENCE_ORB_PICKUP
+      volume: 1.0
+      pitch: 1.5
+
+    close:
+      type: BLOCK_CHEST_CLOSE
+      volume: 1.0
+      pitch: 0.9
+
+    confirm:
+      type: ENTITY_PLAYER_LEVELUP
+      volume: 1.0
+      pitch: 1.2
+
+    cancel:
+      type: BLOCK_ANVIL_LAND
+      volume: 1.0
+      pitch: 0.8
+
+    invalid-click:
+      type: BLOCK_NOTE_BLOCK_BASS
+      volume: 1.0
+      pitch: 0.7
+
+  layout:
+    # 📈 Spawn Rate Display
+    - slot: 10
+      action: info
+      material: CLOCK
+      amount: 1
+      name: "<yellow>Spawn Rate"
+      lore:
+        - "<gray>Current: <green>%spawn_rate%s"
+        - "<gray>Lower is faster."
+      customData:
+        CustomModelData: 1201
+
+    # 📦 Spawn Count Display
+    - slot: 12
+      action: info
+      material: ZOMBIE_SPAWN_EGG
+      amount: 1
+      name: "<yellow>Spawn Count"
+      lore:
+        - "<gray>Current: <green>%spawn_count%"
+        - "<gray>Max mobs spawned per cycle."
+      customData:
+        CustomModelData: 1201
+
+    # ✨ XP Drop Display
+    - slot: 14
+      action: info
+      material: EXPERIENCE_BOTTLE
+      amount: 1
+      name: "<yellow>XP Drop Bonus"
+      lore:
+        - "<gray>Current: <green>%xp_bonus%"
+        - "<gray>Extra XP per mob kill."
+      customData:
+        CustomModelData: 1201
+
+    # ⬆ Upgrade Button
+    - slot: 16
+      action: upgrade
+      material: EMERALD
+      amount: 1
+      name: "<green>Upgrade Spawner"
+      lore:
+        - "<gray>Click to upgrade one stat."
+        - "<aqua>Cost: <gold>%upgrade_cost%"
+      customData:
+        CustomModelData: 1201
+
+# ============================================================
+# Notes:
+# - %placeholders% should be dynamically replaced per spawner.
+# - Add more upgrade buttons or info slots as needed.
+# ============================================================

@@ -4,6 +4,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.conquest.conquestSpawners.ConquestSpawners;
 import org.conquest.conquestSpawners.configurationHandler.configurationFiles.AdminMessagesFile;
 import org.conquest.conquestSpawners.configurationHandler.configurationFiles.ConfigFile;
+import org.conquest.conquestSpawners.configurationHandler.configurationFiles.UpgradeMenuGUIFile;
 import org.conquest.conquestSpawners.configurationHandler.configurationFiles.UserMessagesFile;
 import org.conquest.conquestSpawners.configurationHandler.integrationFiles.DecentHologramsManager;
 import org.conquest.conquestSpawners.configurationHandler.integrationFiles.PlaceHolderAPIManager;
@@ -38,6 +39,7 @@ public class ConfigurationManager {
             ConfigFile.load();
             AdminMessagesFile.load();
             UserMessagesFile.load();
+            UpgradeMenuGUIFile.load();
 
             this.config = ConfigFile.getConfig();
 

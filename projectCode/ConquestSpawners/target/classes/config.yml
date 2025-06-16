@@ -137,7 +137,7 @@ interactions:
 
 default-values:
   # Number of blocks a player must be within for a spawner to be active.
-  player-activation-range: 32
+  player-activation-range: 48
 
   # Disables AI for spawned mobs (recommended true for performance).
   disable-mob-ai: true

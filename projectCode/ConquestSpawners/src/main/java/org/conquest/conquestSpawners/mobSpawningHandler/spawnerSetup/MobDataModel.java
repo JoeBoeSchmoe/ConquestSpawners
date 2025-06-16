@@ -1,5 +1,7 @@
 package org.conquest.conquestSpawners.mobSpawningHandler.spawnerSetup;
 
+import org.bukkit.entity.EntityType;
+
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -131,6 +133,13 @@ public class MobDataModel {
         return capitalizeWords(mobType.replace("_", " ").toLowerCase(Locale.ROOT));
     }
 
+    public EntityType getMobTypeEnum() {
+        try {
+            return EntityType.valueOf(mobType.toUpperCase(Locale.ROOT));
+        } catch (IllegalArgumentException | NullPointerException e) {
+            return EntityType.PIG; // fallback, or null, or throw
+        }
+    }
     private String capitalizeWords(String input) {
         String[] words = input.split(" ");
         StringBuilder builder = new StringBuilder();

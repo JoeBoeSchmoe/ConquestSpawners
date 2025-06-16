@@ -4,6 +4,7 @@ import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.TileState;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.*;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.persistence.PersistentDataContainer;
@@ -43,8 +44,6 @@ public class SpawnerScanTask extends BukkitRunnable {
 
             if (nearbyPlayers.isEmpty()) continue;
 
-            Set<Block> claimedBlocks = new HashSet<>();
-
             for (Chunk chunk : world.getLoadedChunks()) {
                 for (BlockState state : chunk.getTileEntities()) {
                     if (!(state instanceof TileState tile)) continue;
@@ -73,11 +72,11 @@ public class SpawnerScanTask extends BukkitRunnable {
                         spawnBase.add(0, -1, 0);
                     }
 
-                    int activationRange = ConfigResolver.getInt(
-                            mob.getPlayerActivationRange(),
-                            "default-values.player-activation-range",
-                            32
-                    );
+                    FileConfiguration config = ConquestSpawners.getInstance().getConfigurationManager().getConfig();
+                    int activationRange = mob.getPlayerActivationRange() instanceof Number
+                            ? ((Number) mob.getPlayerActivationRange()).intValue()
+                            : config.getInt("default-values.player-activation-range", 32);
+
                     int activationRangeSq = activationRange * activationRange;
 
                     boolean playerNearby = false;
@@ -101,15 +100,11 @@ public class SpawnerScanTask extends BukkitRunnable {
                     int xpDrop = levelData.getXpDropResolved();
 
                     List<Location> validSpawns = SpawnLocationResolver.resolveValidSpawnLocations(
-                            spawnBase,
-                            mob.getSpawnRadiusResolved(),
-                            type,
-                            mob.getRequirements(),
-                            mobCount,
-                            claimedBlocks,
-                            origin.getBlockY() // NEW: own Y for vertical separation
+                            origin,       // Spawner's block location
+                            mob,          // The MobDataModel for this spawner
+                            levelData,    // The SpawnerLevelModel for this level
+                            world         // World object
                     );
-
 
                     if (validSpawns.isEmpty()) continue;
 

@@ -71,7 +71,7 @@ SpawnerRequirements:
   On-Ground: false              # Requires solid block below spawn location
 
   # Specific block check: spawner must be placed on one of the listed blocks
-  On-Block: true
+  On-Block: false
   AllowedBlocks:
     - GRASS_BLOCK
     - STONE

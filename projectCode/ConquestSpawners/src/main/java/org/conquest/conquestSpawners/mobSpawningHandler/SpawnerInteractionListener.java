@@ -12,19 +12,24 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.conquest.conquestSpawners.ConquestSpawners;
 import org.conquest.conquestSpawners.configurationHandler.integrationFiles.DecentHologramsManager;
+import org.conquest.conquestSpawners.guiHandler.GUIOpener;
+import org.conquest.conquestSpawners.guiHandler.guiEditingHandler.guiMenuModels.GUIFileEnums;
 
 public class SpawnerInteractionListener implements Listener {
 
     private final InteractionType hologramInteraction;
+    private final InteractionType upgradeInteraction;
 
     public SpawnerInteractionListener(ConquestSpawners plugin) {
         this.hologramInteraction = InteractionType.from(
-                plugin.getConfig().getString("interactions.hologram-display-interaction", "RIGHT_CLICK")
+                plugin.getConfig().getString("interactions.hologram-display-interaction", "SHIFT_LEFT_CLICK")
+        );
+        this.upgradeInteraction = InteractionType.from(
+                plugin.getConfig().getString("interactions.upgrade-interaction", "RIGHT_CLICK")
         );
 
         Bukkit.getPluginManager().registerEvents(this, plugin);
     }
-
 
     @EventHandler
     public void onInteract(PlayerInteractEvent event) {
@@ -33,16 +38,23 @@ public class SpawnerInteractionListener implements Listener {
         if (clicked == null || clicked.getType() != Material.SPAWNER) return;
 
         InteractionType actual = resolveInteractionType(event);
-        if (actual != hologramInteraction) return;
+        if (actual == null) return;
 
         BlockState state = clicked.getState();
         if (!(state instanceof CreatureSpawner)) return;
 
-        // 🪧 Trigger hologram display if DecentHolograms is enabled
-        if (DecentHologramsManager.isEnabled()) {
+        // 🪧 Show hologram
+        if (actual == hologramInteraction && DecentHologramsManager.isEnabled()) {
             DecentHologramsManager.showTemporaryHologram(clicked.getLocation(), player);
+            event.setCancelled(true);
+            return;
         }
-        event.setCancelled(true);
+
+        // ⬆️ Open upgrade GUI
+        if (actual == upgradeInteraction) {
+            GUIOpener.open(player, GUIFileEnums.SPAWNER_UPGRADE);
+            event.setCancelled(true);
+        }
     }
 
     private InteractionType resolveInteractionType(PlayerInteractEvent event) {

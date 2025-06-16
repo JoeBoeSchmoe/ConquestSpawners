@@ -50,7 +50,6 @@ public class MobBehaviorSuppressorListener implements Listener {
             case FALL, FIRE, FIRE_TICK, LAVA, SUFFOCATION -> {
                 Bukkit.getScheduler().runTask(ConquestSpawners.getInstance(), () -> {
                     entity.setVelocity(new Vector(0, 0, 0));
-                    entity.setFallDistance(0f);
                     entity.setFireTicks(0);
 
                     if (entity instanceof LivingEntity living) {
@@ -107,10 +106,6 @@ public class MobBehaviorSuppressorListener implements Listener {
 
         UUID id = entity.getUniqueId();
         Vector velocity = entity.getVelocity();
-
-        if (velocity.getY() < -0.25 && entity instanceof LivingEntity living) {
-            living.setFallDistance(0f);
-        }
 
         if (velocity.getY() < -0.01) return;
 

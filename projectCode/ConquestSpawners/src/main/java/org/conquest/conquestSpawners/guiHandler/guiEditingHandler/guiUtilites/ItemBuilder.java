@@ -14,15 +14,15 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.*;
 
-/**
- * 🎨 ItemBuilder
- * Constructs ItemStacks from YAML config maps for use in GUI layouts.
- */
 public class ItemBuilder {
 
     private static final MiniMessage mini = MiniMessage.miniMessage();
 
     public static ItemStack create(Map<String, Object> data) {
+        return create(data, Collections.emptyMap());
+    }
+
+    public static ItemStack create(Map<String, Object> data, Map<String, String> placeholderValues) {
         String materialName = String.valueOf(data.getOrDefault("material", "BARRIER"));
         Material material = safeMatchMaterial(materialName);
 
@@ -39,12 +39,14 @@ public class ItemBuilder {
         if (meta == null) return item;
 
         if (data.containsKey("name")) {
-            meta.displayName(mini.deserialize(String.valueOf(data.get("name"))));
+            String rawName = String.valueOf(data.get("name"));
+            meta.displayName(mini.deserialize(replacePlaceholders(rawName, placeholderValues)));
         }
 
         if (data.containsKey("lore")) {
             List<String> rawLore = safeStringList(data.get("lore"));
             List<Component> parsedLore = rawLore.stream()
+                    .map(line -> replacePlaceholders(line, placeholderValues))
                     .map(mini::deserialize)
                     .map(line -> line.decorationIfAbsent(TextDecoration.ITALIC, TextDecoration.State.FALSE))
                     .toList();
@@ -63,6 +65,14 @@ public class ItemBuilder {
         addHideAttributes(meta);
         item.setItemMeta(meta);
         return item;
+    }
+
+    private static String replacePlaceholders(String input, Map<String, String> values) {
+        String result = input;
+        for (Map.Entry<String, String> entry : values.entrySet()) {
+            result = result.replace("%" + entry.getKey() + "%", entry.getValue());
+        }
+        return result;
     }
 
     private static void applyCustomData(ItemMeta meta, Map<String, Object> customData) {

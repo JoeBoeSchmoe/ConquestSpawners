@@ -101,10 +101,22 @@ menu:
       amount: 1
       name: "<green>Upgrade Spawner"
       lore:
+        - "<gray>Upgrade Path: <yellow>%upgrade_path%"
         - "<gray>Click to upgrade one stat."
         - "<aqua>Cost: <gold>%upgrade_cost%"
       customData:
         CustomModelData: 1201
+
+    # ⛔ Max Level Indicator
+    - slot: 16
+      action: maxed
+      material: BARRIER
+      amount: 1
+      name: "<red>Max Level Reached"
+      lore:
+        - "<gray>This spawner is fully upgraded."
+      customData:
+        CustomModelData: 1202
 
 # ============================================================
 # Notes:

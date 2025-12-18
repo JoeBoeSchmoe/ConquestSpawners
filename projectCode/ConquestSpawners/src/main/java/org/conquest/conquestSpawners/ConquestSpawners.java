@@ -7,6 +7,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.conquest.conquestSpawners.commandHandler.CommandManager;
 import org.conquest.conquestSpawners.configurationHandler.ConfigurationManager;
 import org.conquest.conquestSpawners.configurationHandler.integrationFiles.DecentHologramsManager;
+import org.conquest.conquestSpawners.guiHandler.guiEditingHandler.GUIListener;
 import org.conquest.conquestSpawners.mobSpawningHandler.SpawnerInteractionListener;
 import org.conquest.conquestSpawners.mobSpawningHandler.SpawnerPickupListener;
 import org.conquest.conquestSpawners.mobSpawningHandler.SpawnerPlaceListener;
@@ -162,10 +163,14 @@ public final class ConquestSpawners extends JavaPlugin {
 
         new SpawnerPickupListener(this);
         new SpawnerProtectionListener(this);
-
         new SpawnerInteractionListener(this);
+
+        // 🖱️ Prevent item taking and handle spawner upgrade clicks
+        new GUIListener(this);
+
         getLogger().info("🎧  Listeners and spawning tasks registered.");
     }
+
 
     public static ConquestSpawners getInstance() {
         return instance;

@@ -154,7 +154,7 @@ default-values:
   # Default number of mobs to spawn per cycle.
   mob-count: 4
 
-  # Spawn delay between mob spawns (ticks).
+  # Spawn delay between mob spawns
   spawn-delay: 8
 
   # Default XP dropped per spawn.

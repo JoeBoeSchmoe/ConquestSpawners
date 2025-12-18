@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 
 /**
  * 📩 UserMessagesFile
- * Manages the loading and access to messagesConfiguration/userMessages.yml
+ * Manages the loading and access to MessagesConfiguration/userMessages.yml
  */
 public class UserMessagesFile {
 
@@ -33,15 +33,15 @@ public class UserMessagesFile {
                 log.warning("⚠️  Failed to create plugin data folder: " + folder.getAbsolutePath());
             }
 
-            File messagesDir = new File(folder, "messagesConfiguration");
+            File messagesDir = new File(folder, "MessagesConfiguration");
             if (!messagesDir.exists() && !messagesDir.mkdirs()) {
-                log.warning("⚠️  Failed to create messagesConfiguration directory: " + messagesDir.getAbsolutePath());
+                log.warning("⚠️  Failed to create MessagesConfiguration directory: " + messagesDir.getAbsolutePath());
             }
 
             File file = new File(messagesDir, "userMessages.yml");
 
             if (!file.exists()) {
-                try (InputStream in = plugin.getResource("messagesConfiguration/userMessages.yml")) {
+                try (InputStream in = plugin.getResource("MessagesConfiguration/userMessages.yml")) {
                     if (in != null) {
                         Files.copy(in, file.toPath());
                         log.info("📄  Created default userMessages.yml");

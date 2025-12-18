@@ -96,8 +96,8 @@ public class EntityCramDamageTask extends BukkitRunnable {
     }
 
     private boolean isCustomMob(LivingEntity entity) {
-        return entity.hasMetadata("conquest-spawner-drop")
-                && !entity.isCollidable(); // Only apply cram logic to collision-disabled mobs
+        return entity.hasMetadata("custom-spawner")
+                && entity.getMetadata("custom-spawner").stream().anyMatch(m -> m.getOwningPlugin() == plugin && m.asBoolean());
     }
 
     private GridKey getGridKey(Location loc) {

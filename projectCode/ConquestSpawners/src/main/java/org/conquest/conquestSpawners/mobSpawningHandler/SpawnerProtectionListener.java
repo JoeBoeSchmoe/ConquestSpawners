@@ -83,8 +83,12 @@ public class SpawnerProtectionListener implements Listener {
     }
 
     /**
-     * Handles dropping a spawner item on explosion if allowed by config.
-     * Always returns true to remove the spawner block visually.
+     * Explosion policy:
+     * - Always prevent vanilla explosion handling for spawners (remove from blockList)
+     * - Optionally drop a spawner item
+     * - If we are actually deleting it (setting AIR), ALSO remove from SpawnerManager/disk
+     *
+     * Returns true to remove from explosion blockList.
      */
     private boolean handleSpawnerExplosion(Block block) {
         if (block.getType() != Material.SPAWNER) return false;
@@ -93,29 +97,58 @@ public class SpawnerProtectionListener implements Listener {
         boolean allowVanillaConvert = plugin.getConfig().getBoolean("vanilla-spawner-conversion.enabled", false);
 
         BlockState state = block.getState();
-        if (!(state instanceof CreatureSpawner spawner)) return true;
+        if (!(state instanceof CreatureSpawner spawner)) {
+            // Still remove it from the explosion list; if you want it actually deleted, we delete it anyway.
+            block.setType(Material.AIR, false);
+            return true;
+        }
 
         PersistentDataContainer data = spawner.getPersistentDataContainer();
         String mobKey = data.get(ItemUtility.key("mob"), PersistentDataType.STRING);
         Integer level = data.get(ItemUtility.key("level"), PersistentDataType.INTEGER);
 
-        // 📦 If this is a vanilla spawner, try to convert if config allows
-        if (mobKey == null || level == null) {
-            if (!allowVanillaConvert) return true;
+        final boolean isCustomSpawner = (mobKey != null && level != null);
 
-            mobKey = Objects.requireNonNull(spawner.getSpawnedType()).name().toLowerCase(Locale.ROOT);
-            level = 1;
+        // If vanilla and conversion disabled: just delete block (or keep it protected if you prefer).
+        if (!isCustomSpawner && !allowVanillaConvert) {
+            block.setType(Material.AIR, false);
+            return true;
         }
 
-        MobDataModel mob = plugin.getConfigurationManager().getMobManager().getMob(mobKey.toLowerCase(Locale.ROOT));
+        // If vanilla conversion path: fabricate mobKey/level for drop ONLY (not stored in SpawnerManager)
+        String resolvedMobKey = mobKey;
+        int resolvedLevel = (level == null ? 1 : level);
+
+        if (!isCustomSpawner) {
+            EntityType spawned = spawner.getSpawnedType();
+            if (spawned == null) {
+                block.setType(Material.AIR, false);
+                return true;
+            }
+            resolvedMobKey = Objects.requireNonNull(spawned).name().toLowerCase(Locale.ROOT);
+            resolvedLevel = 1;
+        }
+
+        // Drop item if enabled and mob exists
+        MobDataModel mob = plugin.getConfigurationManager().getMobManager()
+                .getMob(resolvedMobKey.toLowerCase(Locale.ROOT));
+
         if (dropEnabled && mob != null) {
-            ItemStack drop = SpawnerBuilder.buildSpawner(mob, level);
+            ItemStack drop = SpawnerBuilder.buildSpawner(mob, resolvedLevel);
             block.getWorld().dropItemNaturally(block.getLocation(), drop);
         }
 
-        block.setType(Material.AIR, false); // ✅ Actually remove spawner block
+        // ✅ Layer 1 storage cleanup: only for real custom spawners (PDC-backed)
+        if (isCustomSpawner) {
+            plugin.getConfigurationManager()
+                    .getSpawnerManager()
+                    .removeSpawner(mobKey.toLowerCase(Locale.ROOT), resolvedLevel, block.getLocation());
+        }
 
+        // ✅ Actually remove spawner block
+        block.setType(Material.AIR, false);
+
+        // ✅ Prevent vanilla explosion handling for this block
         return true;
     }
-
 }

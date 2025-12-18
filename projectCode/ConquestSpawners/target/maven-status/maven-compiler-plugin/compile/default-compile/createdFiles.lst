@@ -1,17 +1,15 @@
 org\conquest\conquestSpawners\guiHandler\guiEditingHandler\guiUtilites\ClickActionManager.class
-org\conquest\conquestSpawners\mobSpawningHandler\spawningHandler\SpawnerScanTask.class
 org\conquest\conquestSpawners\configurationHandler\configurationFiles\UserMessagesFile.class
 org\conquest\conquestSpawners\mobSpawningHandler\spawningHandler\MobDespawnTask.class
 org\conquest\conquestSpawners\commandHandler\CommandManager.class
 org\conquest\conquestSpawners\responseHandler\effectHandler\SoundResponseManager.class
-org\conquest\conquestSpawners\mobSpawningHandler\spawningHandler\SpawnLocationResolver.class
 org\conquest\conquestSpawners\configurationHandler\integrationFiles\DecentHologramsManager.class
+org\conquest\conquestSpawners\mobSpawningHandler\spawningHandler\CustomSpawnerSpawnListener.class
 org\conquest\conquestSpawners\mobSpawningHandler\spawningHandler\MobBehaviorSuppressorListener$1.class
 org\conquest\conquestSpawners\configurationHandler\integrationFiles\PlaceHolderAPIManager$PlaceholderSet.class
 org\conquest\conquestSpawners\mobSpawningHandler\spawnerSetup\MobDataModel.class
 org\conquest\conquestSpawners\mobSpawningHandler\spawningHandler\CustomMob.class
 org\conquest\conquestSpawners\configurationHandler\integrationFiles\PlaceHolderAPIManager.class
-org\conquest\conquestSpawners\mobSpawningHandler\spawningHandler\SpawnLocationResolver$BlockXZ.class
 org\conquest\conquestSpawners\responseHandler\effectHandler\SoundCompatModel.class
 org\conquest\conquestSpawners\responseHandler\effectHandler\ActionBarResponseManager.class
 org\conquest\conquestSpawners\configurationHandler\integrationFiles\VaultManager.class
@@ -46,6 +44,7 @@ org\conquest\conquestSpawners\mobSpawningHandler\spawnerSetup\MobManager.class
 org\conquest\conquestSpawners\guiHandler\guiEditingHandler\GUISessionManager.class
 org\conquest\conquestSpawners\responseHandler\effectHandler\TitleResponseManager.class
 org\conquest\conquestSpawners\cooldownHandler\InteractionCooldownManager.class
+org\conquest\conquestSpawners\mobSpawningHandler\spawnerSetup\SpawnerManager$StartupWorldValidator.class
 org\conquest\conquestSpawners\guiHandler\GUIOpener.class
 org\conquest\conquestSpawners\configurationHandler\configurationFiles\ConfigFile.class
 org\conquest\conquestSpawners\configurationHandler\integrationFiles\PlaceHolderAPIManager$1.class
@@ -53,8 +52,8 @@ org\conquest\conquestSpawners\commandHandler\permissionHandler\PermissionModels.
 org\conquest\conquestSpawners\mobSpawningHandler\SpawnerProtectionListener.class
 org\conquest\conquestSpawners\guiHandler\guiEditingHandler\guiMenuModels\FillerItemModel.class
 org\conquest\conquestSpawners\guiHandler\guiEditingHandler\guiMenuModels\EffectModel$ParticleEffectModel.class
-org\conquest\conquestSpawners\mobSpawningHandler\spawningHandler\SpawnLocationResolver$Size.class
 org\conquest\conquestSpawners\cooldownHandler\CommandCooldownManager.class
+org\conquest\conquestSpawners\configurationHandler\configurationFiles\SpawnerDataFile.class
 org\conquest\conquestSpawners\guiHandler\guiEditingHandler\GUIListener.class
 org\conquest\conquestSpawners\guiHandler\GUIOpener$1.class
 org\conquest\conquestSpawners\guiHandler\guiEditingHandler\guiMenuModels\GUIFileEnums$1.class
@@ -63,6 +62,7 @@ org\conquest\conquestSpawners\responseHandler\effectHandler\EffectResponseManage
 org\conquest\conquestSpawners\mobSpawningHandler\spawnerSetup\CustomDropModel.class
 org\conquest\conquestSpawners\responseHandler\effectHandler\BossBarResponseManager$BossBarEntry.class
 org\conquest\conquestSpawners\guiHandler\guiEditingHandler\guiUtilites\FillerItemParser.class
+org\conquest\conquestSpawners\mobSpawningHandler\SpawnerFireLavaProtectionListener.class
 org\conquest\conquestSpawners\commandHandler\subcommandHandler\AdminCommands.class
 org\conquest\conquestSpawners\guiHandler\guiEditingHandler\guiMenuModels\GUIFileEnums.class
 org\conquest\conquestSpawners\guiHandler\guiEditingHandler\guiMenuManagers\UpgradeSpawnerMenu.class
@@ -73,5 +73,7 @@ org\conquest\conquestSpawners\mobSpawningHandler\spawnerSetup\SpawnerLevelModel.
 org\conquest\conquestSpawners\guiHandler\guiEditingHandler\EditorMenuManager.class
 org\conquest\conquestSpawners\mobSpawningHandler\SpawnerPlaceListener.class
 org\conquest\conquestSpawners\mobSpawningHandler\SpawnerInteractionListener.class
+org\conquest\conquestSpawners\mobSpawningHandler\spawnerSetup\SpawnerManager.class
+org\conquest\conquestSpawners\mobSpawningHandler\spawnerSetup\SpawnerManager$SpawnerPos.class
 org\conquest\conquestSpawners\guiHandler\guiEditingHandler\guiUtilites\EditingMenuHolder.class
 org\conquest\conquestSpawners\configurationHandler\configurationFiles\UpgradeMenuGUIFile.class

@@ -15,6 +15,7 @@ import org.conquest.conquestSpawners.ConquestSpawners;
 import org.conquest.conquestSpawners.mobSpawningHandler.spawnerSetup.*;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.Logger;
@@ -63,7 +64,19 @@ public class MobDeathListener implements Listener {
             return;
         }
 
-        String mobKey = entity.getType().name().toLowerCase();
+        String mobKey = entity.getMetadata("conquest-spawner-drop").stream()
+                .filter(meta -> meta.getOwningPlugin() == plugin)
+                .map(MetadataValue::asString)
+                .findFirst()
+                .orElse(null);
+
+        if (mobKey == null || mobKey.isEmpty()) {
+            log.warning("Missing mobKey metadata for entity: " + entity.getType());
+            return;
+        }
+
+        mobKey = mobKey.toLowerCase(Locale.ROOT);
+
         MobDataModel mobData = mobManager.getMob(mobKey);
         if (mobData == null) {
             log.warning("Mob config not found: " + mobKey);

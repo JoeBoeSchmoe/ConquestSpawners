@@ -13,6 +13,7 @@ import org.conquest.conquestSpawners.mobSpawningHandler.spawnerSetup.MobManager;
 import org.conquest.conquestSpawners.mobSpawningHandler.spawnerSetup.SpawnerLevelModel;
 
 import java.util.List;
+import java.util.Locale;
 
 /**
  * 🧹 MobDespawnTask
@@ -44,7 +45,6 @@ public class MobDespawnTask extends BukkitRunnable {
             if (!isCustomSpawnerMob(living)) continue;
 
             int activationRange = getMobActivationRange(living);
-            double rangeSquared = activationRange * activationRange;
 
             boolean hasNearby = world.getNearbyPlayers(living.getLocation(), activationRange).stream()
                     .anyMatch(p -> {
@@ -70,37 +70,26 @@ public class MobDespawnTask extends BukkitRunnable {
 
     private int getMobActivationRange(LivingEntity entity) {
         String mobKey = null;
-        Integer level = null;
 
         if (entity.hasMetadata("conquest-spawner-drop")) {
             for (MetadataValue meta : entity.getMetadata("conquest-spawner-drop")) {
                 if (meta.getOwningPlugin() == plugin) {
-                    mobKey = meta.asString().toLowerCase();
+                    mobKey = meta.asString();
                     break;
                 }
             }
         }
 
-        if (entity.hasMetadata("spawner-level")) {
-            for (MetadataValue meta : entity.getMetadata("spawner-level")) {
-                if (meta.getOwningPlugin() == plugin) {
-                    level = meta.asInt();
-                    break;
-                }
-            }
+        if (mobKey == null || mobKey.isEmpty()) {
+            return defaultActivationRange;
         }
 
-        if (mobKey != null) {
-            MobDataModel mob = mobManager.getMob(mobKey);
-            if (mob != null && level != null) {
-                SpawnerLevelModel lvl = mob.getSpawnerLevels().get(level);
-                if (lvl != null && mob.getPlayerActivationRange() != null) {
-                    return (int) mob.getPlayerActivationRange();
-                }
-            }
+        MobDataModel mob = mobManager.getMob(mobKey.toLowerCase(Locale.ROOT));
+        if (mob == null) {
+            return defaultActivationRange;
         }
 
-        return defaultActivationRange;
+        return mob.getPlayerActivationRangeResolved();
     }
 
     public void runDirectEntityScan() {

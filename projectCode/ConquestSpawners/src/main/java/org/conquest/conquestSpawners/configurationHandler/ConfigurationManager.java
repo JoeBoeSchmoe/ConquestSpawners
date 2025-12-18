@@ -2,14 +2,12 @@ package org.conquest.conquestSpawners.configurationHandler;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.conquest.conquestSpawners.ConquestSpawners;
-import org.conquest.conquestSpawners.configurationHandler.configurationFiles.AdminMessagesFile;
-import org.conquest.conquestSpawners.configurationHandler.configurationFiles.ConfigFile;
-import org.conquest.conquestSpawners.configurationHandler.configurationFiles.UpgradeMenuGUIFile;
-import org.conquest.conquestSpawners.configurationHandler.configurationFiles.UserMessagesFile;
+import org.conquest.conquestSpawners.configurationHandler.configurationFiles.*;
 import org.conquest.conquestSpawners.configurationHandler.integrationFiles.DecentHologramsManager;
 import org.conquest.conquestSpawners.configurationHandler.integrationFiles.PlaceHolderAPIManager;
 import org.conquest.conquestSpawners.configurationHandler.integrationFiles.VaultManager;
 import org.conquest.conquestSpawners.mobSpawningHandler.spawnerSetup.MobManager;
+import org.conquest.conquestSpawners.mobSpawningHandler.spawnerSetup.SpawnerManager;
 
 import java.util.logging.Logger;
 
@@ -26,9 +24,12 @@ public class ConfigurationManager {
     private FileConfiguration config;
 
     private final MobManager mobManager;
+    private final SpawnerManager spawnerManager;
 
     public ConfigurationManager() {
         this.mobManager = new MobManager(plugin); // ✅ Instantiate ONCE here
+        this.spawnerManager = new SpawnerManager();
+
     }
 
     public void initialize() {
@@ -41,16 +42,18 @@ public class ConfigurationManager {
             UserMessagesFile.load();
             UpgradeMenuGUIFile.load();
 
+            // ✅ NEW: SpawnerData storage directory
+            SpawnerDataFile.load(spawnerManager); // creates folders if missing
+            spawnerManager.runStartupBrokenDataCheck(plugin);
+
             this.config = ConfigFile.getConfig();
 
             checkAll();
 
-            // 🔌 Integrations
             setupVault();
             setupPlaceholderAPI();
             setupDecentHolograms();
 
-            // ✅ Now we can safely reload the mobs
             mobManager.reload();
 
             log.info("✅  Configuration loading complete.");
@@ -114,5 +117,9 @@ public class ConfigurationManager {
 
     public MobManager getMobManager() {
         return mobManager;
+    }
+
+    public SpawnerManager getSpawnerManager() {
+        return spawnerManager;
     }
 }

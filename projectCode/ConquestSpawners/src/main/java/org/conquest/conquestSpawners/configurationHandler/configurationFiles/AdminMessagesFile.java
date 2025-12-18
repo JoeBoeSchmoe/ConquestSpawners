@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 
 /**
  * 🛠️ AdminMessagesFile
- * Manages the loading and access to messagesConfiguration/adminMessages.yml
+ * Manages the loading and access to MessagesConfiguration/adminMessages.yml
  */
 public class AdminMessagesFile {
 
@@ -33,15 +33,15 @@ public class AdminMessagesFile {
                 log.warning("⚠️  Failed to create plugin data folder: " + folder.getAbsolutePath());
             }
 
-            File messagesDir = new File(folder, "messagesConfiguration");
+            File messagesDir = new File(folder, "MessagesConfiguration");
             if (!messagesDir.exists() && !messagesDir.mkdirs()) {
-                log.warning("⚠️  Failed to create messagesConfiguration directory: " + messagesDir.getAbsolutePath());
+                log.warning("⚠️  Failed to create MssagesConfiguration directory: " + messagesDir.getAbsolutePath());
             }
 
             File file = new File(messagesDir, "adminMessages.yml");
 
             if (!file.exists()) {
-                try (InputStream in = plugin.getResource("messagesConfiguration/adminMessages.yml")) {
+                try (InputStream in = plugin.getResource("MessagesConfiguration/adminMessages.yml")) {
                     if (in != null) {
                         Files.copy(in, file.toPath());
                         log.info("📄  Created default adminMessages.yml");

@@ -30,9 +30,9 @@ public class MobManager {
         mobData.clear();
         Logger log = plugin.getLogger();
 
-        File configFolder = new File(plugin.getDataFolder(), "mobLevelsConfiguration");
+        File configFolder = new File(plugin.getDataFolder(), "MobLevelsConfiguration");
         if (!configFolder.exists() && !configFolder.mkdirs()) {
-            log.warning("⚠️  Failed to create mobLevelsConfiguration/ directory.");
+            log.warning("⚠️  Failed to create MobLevelsConfiguration/ directory.");
             return;
         }
 
@@ -40,7 +40,7 @@ public class MobManager {
 
         File[] files = configFolder.listFiles((dir, name) -> name.toLowerCase().endsWith(".yml"));
         if (files == null || files.length == 0) {
-            log.warning("⚠️  No mob config files found in mobLevelsConfiguration/");
+            log.warning("⚠️  No mob config files found in MbLevelsConfiguration/");
             return;
         }
 
@@ -100,7 +100,7 @@ public class MobManager {
                     JarEntry entry = entries.nextElement();
                     String name = entry.getName();
 
-                    if (name.startsWith("mobLevelsConfiguration/") && name.endsWith(".yml")) {
+                    if (name.startsWith("MobLevelsConfiguration/") && name.endsWith(".yml")) {
                         File target = new File(plugin.getDataFolder(), name);
                         if (!target.exists()) {
                             plugin.saveResource(name, false);

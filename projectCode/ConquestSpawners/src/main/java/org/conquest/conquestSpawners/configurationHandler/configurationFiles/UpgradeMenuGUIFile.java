@@ -27,7 +27,7 @@ public class UpgradeMenuGUIFile {
      */
     public static void load() {
         try {
-            File guiFolder = new File(plugin.getDataFolder(), "guiConfiguration");
+            File guiFolder = new File(plugin.getDataFolder(), "GuiConfiguration");
             if (!guiFolder.exists() && !guiFolder.mkdirs()) {
                 log.warning("⚠️  Failed to create guiConfiguration folder.");
             }
@@ -35,7 +35,7 @@ public class UpgradeMenuGUIFile {
             File file = new File(guiFolder, "upgradeSpawnerGUI.yml");
 
             if (!file.exists()) {
-                try (InputStream in = plugin.getResource("guiConfiguration/upgradeSpawnerGUI.yml")) {
+                try (InputStream in = plugin.getResource("GuiConfiguration/upgradeSpawnerGUI.yml")) {
                     if (in != null) {
                         Files.copy(in, file.toPath());
                         log.info("📄  Created default upgradeSpawnerGUI.yml in guiConfiguration/");

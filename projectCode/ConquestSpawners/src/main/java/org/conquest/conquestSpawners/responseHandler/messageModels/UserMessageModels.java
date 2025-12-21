@@ -20,8 +20,14 @@ public enum UserMessageModels {
     SPAWNER_PLACE_FAILED("spawner-place-failed"),
     SPAWNER_PLACE_SUCCESS("spawner-place-success"),
     SPAWNER_PICKUP_SUCCESS("spawner-pickup-success"),
-    SPAWNER_PICKUP_FAILED("spawner-pickup-failed");
+    SPAWNER_PICKUP_FAILED("spawner-pickup-failed"),
+    SPAWNER_UPGRADE_INSUFFICIENT_FUNDS("spawner-upgrade-insufficient-funds"),
 
+    // 🏰 Clan spawner limits
+    CLAN_SPAWNER_CAPACITY_REACHED("clan-spawner-capacity-reached"),
+
+    // 🔒 Spawner upgrade lock
+    SPAWNER_UPGRADE_MENU_IN_USE("spawner-upgrade-menu-in-use");
 
     private final String path;
 

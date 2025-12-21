@@ -48,44 +48,56 @@ public class CommandManager implements CommandExecutor, TabCompleter {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if (!(sender instanceof Player player)) {
-            return UserCommands.sendNotPlayer(sender);
-        }
-
-        if (CommandCooldownManager.isOnCooldown(player.getUniqueId())) {
-            MessageResponseManager.send(player, UserMessageModels.COMMAND_ON_COOLDOWN);
-            return true;
-        }
-
-        CommandCooldownManager.mark(player.getUniqueId());
 
         if (args.length == 0) {
-            return UserCommands.sendUsageHint(player);
+            // If console runs /spawners with no args, just show usage/help
+            if (sender instanceof Player p) {
+                return UserCommands.sendUsageHint(p);
+            }
+            MessageResponseManager.send(sender, AdminMessageModels.ADMIN_USAGE_HINT, Map.of());
+            return true;
         }
 
         String input = args[0].toLowerCase();
         String subcommand = ALIAS_MAP.getOrDefault(input, null);
 
         if (subcommand == null) {
-            MessageResponseManager.send(player, AdminMessageModels.ADMIN_USAGE_HINT);
+            if (sender instanceof Player p) {
+                MessageResponseManager.send(p, AdminMessageModels.ADMIN_USAGE_HINT);
+            } else {
+                MessageResponseManager.send(sender, AdminMessageModels.ADMIN_USAGE_HINT, Map.of());
+            }
             return true;
         }
 
+        // ✅ Console is allowed to run admin commands
         if (subcommand.equals("admin")) {
-            return handleAdmin(player, args);
+            return handleAdmin(sender, args);
         }
+
+        // ❌ Everything else stays player-only
+        if (!(sender instanceof Player player)) {
+            return UserCommands.sendNotPlayer(sender);
+        }
+
+        // Cooldowns only apply to players
+        if (CommandCooldownManager.isOnCooldown(player.getUniqueId())) {
+            MessageResponseManager.send(player, UserMessageModels.COMMAND_ON_COOLDOWN);
+            return true;
+        }
+        CommandCooldownManager.mark(player.getUniqueId());
 
         return UserCommands.handle(player, subcommand, args);
     }
 
-    private boolean handleAdmin(Player player, String[] args) {
+    private boolean handleAdmin(CommandSender sender, String[] args) {
         if (args.length < 2) {
-            MessageResponseManager.send(player, AdminMessageModels.ADMIN_USAGE_HINT);
+            MessageResponseManager.send(sender, AdminMessageModels.ADMIN_USAGE_HINT, Map.of());
             return true;
         }
-
-        return AdminCommands.handle(player, args);
+        return AdminCommands.handle(sender, args);
     }
+
 
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, @NotNull String[] args) {

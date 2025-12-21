@@ -91,6 +91,27 @@ public final class CustomSpawnerSpawnListener implements Listener {
         }
 
         // ---------------------------------------------------------------------
+        // Keep vanilla spawner internals synced with config (covers reload + unloaded chunks).
+        // Config delay is SECONDS, vanilla needs TICKS.
+        // ---------------------------------------------------------------------
+        try {
+            int delayTicks = levelData.getSpawnerDelayTicksResolved();
+
+            spawner.setMinSpawnDelay(delayTicks);
+            spawner.setMaxSpawnDelay(delayTicks);
+            spawner.setDelay(delayTicks);
+
+            // STRICT mode: only trigger once per cycle
+            spawner.setSpawnCount(1);
+
+            // Keep these consistent too (optional but nice)
+            spawner.setRequiredPlayerRange(Math.max(1, mob.getPlayerActivationRangeResolved()));
+            spawner.setSpawnRange(Math.max(0, mob.getSpawnRadiusResolved()));
+
+            spawner.update(true, false);
+        } catch (Throwable ignored) {}
+
+        // ---------------------------------------------------------------------
         // IMPORTANT: Stop vanilla spawner mobs from ever appearing.
         // ---------------------------------------------------------------------
         hardCancel(event);
@@ -376,7 +397,6 @@ public final class CustomSpawnerSpawnListener implements Listener {
     private void hardCancel(SpawnerSpawnEvent event) {
         try {
             event.setCancelled(true);
-        } catch (Throwable ignored) {
-        }
+        } catch (Throwable ignored) {}
     }
 }

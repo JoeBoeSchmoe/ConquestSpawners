@@ -148,4 +148,44 @@ messages:
       subtitle: "<gray>{reason}"
       timings: { fadeIn: 10, stay: 40, fadeOut: 20 }
 
+  # 🔒 SPAWNER MENU IN USE
+  spawner-upgrade-menu-in-use:
+    text:
+      - "<red>🔒 This spawner is currently being upgraded by <yellow>{player}</yellow>."
+      - "<gray>Please wait and try again in a moment.</gray>"
+    hover: "<gray>Only one player can use a spawner upgrade menu at a time.</gray>"
+    click: ""
+    clickType: "NONE"
+    components: [ ]
+    prefix: true
+    sound: { type: ENTITY_VILLAGER_NO, volume: 1.0, pitch: 1.0 }
+    particles: [ { type: SMOKE_NORMAL, count: 5, offset: [0.2, 0.4, 0.2], speed: 0.01 } ]
+    effects: [ ]
+    bossbar: { text: "<red>Spawner In Use", color: "RED", overlay: "PROGRESS", time: 60, progress: 1.0 }
+    actionbar: { text: "<gray>Spawner upgrade menu is in use.</gray>", duration: 60 }
+    title:
+      text: "<red><bold>Spawner In Use</bold></red>"
+      subtitle: "<gray>Currently being used by <yellow>{player}</yellow>.</gray>"
+      timings: { fadeIn: 10, stay: 40, fadeOut: 20 }
+
+  # 🏰 CLAN SPAWNER CAPACITY REACHED
+  clan-spawner-capacity-reached:
+    text:
+      - "<red>⛔ Your clan has reached its spawner limit.</red>"
+      - "<gray>Limit: <yellow>{max}</yellow> • Current: <yellow>{current}</yellow></gray>"
+    hover: "<gray>Remove an existing spawner in your clan territory to place another.</gray>"
+    click: ""
+    clickType: "NONE"
+    components: [ ]
+    prefix: true
+    sound: { type: ENTITY_VILLAGER_NO, volume: 1.0, pitch: 0.9 }
+    particles: [ { type: SMOKE_NORMAL, count: 6, offset: [ 0.2, 0.4, 0.2 ], speed: 0.02 } ]
+    effects: [ ]
+    bossbar: { text: "<red>Clan Spawner Limit</red>", color: "RED", overlay: "PROGRESS", time: 60, progress: 1.0 }
+    actionbar: { text: "<red>Clan spawner limit reached.</red>", duration: 60 }
+    title:
+      text: "<red><bold>Limit Reached</bold></red>"
+      subtitle: "<gray>Your clan is at <yellow>{current}</yellow>/<yellow>{max}</yellow> spawners.</gray>"
+      timings: { fadeIn: 10, stay: 40, fadeOut: 20 }
+
 # End Of Config :D

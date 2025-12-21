@@ -1,6 +1,7 @@
 package org.conquest.conquestSpawners.mobSpawningHandler.spawnerSetup;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -35,11 +36,14 @@ public class SpawnerBuilder {
                 .getString("default-values.default-display.display-name");
 
         if (rawName != null) {
-            Component display = mini.deserialize(
-                    rawName.replace("{Spawner}", mob.getMobType()).replace("{level}", String.valueOf(level))
-            );
-            meta.displayName(display);
+            String resolved = rawName
+                    .replace("{Spawner}", mob.getMobType())
+                    .replace("{level}", String.valueOf(level));
+
+            Component display = mini.deserialize(resolved);
+            meta.displayName(defaultNonItalic(rawName, display));
         }
+
 
         // 📜 Lore
         List<String> loreLines = mob.isOverrideDefaultDisplay()
@@ -49,15 +53,21 @@ public class SpawnerBuilder {
 
         if (loreLines != null && !loreLines.isEmpty()) {
             List<Component> lore = loreLines.stream()
-                    .map(line -> mini.deserialize(
-                            line.replace("{Spawner}", mob.getMobType())
-                                    .replace("{level}", String.valueOf(level))
-                    ))
+                    .map(line -> {
+                        String resolved = line
+                                .replace("{Spawner}", mob.getMobType())
+                                .replace("{level}", String.valueOf(level));
+
+                        Component c = mini.deserialize(resolved);
+                        return defaultNonItalic(line, c);
+                    })
                     .toList();
+
             meta.lore(lore);
         } else {
             meta.lore(null);
         }
+
 
         // 🧬 Metadata
         PersistentDataContainer data = meta.getPersistentDataContainer();
@@ -88,4 +98,27 @@ public class SpawnerBuilder {
         item.setItemMeta(meta);
         return item;
     }
+    private static boolean explicitlyRequestsItalic(String raw) {
+        if (raw == null) return false;
+        String s = raw.toLowerCase();
+
+        // MiniMessage common italics signals
+        return s.contains("<i>") ||
+                s.contains("</i>") ||
+                s.contains("<italic>") ||
+                s.contains("</italic>") ||
+                s.contains("<em>") ||
+                s.contains("</em>") ||
+                s.contains("italic=true") ||
+                s.contains("italic:false") == false && s.contains("italic"); // covers odd variants
+    }
+
+    private static Component defaultNonItalic(String raw, Component component) {
+        // If user explicitly requested italics, don't override.
+        if (explicitlyRequestsItalic(raw)) return component;
+
+        // Otherwise force non-italic at the root so children inherit it unless they override.
+        return component.decoration(TextDecoration.ITALIC, false);
+    }
+
 }

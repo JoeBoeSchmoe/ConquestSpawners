@@ -3,11 +3,13 @@ package org.conquest.conquestSpawners.configurationHandler;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.conquest.conquestSpawners.ConquestSpawners;
 import org.conquest.conquestSpawners.configurationHandler.configurationFiles.*;
+import org.conquest.conquestSpawners.configurationHandler.integrationFiles.ConquestClansManager;
 import org.conquest.conquestSpawners.configurationHandler.integrationFiles.DecentHologramsManager;
 import org.conquest.conquestSpawners.configurationHandler.integrationFiles.PlaceHolderAPIManager;
 import org.conquest.conquestSpawners.configurationHandler.integrationFiles.VaultManager;
 import org.conquest.conquestSpawners.mobSpawningHandler.spawnerSetup.MobManager;
 import org.conquest.conquestSpawners.mobSpawningHandler.spawnerSetup.SpawnerManager;
+import org.conquest.conquestSpawners.mobSpawningHandler.spawningHandler.SpawnerStateRefresher;
 
 import java.util.logging.Logger;
 
@@ -53,8 +55,10 @@ public class ConfigurationManager {
             setupVault();
             setupPlaceholderAPI();
             setupDecentHolograms();
+            setupConquestClans();
 
             mobManager.reload();
+            SpawnerStateRefresher.refreshAllLoaded(plugin, mobManager);
 
             log.info("✅  Configuration loading complete.");
         } catch (Exception e) {
@@ -79,6 +83,11 @@ public class ConfigurationManager {
 
         check("gui-settings.timeout-seconds");
 
+        // 🏰 ConquestClans integration validation
+        check("conquestclans.enabled");
+        check("conquestclans.spawners-must-be-in-claims");
+        check("conquestclans.max-spawner-count-per-clan");
+
         // 🧱 Cram config validation
         check("entity-cram-limit");
     }
@@ -87,6 +96,11 @@ public class ConfigurationManager {
         if (!ConfigFile.contains(path)) {
             log.warning("⚠️ Missing config.yml key: '" + path + "'");
         }
+    }
+
+    private void setupConquestClans() {
+        boolean enabled = ConfigFile.getBoolean("conquestclans.enabled", true);
+        ConquestClansManager.initialize(enabled);
     }
 
     private void setupVault() {

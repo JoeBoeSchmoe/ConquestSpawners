@@ -3,13 +3,11 @@ package org.conquest.conquestSpawners.guiHandler;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
+import org.conquest.conquestSpawners.guiHandler.guiEditingHandler.GUISession;
 import org.conquest.conquestSpawners.guiHandler.guiEditingHandler.GUISessionManager;
 import org.conquest.conquestSpawners.guiHandler.guiEditingHandler.EditorMenuManager;
 import org.conquest.conquestSpawners.guiHandler.guiEditingHandler.guiMenuManagers.UpgradeSpawnerMenu;
-import org.conquest.conquestSpawners.guiHandler.guiEditingHandler.guiMenuModels.DuelMenuMeta;
-import org.conquest.conquestSpawners.guiHandler.guiEditingHandler.guiMenuModels.EffectModel;
-import org.conquest.conquestSpawners.guiHandler.guiEditingHandler.guiMenuModels.FillerItemModel;
-import org.conquest.conquestSpawners.guiHandler.guiEditingHandler.guiMenuModels.GUIFileEnums;
+import org.conquest.conquestSpawners.guiHandler.guiEditingHandler.guiMenuModels.*;
 import org.conquest.conquestSpawners.guiHandler.guiEditingHandler.guiUtilites.EffectModelParser;
 import org.conquest.conquestSpawners.guiHandler.guiEditingHandler.guiUtilites.FillerItemParser;
 
@@ -22,8 +20,21 @@ import java.util.*;
 public class GUIOpener {
 
     public static void open(Player player, GUIFileEnums type) {
+        open(player, type, null);
+    }
+
+    public static void open(Player player, GUIFileEnums type, SpawnerMenuContext context) {
         ensureMetaBuilt(type);
-        GUISessionManager.getOrCreate(player).touch();
+
+        GUISession session = GUISessionManager.getOrCreate(player);
+        session.touch();
+
+        // ✅ store context for menus to read
+        if (context != null) {
+            session.setEditingSpawnerContext(context);
+        } else {
+            session.setEditingSpawnerContext(null);
+        }
 
         switch (type) {
             case SPAWNER_UPGRADE -> UpgradeSpawnerMenu.open(player);
@@ -44,9 +55,7 @@ public class GUIOpener {
             for (Map<?, ?> raw : config.getMapList("menu.layout")) {
                 Map<String, Object> mapped = new HashMap<>();
                 raw.forEach((k, v) -> {
-                    if (k instanceof String key) {
-                        mapped.put(key, v);
-                    }
+                    if (k instanceof String key) mapped.put(key, v);
                 });
                 layout.add(mapped);
             }
@@ -65,9 +74,7 @@ public class GUIOpener {
                 ConfigurationSection sfx = soundsSection.getConfigurationSection(key);
                 if (sfx != null) {
                     EffectModel model = EffectModelParser.parseEffect(sfx);
-                    if (model != null) {
-                        effects.put(key.toLowerCase(Locale.ROOT), model);
-                    }
+                    if (model != null) effects.put(key.toLowerCase(Locale.ROOT), model);
                 }
             }
         }

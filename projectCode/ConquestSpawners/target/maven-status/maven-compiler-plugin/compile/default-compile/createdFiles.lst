@@ -5,6 +5,7 @@ org\conquest\conquestSpawners\commandHandler\CommandManager.class
 org\conquest\conquestSpawners\responseHandler\effectHandler\SoundResponseManager.class
 org\conquest\conquestSpawners\configurationHandler\integrationFiles\DecentHologramsManager.class
 org\conquest\conquestSpawners\mobSpawningHandler\spawningHandler\CustomSpawnerSpawnListener.class
+org\conquest\conquestSpawners\mobSpawningHandler\spawningHandler\SpawnerStateRefresher.class
 org\conquest\conquestSpawners\mobSpawningHandler\spawningHandler\MobBehaviorSuppressorListener$1.class
 org\conquest\conquestSpawners\configurationHandler\integrationFiles\PlaceHolderAPIManager$PlaceholderSet.class
 org\conquest\conquestSpawners\mobSpawningHandler\spawnerSetup\MobDataModel.class
@@ -23,6 +24,7 @@ org\conquest\conquestSpawners\cooldownHandler\GUICooldownManager.class
 org\conquest\conquestSpawners\mobSpawningHandler\spawnerSetup\ItemUtility.class
 org\conquest\conquestSpawners\mobSpawningHandler\SpawnerInteractionListener$InteractionType.class
 org\conquest\conquestSpawners\responseHandler\MessageResponseManager.class
+org\conquest\conquestSpawners\guiHandler\guiEditingHandler\guiMenuModels\SpawnerMenuContext.class
 org\conquest\conquestSpawners\responseHandler\messageModels\AdminMessageModels.class
 org\conquest\conquestSpawners\configurationHandler\configurationFiles\AdminMessagesFile.class
 org\conquest\conquestSpawners\mobSpawningHandler\spawnerSetup\SpawnerBuilder.class
@@ -43,6 +45,7 @@ org\conquest\conquestSpawners\commandHandler\permissionHandler\PermissionManager
 org\conquest\conquestSpawners\mobSpawningHandler\spawnerSetup\MobManager.class
 org\conquest\conquestSpawners\guiHandler\guiEditingHandler\GUISessionManager.class
 org\conquest\conquestSpawners\responseHandler\effectHandler\TitleResponseManager.class
+org\conquest\conquestSpawners\configurationHandler\integrationFiles\ConquestClansManager.class
 org\conquest\conquestSpawners\cooldownHandler\InteractionCooldownManager.class
 org\conquest\conquestSpawners\mobSpawningHandler\spawnerSetup\SpawnerManager$StartupWorldValidator.class
 org\conquest\conquestSpawners\guiHandler\GUIOpener.class
@@ -53,6 +56,7 @@ org\conquest\conquestSpawners\mobSpawningHandler\SpawnerProtectionListener.class
 org\conquest\conquestSpawners\guiHandler\guiEditingHandler\guiMenuModels\FillerItemModel.class
 org\conquest\conquestSpawners\guiHandler\guiEditingHandler\guiMenuModels\EffectModel$ParticleEffectModel.class
 org\conquest\conquestSpawners\cooldownHandler\CommandCooldownManager.class
+org\conquest\conquestSpawners\guiHandler\guiEditingHandler\SpawnerUpgradeService.class
 org\conquest\conquestSpawners\configurationHandler\configurationFiles\SpawnerDataFile.class
 org\conquest\conquestSpawners\guiHandler\guiEditingHandler\GUIListener.class
 org\conquest\conquestSpawners\guiHandler\GUIOpener$1.class
@@ -65,6 +69,7 @@ org\conquest\conquestSpawners\guiHandler\guiEditingHandler\guiUtilites\FillerIte
 org\conquest\conquestSpawners\mobSpawningHandler\SpawnerFireLavaProtectionListener.class
 org\conquest\conquestSpawners\commandHandler\subcommandHandler\AdminCommands.class
 org\conquest\conquestSpawners\guiHandler\guiEditingHandler\guiMenuModels\GUIFileEnums.class
+org\conquest\conquestSpawners\mobSpawningHandler\spawningHandler\MobDeathListener$PendingSplit.class
 org\conquest\conquestSpawners\guiHandler\guiEditingHandler\guiMenuManagers\UpgradeSpawnerMenu.class
 org\conquest\conquestSpawners\commandHandler\subcommandHandler\UserCommands.class
 org\conquest\conquestSpawners\ConquestSpawners.class
@@ -72,6 +77,7 @@ org\conquest\conquestSpawners\mobSpawningHandler\spawningHandler\MobBehaviorSupp
 org\conquest\conquestSpawners\mobSpawningHandler\spawnerSetup\SpawnerLevelModel.class
 org\conquest\conquestSpawners\guiHandler\guiEditingHandler\EditorMenuManager.class
 org\conquest\conquestSpawners\mobSpawningHandler\SpawnerPlaceListener.class
+org\conquest\conquestSpawners\guiHandler\SpawnerMenuLockManager.class
 org\conquest\conquestSpawners\mobSpawningHandler\SpawnerInteractionListener.class
 org\conquest\conquestSpawners\mobSpawningHandler\spawnerSetup\SpawnerManager.class
 org\conquest\conquestSpawners\mobSpawningHandler\spawnerSetup\SpawnerManager$SpawnerPos.class

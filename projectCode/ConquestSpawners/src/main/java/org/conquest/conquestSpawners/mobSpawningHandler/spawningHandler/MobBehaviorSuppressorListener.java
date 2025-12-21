@@ -3,10 +3,9 @@ package org.conquest.conquestSpawners.mobSpawningHandler.spawningHandler;
 import io.papermc.paper.event.entity.EntityMoveEvent;
 import org.bukkit.*;
 import org.bukkit.block.Block;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Mob;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.*;
 import org.bukkit.metadata.FixedMetadataValue;
@@ -14,6 +13,7 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
 import org.conquest.conquestSpawners.ConquestSpawners;
 
+import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 import java.util.WeakHashMap;
@@ -64,6 +64,32 @@ public class MobBehaviorSuppressorListener implements Listener {
         }
     }
 
+    // ------------------------------------------------------------------------
+    // Piglin special case: prevent zombification + shaking if AI disabled
+    // ------------------------------------------------------------------------
+
+    /**
+     * Safety net: if some conversion still tries to happen, cancel the transform.
+     * This prevents "shaking" turning into a zombified piglin.
+     */
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    public void onEntityTransform(EntityTransformEvent event) {
+        Entity entity = event.getEntity();
+        if (!hasAIDisabled(entity)) return;
+
+        // Only relevant to piglin -> zombified piglin transformations.
+        // Reason names vary across implementations, so use a robust name check.
+        if (!(entity instanceof Piglin)) return;
+
+        String reason = event.getTransformReason() != null ? event.getTransformReason().name() : "";
+        String upper = reason.toUpperCase(Locale.ROOT);
+
+        // Common variants seen across APIs: PIGLIN_ZOMBIFIED, PIGLIN_ZOMBIFY, etc.
+        if (upper.contains("PIGLIN") && upper.contains("ZOMB")) {
+            event.setCancelled(true);
+        }
+    }
+
     @EventHandler
     public void onEntityDamageByEntity(EntityDamageByEntityEvent e) {
         if (hasAIDisabled(e.getDamager())) {
@@ -81,6 +107,19 @@ public class MobBehaviorSuppressorListener implements Listener {
                 e.getEntity().teleport(base);
             }
         });
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    public void onDisabledSlimeDamage(EntityDamageByEntityEvent event) {
+        Entity damager = event.getDamager();
+
+        // Slimes and magma cubes deal contact damage as the damager.
+        if (!(damager instanceof Slime)) return;
+
+        // If we have AI disabled, they should be harmless.
+        if (!damager.hasMetadata("disable-ai-logic")) return;
+
+        event.setCancelled(true);
     }
 
     @EventHandler
@@ -183,8 +222,22 @@ public class MobBehaviorSuppressorListener implements Listener {
 
     public static void tagDisableAI(Entity entity, Plugin plugin) {
         entity.setMetadata("disable-ai-logic", new FixedMetadataValue(plugin, true));
+
         if (entity instanceof Mob mob) {
             mob.setAware(false);
+
+            // Prevent stealing drops
+            mob.setCanPickupItems(false);
+
+            // Optional: also prevent accidental gear equipping / swapping
+            // (helps with armor/weapons disappearing into mobs)
+            mob.getEquipment().setItemInMainHandDropChance(0f);
+            mob.getEquipment().setItemInOffHandDropChance(0f);
+            mob.getEquipment().setHelmetDropChance(0f);
+            mob.getEquipment().setChestplateDropChance(0f);
+            mob.getEquipment().setLeggingsDropChance(0f);
+            mob.getEquipment().setBootsDropChance(0f);
         }
     }
+
 }

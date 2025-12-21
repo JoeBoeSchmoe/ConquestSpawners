@@ -16,6 +16,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.conquest.conquestSpawners.ConquestSpawners;
+import org.conquest.conquestSpawners.configurationHandler.integrationFiles.ConquestClansManager;
 import org.conquest.conquestSpawners.configurationHandler.integrationFiles.DecentHologramsManager;
 import org.conquest.conquestSpawners.mobSpawningHandler.spawnerSetup.ItemUtility;
 import org.conquest.conquestSpawners.mobSpawningHandler.spawnerSetup.MobDataModel;
@@ -134,6 +135,44 @@ public class SpawnerPlaceListener implements Listener {
         }
 
         // ---------------------------------------------------------------------
+        // 🏰 ConquestClans integration checks (claim-only + per-clan cap)
+        // ---------------------------------------------------------------------
+        if (ConquestClansManager.mustBeInClaims()) {
+
+            // Must be inside a claimed chunk owned by the player’s clan
+            if (!ConquestClansManager.isPlayersOwnClaim(player, loc)) {
+                reject(player, event, "Spawners must be placed inside <yellow>your clan claim</yellow>.");
+                return;
+            }
+
+            // Optional per-clan spawner cap
+            int max = ConquestClansManager.getMaxSpawnerCountPerClan();
+            if (max > -1) {
+                String clanId = ConquestClansManager.getPlayerClanId(player).orElse(null);
+                if (clanId == null) {
+                    reject(player, event, "You must be in a clan to place spawners in claims.");
+                    return;
+                }
+
+                // ✅ Best-effort count (uses your SpawnerManager storage as source of truth)
+                int current = spawnerManager.getSpawnerCountForClan(clanId);
+
+                if (current + 1 > max) {
+                    MessageResponseManager.send(
+                            player,
+                            UserMessageModels.CLAN_SPAWNER_CAPACITY_REACHED,
+                            Map.of(
+                                    "current", String.valueOf(current),
+                                    "max", String.valueOf(max)
+                            )
+                    );
+                    event.setCancelled(true);
+                    return;
+                }
+            }
+        }
+
+        // ---------------------------------------------------------------------
         // Write spawner PDC + apply vanilla settings immediately + store location
         // ---------------------------------------------------------------------
         Block block = event.getBlockPlaced();
@@ -155,7 +194,7 @@ public class SpawnerPlaceListener implements Listener {
         placedData.set(ItemUtility.key("mob"), PersistentDataType.STRING, mobKey);
         placedData.set(ItemUtility.key("level"), PersistentDataType.INTEGER, level);
 
-        // ✅ Apply vanilla spawner settings NOW (do not wait for SpawnerSpawnEvent)
+        // Apply vanilla spawner settings NOW (do not wait for SpawnerSpawnEvent)
         SpawnerLevelModel levelData = mob.getSpawnerLevels().get(level);
         if (levelData != null) {
             applySpawnerSettings(spawner, mob, levelData);
@@ -164,7 +203,7 @@ public class SpawnerPlaceListener implements Listener {
         // Save tile state
         spawner.update(true, false);
 
-        // ✅ Storage handshake (memory + disk)
+        // Storage handshake (memory + disk)
         spawnerManager.addSpawner(mobKey, level, loc);
 
         // Hologram feedback
@@ -185,17 +224,19 @@ public class SpawnerPlaceListener implements Listener {
             int playerRange = Math.max(1, mob.getPlayerActivationRangeResolved());
             spawner.setRequiredPlayerRange(playerRange);
 
-            // Mob count -> vanilla spawn count
-            int spawnCount = Math.max(1, levelData.getMobCountResolved());
-            spawner.setSpawnCount(spawnCount);
+            // STRICT MODE: vanilla spawner should only "trigger" once; we spawn the batch ourselves
+            spawner.setSpawnCount(1);
 
-            // Delay (IMPORTANT: if your config value is already ticks, remove "* 20")
-            int delayTicks = Math.max(20, levelData.getSpawnerDelayResolved() * 20);
+            // Delay (config is seconds -> spawner uses ticks)
+            int delayTicks = levelData.getSpawnerDelayTicksResolved();
             spawner.setMinSpawnDelay(delayTicks);
             spawner.setMaxSpawnDelay(delayTicks);
 
-            // Kickstart: make sure it attempts soon after placement
-            spawner.setDelay(20);
+            // Kickstart after placement (optional):
+            // - true: spawn soon (1s) then follow delayTicks for subsequent cycles
+            // - false: follow delayTicks immediately
+            boolean kickstart = true;
+            spawner.setDelay(levelData.getInitialDelayTicks(kickstart));
         } catch (Throwable t) {
             plugin.getLogger().warning("Spawner apply settings failed on place: " + t.getClass().getSimpleName() + ": " + t.getMessage());
         }

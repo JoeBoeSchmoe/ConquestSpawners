@@ -114,4 +114,21 @@ public class SpawnerLevelModel {
                 0
         );
     }
+    /**
+     * Spawn delay in TICKS (Minecraft runs at 20 ticks/sec).
+     * This is the value that must be applied to the vanilla CreatureSpawner tile entity.
+     */
+    public int getSpawnerDelayTicksResolved() {
+        int seconds = getSpawnerDelayResolved();
+        return Math.max(20, seconds * 20);
+    }
+
+    /**
+     * Utility: optionally "kickstart" a spawner after reload/place.
+     * - If true: make it try soon (1s) then the min/max delay will govern afterwards.
+     * - If false: respect the configured delay immediately.
+     */
+    public int getInitialDelayTicks(boolean kickstart) {
+        return kickstart ? 20 : getSpawnerDelayTicksResolved();
+    }
 }

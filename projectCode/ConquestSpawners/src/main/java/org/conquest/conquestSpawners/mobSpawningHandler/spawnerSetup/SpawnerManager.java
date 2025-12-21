@@ -14,6 +14,7 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.Plugin;
 import org.conquest.conquestSpawners.configurationHandler.configurationFiles.SpawnerDataFile;
+import org.conquest.conquestSpawners.configurationHandler.integrationFiles.ConquestClansManager;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -22,10 +23,14 @@ public class SpawnerManager {
 
     // mobKey -> level -> set of positions
     private final Map<String, Map<Integer, Set<SpawnerPos>>> index = new ConcurrentHashMap<>();
+    // clanId(lowercase) -> spawner count (only used when ConquestClans mustBeInClaims is enabled)
+    private final Map<String, Integer> clanCounts = new ConcurrentHashMap<>();
 
     public void clear() {
         index.clear();
+        clanCounts.clear();
     }
+
 
     /** Used ONLY by SpawnerDataFile.load(...) to populate memory without writing disk. */
     public boolean addToMemoryOnly(String mobKey, int level, Location loc) {
@@ -51,6 +56,7 @@ public class SpawnerManager {
     }
 
     /** Runtime add: memory + disk */
+    /** Runtime add: memory + disk */
     public void addSpawner(String mobKey, int level, Location loc) {
         if (mobKey == null || mobKey.isEmpty() || loc == null || loc.getWorld() == null) return;
 
@@ -60,7 +66,14 @@ public class SpawnerManager {
         SpawnerPos pos = new SpawnerPos(worldName, loc.getBlockX(), loc.getBlockY(), loc.getBlockZ());
 
         if (addPosToMemoryOnly(mobKey, level, pos)) {
+            // ✅ disk
             SpawnerDataFile.addSpawner(mobKey, level, loc);
+
+            // ✅ count (only if rule is enabled)
+            if (ConquestClansManager.mustBeInClaims()) {
+                ConquestClansManager.getClaimOwnerClanId(loc)
+                        .ifPresent(ownerClanId -> incrementClanCount(ownerClanId, +1));
+            }
         }
     }
 
@@ -79,9 +92,17 @@ public class SpawnerManager {
         SpawnerPos pos = new SpawnerPos(loc.getWorld().getName(), loc.getBlockX(), loc.getBlockY(), loc.getBlockZ());
 
         if (set.remove(pos)) {
+            // ✅ disk
             SpawnerDataFile.removeSpawner(mobKey, level, loc);
+
+            // ✅ count (best-effort based on current claim ownership)
+            if (ConquestClansManager.mustBeInClaims()) {
+                ConquestClansManager.getClaimOwnerClanId(loc)
+                        .ifPresent(ownerClanId -> incrementClanCount(ownerClanId, -1));
+            }
         }
     }
+
 
     // ---------------------------------------------------------------------
     // ✅ Startup-only broken-data check
@@ -97,6 +118,11 @@ public class SpawnerManager {
      */
     public void runStartupBrokenDataCheck(Plugin plugin) {
         if (plugin == null) return;
+
+        // ✅ If ConquestClans enforcement is enabled, rebuild counts from scratch during this scrub pass
+        if (ConquestClansManager.mustBeInClaims()) {
+            clearClanCounts();
+        }
 
         // Snapshot which worlds we care about (from stored data)
         final Set<String> pendingWorlds = ConcurrentHashMap.newKeySet();
@@ -160,7 +186,7 @@ public class SpawnerManager {
             HandlerList.unregisterAll(this);
 
             if (removed > 0) {
-                Bukkit.getLogger().info("[ConquestSpawners] 🧹 Startup spawner scrub removed " + removed + " stale stored locations.");
+                Bukkit.getLogger().info("[ConquestSpawners] 🧹  Startup spawner scrub removed " + removed + " stale stored locations.");
             }
         }
     }
@@ -193,10 +219,30 @@ public class SpawnerManager {
                     SpawnerPos pos = it.next();
                     if (!worldName.equals(pos.worldName)) continue;
 
+                    // 1) Validate spawner block + PDC matching
                     if (!isStillValidCustomSpawner(world, mobKey, level, pos)) {
                         it.remove();
                         SpawnerDataFile.removeEncoded(mobKey, level, pos.encode());
                         removed++;
+                        continue;
+                    }
+
+                    // 2) If claims-enforcement is enabled, require this spawner to be inside ANY claim
+                    if (ConquestClansManager.mustBeInClaims()) {
+                        Location at = new Location(world, pos.x, pos.y, pos.z);
+
+                        Optional<String> owner = ConquestClansManager.getClaimOwnerClanId(at);
+
+                        if (owner.isEmpty()) {
+                            // Not inside a claim anymore -> treat as invalid stored entry
+                            it.remove();
+                            SpawnerDataFile.removeEncoded(mobKey, level, pos.encode());
+                            removed++;
+                            continue;
+                        }
+
+                        // Valid + in claim => count it
+                        incrementClanCount(owner.get(), +1);
                     }
                 }
             }
@@ -306,4 +352,24 @@ public class SpawnerManager {
             return Objects.hash(worldName, x, y, z);
         }
     }
+
+    public int getSpawnerCountForClan(String clanId) {
+        if (clanId == null || clanId.isBlank()) return 0;
+        return clanCounts.getOrDefault(clanId.trim().toLowerCase(Locale.ROOT), 0);
+    }
+
+    private void clearClanCounts() {
+        clanCounts.clear();
+    }
+
+    private void incrementClanCount(String clanId, int delta) {
+        if (clanId == null || clanId.isBlank()) return;
+        final String key = clanId.trim().toLowerCase(Locale.ROOT);
+
+        clanCounts.compute(key, (k, v) -> {
+            int next = (v == null ? 0 : v) + delta;
+            return (next <= 0) ? null : next;
+        });
+    }
+
 }

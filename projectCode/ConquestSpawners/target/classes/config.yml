@@ -191,4 +191,21 @@ default-values:
     update-interval: 40    # In ticks (2s)
     display-time: 80       # How long the hologram should be visible (in ticks)
 
+# ===================================================
+# 🏰 ConquestClans Integration
+# If ConquestClans is installed + enabled here, ConquestSpawners can enforce
+# claim-based spawner rules.
+# ===================================================
+conquestclans:
+  enabled: false
+
+  # If true:
+  # - Spawners can ONLY be placed inside ConquestClans claims
+  # - Optional max-per-clan limit can apply
+  spawners-must-be-in-claims: false
+
+  # Only used if spawners-must-be-in-claims = true
+  # Use -1 for unlimited
+  max-spawner-count-per-clan: 64
+
 # End of config.yml
